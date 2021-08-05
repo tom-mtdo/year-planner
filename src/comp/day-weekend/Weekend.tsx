@@ -1,12 +1,12 @@
 import React from "react";
-import { StyledDay, StyledDateNum } from "./Day.style";
+import { StyledWeekend, StyledDateNum } from "./Weekend.style";
 
-export default function Day(props: any){
+export default function Weekend(props: any){
     const { children, dateNum } = props
     return(
-        <StyledDay>
+        <StyledWeekend>
             <StyledDateNum>{dateNum}</StyledDateNum>
             {children}
-        </StyledDay>
+        </StyledWeekend>
     );
 }
