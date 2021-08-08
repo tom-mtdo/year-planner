@@ -1,10 +1,12 @@
 import React from "react";
+import { isWeekend } from "../../util/util";
 import { StlyedDayLabel } from "./DayLabel.style";
 
 export default function DayLabel(props: any){
-    const { children } = props
+    const { colIndex, children } = props
+
     return(
-        <StlyedDayLabel>
+        <StlyedDayLabel isWeekend={isWeekend(colIndex)}>
             {children}
         </StlyedDayLabel>
     );

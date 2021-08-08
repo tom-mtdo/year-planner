@@ -2,9 +2,9 @@ import React from "react";
 import { StyledRow } from "./Row.style";
 
 export default function Box(props: any){
-    const { children } = props;
+    const { children, minHeight } = props;
     return(
-        <StyledRow>
+        <StyledRow minHeight={minHeight}>
             {children}
         </StyledRow>
     );

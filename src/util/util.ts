@@ -82,3 +82,7 @@ export const getPlannerContent = (year: number) => {
         content: getYearContent(year)
     })
 }
+
+export const isWeekend = (day: number) => {
+    return (day % 7 === 5 || day % 7 === 6);
+}

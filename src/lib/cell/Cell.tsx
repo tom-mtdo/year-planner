@@ -2,9 +2,9 @@ import React from "react";
 import { StyledCell } from "./Cell.style";
 
 export default function Box(props: any){
-    const { children } = props;
+    const { children, border } = props;
     return(
-        <StyledCell>
+        <StyledCell border={border}>
             {children}
         </StyledCell>
     );

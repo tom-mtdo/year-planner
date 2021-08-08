@@ -1,18 +1,13 @@
 import React from "react";
+import { isWeekend } from "../../util/util";
 import { StyledDay, StyledDateNum } from "./Day.style";
 
 export default function Day(props: any){
     const { dayInfo, colIndex, children } = props
-    const isWeekend = colIndex % 7 === 5 || colIndex % 7 === 6;
-    let dateNum = dayInfo?.date?.getDate();
-    
-    // this if block is temp
-    if (!Boolean(dateNum) && !Boolean(children)) {
-        dateNum = '-';
-    }
+    let dateNum = dayInfo?.date?.getDate() ?? '';
 
     return(
-        <StyledDay isWeekend={isWeekend}>
+        <StyledDay isWeekend={isWeekend(colIndex)}>
             <StyledDateNum>{dateNum}</StyledDateNum>
             {children}
         </StyledDay>
