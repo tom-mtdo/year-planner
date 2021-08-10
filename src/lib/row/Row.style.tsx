@@ -5,7 +5,7 @@ export const StyledRow = styled.div<{minHeight?: string}>`
     text-align: center;
     margin: 0;
     padding: 0;
-    min-width: 2000px;
-    min-height: ${props => props.minHeight ?? '100px'}
+    min-width: 1500px;
+    min-height: ${props => props.minHeight ?? '70px'}
 `;
 

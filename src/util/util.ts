@@ -60,7 +60,12 @@ export const getYearContent = (year: number): any[][] => {
         // other days in month
         for(let j=1; j<=monthInfo.numDay; j++) {
             aDay = new Date(year, i, j);
-            aMonth.push({date: aDay});
+            if ( i === 8 && j === 24 ) {
+                aMonth.push({date: aDay, description: 'Friday before the AFL Grand Final'});
+            } else {
+                aMonth.push({date: aDay});
+            }
+            
         };
 
         // the rear padding
@@ -84,5 +89,5 @@ export const getPlannerContent = (year: number) => {
 }
 
 export const isWeekend = (day: number) => {
-    return (day % 7 === 5 || day % 7 === 6);
+    return (Math.abs(day) % 7 === 5 || Math.abs(day) % 7 === 6);
 }

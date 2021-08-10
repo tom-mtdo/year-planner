@@ -7,9 +7,9 @@ import BodyCenter from '../body-center/BodyCenter';
 export default function Body(){
     return(
         <BodyBox>
-            {/* <BodyLeft /> */}
+            <BodyLeft />
             <BodyCenter />
-            {/* <BodyRight /> */}
+            <BodyRight />
         </BodyBox>
     );
 }
