@@ -53,9 +53,9 @@ export const getYearContent = (year: number): any[][] => {
         const monthInfo = getMonthInfo(year, i);
 
         // indent - left padding
-        for(let j=1; j<=monthInfo.leftIndent; j++) {
-            aMonth.push('-')
-        };
+        // for(let j=1; j<=monthInfo.leftIndent; j++) {
+        //     aMonth.push('-')
+        // };
 
         // other days in month
         for(let j=1; j<=monthInfo.numDay; j++) {
@@ -68,11 +68,11 @@ export const getYearContent = (year: number): any[][] => {
             
         };
 
-        // the rear padding
-        const restNum = TOTAL_COLUMN - 1 - monthInfo.leftIndent - monthInfo.numDay;
-        for(let j=0; j<restNum ; j++) {
-            aMonth.push('-')
-        };
+        // // the rear padding
+        // const restNum = TOTAL_COLUMN - 1 - monthInfo.leftIndent - monthInfo.numDay;
+        // for(let j=0; j<restNum ; j++) {
+        //     aMonth.push('-')
+        // };
         aYear.push(aMonth);
     };
 
