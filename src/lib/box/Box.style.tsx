@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const HeaderBox = styled.div`
+export const StyledBox = styled.div`
     text-align: center;
 `;
