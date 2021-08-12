@@ -1,3 +1,4 @@
+import Holidays from 'date-holidays';
 import {
   DAY_SHORT_NAME,
   MONTH_NAME,
@@ -90,12 +91,16 @@ export const isWeekend = (day: number) => {
 };
 
 export const addHoliday = (aYear: any[][]) => {
-    aYear[0][0].holiday = "N.Year";
-    aYear[0][25].holiday = "Aus";
-    aYear[2][7].holiday = "Labour";
-    aYear[4][24].holiday = "Anzac";
-    aYear[5][13].holiday = "Queen";
-    aYear[11][24].holiday = "XMas";
-    aYear[11][25].holiday = "Boxing";
+  const country = 'AU';
+  const state = 'VIC';
+  const hd = new Holidays(country, state);
+  const holidays = hd.getHolidays();
+  holidays.forEach((holiday, index) => {
+    const aDate = new Date(holiday.date);
+    const month = aDate.getMonth();
+    const dateNum = aDate.getDate();
+    aYear[month][dateNum - 1].holiday = holiday.name;
+  });
   return aYear;
 };
+

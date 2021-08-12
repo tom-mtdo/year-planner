@@ -28,6 +28,6 @@ export const StyledHoliday = styled.span`
     width: 100%;
     left: 0;
     bottom: 0;
-    font-size: small;
+    font-size: x-small;
 `;
 
