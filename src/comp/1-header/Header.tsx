@@ -1,10 +1,11 @@
 import React from "react";
 import Box from "../../lib/box/Box";
+import { StyledH1 } from '../comp.style';
 
 export default function Header(){
     return(
         <Box>
-            <h1>Year Planner - 2021</h1>
+            <StyledH1>Year Planner - 2021</StyledH1>
         </Box>
     );
 }
