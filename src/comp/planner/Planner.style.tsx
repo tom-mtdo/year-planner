@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const BodyCenterBox = styled.div`
+export const ContentBox = styled.div`
     text-align: center;
-    flex-grow: 10;
+    width: 100%;
     overflow: auto;
 `;

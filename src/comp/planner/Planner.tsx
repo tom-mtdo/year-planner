@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyCenterBox } from "./BodyCenter.style";
+import { ContentBox } from "./Planner.style";
 import Row from "../../lib/row/Row";
 import Cell from "../../lib/cell/Cell";
 import Day from "../day/Day";
@@ -35,16 +35,10 @@ export const getPadding = (aMonth: DayInfo[]) => {
     );
   }
 
-  return({paddingLeft, paddingRight});
+  return { paddingLeft, paddingRight };
 };
 
-export default function Body() {
-  const toDay = new Date();
-  const year = toDay.getFullYear(); // 2021
-  const month = toDay.getMonth(); // 0 - 11
-  const date = toDay.getDate(); // 1 - 31
-  const { content } = usePlanner({ year });
-
+export const getHeaderRow = (headerData: string[]) => {
   // corner
   let corner = (
     <Cell
@@ -58,8 +52,8 @@ export default function Body() {
 
   // header
   let headerCell: any = [];
-  if (Array.isArray(content?.header)) {
-    headerCell = content?.header.map((dayLabel, index) => {
+  if (Array.isArray(headerData)) {
+    headerCell = headerData.map((dayLabel, index) => {
       return (
         <Cell key={index}>
           <DayLabel colIndex={index}>
@@ -75,8 +69,18 @@ export default function Body() {
     </Row>
   );
 
-  // content
-  const months = content?.content.map((aMonth, monthIndex) => {
+  return headerRow;
+};
+
+export const getContentRow = (contentData: any[][] | undefined) => {
+  if (!contentData) {
+    return undefined;
+  }
+  const toDay = new Date();
+  const month = toDay.getMonth(); // 0 - 11
+  const date = toDay.getDate(); // 1 - 31
+
+  const months = contentData.map((aMonth, monthIndex) => {
     const monthLabel = (
       <Cell
         key={"label"}
@@ -120,15 +124,31 @@ export default function Body() {
     // return a month
     return (
       <Row key={monthIndex}>
-        {[monthLabel, ...padding.paddingLeft, ...monthCell, ...padding.paddingRight]}
+        {[
+          monthLabel,
+          ...padding.paddingLeft,
+          ...monthCell,
+          ...padding.paddingRight,
+        ]}
       </Row>
     );
   });
+
+  return months;
+};
+
+export default function Body() {
+  const toDay = new Date();
+  const year = toDay.getFullYear(); // 2021
+  const { content } = usePlanner({ year });
+  
+  const headerRow = getHeaderRow(content?.header);
+  const months = getContentRow(content?.content);
 
   const planner = [headerRow];
   if (Array.isArray(months)) {
     planner.push(...months);
   }
 
-  return <BodyCenterBox>{planner}</BodyCenterBox>;
+  return <ContentBox>{planner}</ContentBox>;
 }
