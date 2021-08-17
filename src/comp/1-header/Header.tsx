@@ -1,11 +1,15 @@
 import React from "react";
-import Box from "../../lib/box/Box";
-import { StyledH1 } from '../comp.style';
+import { StyledH1 } from "../comp.style";
+import { Checkbox } from "@material-ui/core";
+import { StyledCtrBox, StyledHeader } from "./Header.style";
 
-export default function Header(){
-    return(
-        <Box>
-            <StyledH1>Year Planner - 2021</StyledH1>
-        </Box>
-    );
+export default function Header() {
+  return (
+    <StyledHeader>
+      <StyledH1>Year Planner - 2021</StyledH1>
+      <StyledCtrBox>
+        <Checkbox name="checkedA" onChange={() => alert('Hi!')}/> Config
+      </StyledCtrBox>
+    </StyledHeader>
+  );
 }
