@@ -8,8 +8,10 @@ export const StyledHeader = styled.div`
 `;
 
 export const StyledCtrBox = styled.div`
+    display: flex;
+    align-items: center;
     position: absolute;
     right: 0;
     bottom: 0;
-    padding: 0 30px 0 0;
+    padding: 0 3em 0 0;
 `
