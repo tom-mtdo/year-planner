@@ -1,4 +1,4 @@
-export enum BOOLEAN_VALUES {
+export enum BOOLEAN_STR_VALUES {
   YES = 'yes',
   NO = 'no',
   TRUE = 'true',
