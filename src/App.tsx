@@ -5,10 +5,10 @@ import Header from "./comp/1-header/Header";
 import Footer from "./comp/3-footer/Footer";
 import Body from "./comp/2-body/Body";
 import { DataProvider } from "./data-lib/context/DataProvider";
-import { BOOLEAN_VALUES } from "./util/constant";
+import useInBound from "./hook/useInBound";
 
 function App() {
-  const prepopData = {settings: {showSettings: BOOLEAN_VALUES.FALSE}};
+const { prepopData } = useInBound({});
   return (
     <DataProvider prepopData={prepopData}>
       <AppBox>

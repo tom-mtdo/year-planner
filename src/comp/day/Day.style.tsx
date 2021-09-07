@@ -23,6 +23,14 @@ export const StyledDateNum = styled.span`
     top: 0;
 `;
 
+export const StyledNote = styled.span`
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 17px;
+    font-size: x-small;
+`;
+
 export const StyledHoliday = styled.span`
     position: absolute;
     width: 100%;

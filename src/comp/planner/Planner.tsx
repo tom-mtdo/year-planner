@@ -19,7 +19,7 @@ export const getPadding = (aMonth: DayInfo[]) => {
   for (let i = 0; i < leftIndent; i++) {
     paddingLeft.push(
       <Cell key={`l-${i}`} border={"solid 1px burlywood"}>
-        <Day dayInfo={{}} colIndex={i}></Day>
+        <Day dayInfo={undefined}></Day>
       </Cell>
     );
   }
@@ -30,7 +30,7 @@ export const getPadding = (aMonth: DayInfo[]) => {
   for (let i = 0; i < restNum; i++) {
     paddingRight.push(
       <Cell key={`r-${i}`} border={"solid 1px burlywood"}>
-        <Day dayInfo={{}} colIndex={i}></Day>
+        <Day dayInfo={undefined}></Day>
       </Cell>
     );
   }
@@ -123,21 +123,21 @@ export const getContentRow = (contentData: any[][] | undefined) => {
         // void day
         return (
           <Cell key={dayIndex} border={"solid 1px burlywood"}>
-            <Day dayInfo={aDay} colIndex={dayIndex}></Day>
+            <Day dayInfo={aDay}></Day>
           </Cell>
         );
       } else if (monthIndex === month && dayIndex === date - 1) {
         //  toDay
         return (
           <Cell key={dayIndex}>
-            <Day dayInfo={aDay} colIndex={dayIndex} isCurrent={true}></Day>
+            <Day dayInfo={aDay} isCurrent={true}></Day>
           </Cell>
         );
       } else {
         // Other days
         return (
           <Cell key={dayIndex}>
-            <Day dayInfo={aDay} colIndex={dayIndex}></Day>
+            <Day dayInfo={aDay}></Day>
           </Cell>
         );
       }
