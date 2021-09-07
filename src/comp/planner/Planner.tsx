@@ -18,7 +18,7 @@ export const getPadding = (aMonth: DayInfo[]) => {
   const paddingLeft = [];
   for (let i = 0; i < leftIndent; i++) {
     paddingLeft.push(
-      <Cell key={i} border={"solid 1px burlywood"}>
+      <Cell key={`l-${i}`} border={"solid 1px burlywood"}>
         <Day dayInfo={{}} colIndex={i}></Day>
       </Cell>
     );
@@ -29,7 +29,7 @@ export const getPadding = (aMonth: DayInfo[]) => {
   const restNum = TOTAL_COLUMN - 1 - leftIndent - aMonth.length;
   for (let i = 0; i < restNum; i++) {
     paddingRight.push(
-      <Cell key={i} border={"solid 1px burlywood"}>
+      <Cell key={`r-${i}`} border={"solid 1px burlywood"}>
         <Day dayInfo={{}} colIndex={i}></Day>
       </Cell>
     );
@@ -40,9 +40,18 @@ export const getPadding = (aMonth: DayInfo[]) => {
 
 export const getHeaderRow = (headerData: string[]) => {
   // corner
-  let corner = (
+  let cornerL = (
     <Cell
-      key={"label"}
+      key={"corner-l"}
+      border={"solid 1px burlywood"}
+      minWidth={MONTH_LABEL_MIN_WIDTH}
+    >
+      <DayLabel colIndex={-5}></DayLabel>
+    </Cell>
+  );
+  let cornerR = (
+    <Cell
+      key={"corner-r"}
       border={"solid 1px burlywood"}
       minWidth={MONTH_LABEL_MIN_WIDTH}
     >
@@ -65,7 +74,7 @@ export const getHeaderRow = (headerData: string[]) => {
   }
   const headerRow = (
     <Row key={"label"} minHeight={"unset"}>
-      {[corner, ...headerCell]}
+      {[cornerL, ...headerCell, cornerR]}
     </Row>
   );
 
@@ -81,9 +90,23 @@ export const getContentRow = (contentData: any[][] | undefined) => {
   const date = toDay.getDate(); // 1 - 31
 
   const months = contentData.map((aMonth, monthIndex) => {
-    const monthLabel = (
+    const monthLabelL = (
       <Cell
-        key={"label"}
+        key={`month-label-${monthIndex}-L`}
+        border={"solid 1px burlywood"}
+        minWidth={MONTH_LABEL_MIN_WIDTH}
+      >
+        <MonthLabel>
+          <span style={{ width: "100%", fontWeight: "bold" }}>
+            <h2>{MONTH_SHORT_NAME[monthIndex]}</h2>
+          </span>
+        </MonthLabel>
+      </Cell>
+    );
+
+    const monthLabelR = (
+      <Cell
+      key={`month-label-${monthIndex}-R`}
         border={"solid 1px burlywood"}
         minWidth={MONTH_LABEL_MIN_WIDTH}
       >
@@ -125,10 +148,11 @@ export const getContentRow = (contentData: any[][] | undefined) => {
     return (
       <Row key={monthIndex}>
         {[
-          monthLabel,
+          monthLabelL,
           ...padding.paddingLeft,
           ...monthCell,
           ...padding.paddingRight,
+          monthLabelR
         ]}
       </Row>
     );
