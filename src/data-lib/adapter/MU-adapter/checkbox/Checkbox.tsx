@@ -14,6 +14,7 @@ export default function Checkbox(props: IComp) {
         },
         value: event.target.checked,
       },
+      event
     };
     onChange(compEvent);
   };

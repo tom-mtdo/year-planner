@@ -9,7 +9,7 @@ export default function Header() {
       <StyledH1>Year Planner - 2021</StyledH1>
       <StyledCtrBox>
         <Checkbox compId={"settings.showSettings"} dataPath={"settings.showSettings"}/>
-        <strong>Config</strong>
+        <strong>Settings</strong>
       </StyledCtrBox>
     </StyledHeader>
   );
