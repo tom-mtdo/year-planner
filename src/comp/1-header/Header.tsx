@@ -2,6 +2,7 @@ import { StyledH1 } from "../comp.style";
 
 import { StyledCtrBox, StyledHeader } from "./Header.style";
 import Checkbox from "../../data-lib/adapter/MU-adapter/checkbox/Checkbox";
+import { Button } from "@material-ui/core";
 
 export default function Header() {
   return (
@@ -10,6 +11,7 @@ export default function Header() {
       <StyledCtrBox>
         <Checkbox compId={"settings.showSettings"} dataPath={"settings.showSettings"}/>
         <strong>Settings</strong>
+        <Button onClick={() => alert('Show modal!')}>Show Modal</Button>
       </StyledCtrBox>
     </StyledHeader>
   );

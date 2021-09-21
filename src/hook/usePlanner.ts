@@ -19,7 +19,7 @@ export default function usePlanner(props: UsePlanner) {
             const mm = parseInt(strDate.substr(4, 2)) - 1;
             const dd = parseInt(strDate.substr(6, 2)) - 1;
             if (isNumber(mm) && isNumber(dd) && content && !isEmpty(content)) {
-                content.content[mm][dd].description = savedData[strDate].description;
+                content.content[mm][dd].note = savedData[strDate].note;
             }
         })
     }

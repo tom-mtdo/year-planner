@@ -7,10 +7,11 @@ export interface IDay {
     dayInfo?: DayInfo | undefined;
     isCurrent?: boolean;
     children?: any;
+    onDoubleClick?: any;
 }
 
 export default function Day(props: IDay){
-    const { dayInfo, isCurrent, children } = props
+    const { dayInfo, isCurrent, onDoubleClick, children } = props
     let dateNum = dayInfo?.date?.getDate() ?? '';
     const isVoid = !dayInfo?.date;
     const isHoliday = Boolean(dayInfo?.holiday);
@@ -18,9 +19,9 @@ export default function Day(props: IDay){
     const isWeekend = day % 7 === 6 || day % 7 === 0;
 
     return(
-        <StyledDay isWeekend={isWeekend} isCurrent={isCurrent ?? false} isVoid={isVoid} isHoliday={isHoliday}>
+        <StyledDay onDoubleClick={onDoubleClick} isWeekend={isWeekend} isCurrent={isCurrent ?? false} isVoid={isVoid} isHoliday={isHoliday}>
             <StyledDateNum>{dateNum}</StyledDateNum>
-            <StyledNote>{dayInfo?.description}</StyledNote>
+            <StyledNote>{dayInfo?.note}</StyledNote>
             {children}
             <StyledHoliday>{dayInfo?.holiday}</StyledHoliday>
         </StyledDay>

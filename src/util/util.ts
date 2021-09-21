@@ -18,7 +18,7 @@ export interface MonthInfo {
 export interface DayInfo {
   date: Date;
   holiday?: string; // Queen birthday .etc
-  description?: string;
+  note?: string;
 }
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {

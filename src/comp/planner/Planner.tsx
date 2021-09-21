@@ -106,7 +106,7 @@ export const getContentRow = (contentData: any[][] | undefined) => {
 
     const monthLabelR = (
       <Cell
-      key={`month-label-${monthIndex}-R`}
+        key={`month-label-${monthIndex}-R`}
         border={"solid 1px burlywood"}
         minWidth={MONTH_LABEL_MIN_WIDTH}
       >
@@ -130,14 +130,14 @@ export const getContentRow = (contentData: any[][] | undefined) => {
         //  toDay
         return (
           <Cell key={dayIndex}>
-            <Day dayInfo={aDay} isCurrent={true}></Day>
+            <Day onDoubleClick={()=>alert('double click')} dayInfo={aDay} isCurrent={true}></Day>
           </Cell>
         );
       } else {
         // Other days
         return (
           <Cell key={dayIndex}>
-            <Day dayInfo={aDay}></Day>
+            <Day onDoubleClick={()=>alert('double click')} dayInfo={aDay}></Day>
           </Cell>
         );
       }
@@ -152,7 +152,7 @@ export const getContentRow = (contentData: any[][] | undefined) => {
           ...padding.paddingLeft,
           ...monthCell,
           ...padding.paddingRight,
-          monthLabelR
+          monthLabelR,
         ]}
       </Row>
     );
@@ -165,7 +165,7 @@ export default function Body() {
   const toDay = new Date();
   const year = toDay.getFullYear(); // 2021
   const { content } = usePlanner({ year });
-  
+
   const headerRow = getHeaderRow(content?.header);
   const months = getContentRow(content?.content);
 
@@ -174,5 +174,9 @@ export default function Body() {
     planner.push(...months);
   }
 
-  return <ContentBox>{planner}</ContentBox>;
+  return (
+    <ContentBox>
+      {planner}
+    </ContentBox>
+  );
 }
