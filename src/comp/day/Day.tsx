@@ -1,29 +1,39 @@
 import React from "react";
 import { DayInfo } from "../../util/util";
 // import { isWeekend, DayInfo } from '../../util/util';
-import { StyledDay, StyledDateNum, StyledNote, StyledHoliday } from "./Day.style";
+import {
+  StyledDay,
+  StyledDateNum,
+  StyledNote,
+  StyledHoliday,
+} from "./Day.style";
 
 export interface IDay {
-    dayInfo?: DayInfo | undefined;
-    isCurrent?: boolean;
-    children?: any;
-    onDoubleClick?: any;
+  dayInfo?: DayInfo | undefined;
+  isCurrent?: boolean;
+  children?: any;
+  onDoubleClick?: any;
 }
 
-export default function Day(props: IDay){
-    const { dayInfo, isCurrent, onDoubleClick, children } = props
-    let dateNum = dayInfo?.date?.getDate() ?? '';
-    const isVoid = !dayInfo?.date;
-    const isHoliday = Boolean(dayInfo?.holiday);
-    const day = dayInfo?.date?.getDay() ?? 0;
-    const isWeekend = day % 7 === 6 || day % 7 === 0;
+export default function Day(props: IDay) {
+  const { dayInfo, isCurrent, onDoubleClick, children } = props;
+  let dateNum = dayInfo?.date?.getDate() ?? "";
+  const day = dayInfo?.date?.getDay() ?? 0;
+  const isWeekend = day % 7 === 6 || day % 7 === 0;
+  const styledProps = {
+    isVoid: !dayInfo?.date,
+    isCurrent: isCurrent ?? false,
+    isHoliday: Boolean(dayInfo?.holiday),
+    day,
+    isWeekend,
+  };
 
-    return(
-        <StyledDay onDoubleClick={onDoubleClick} isWeekend={isWeekend} isCurrent={isCurrent ?? false} isVoid={isVoid} isHoliday={isHoliday}>
-            <StyledDateNum>{dateNum}</StyledDateNum>
-            <StyledNote>{dayInfo?.note}</StyledNote>
-            {children}
-            <StyledHoliday>{dayInfo?.holiday}</StyledHoliday>
-        </StyledDay>
-    );
+  return (
+    <StyledDay {...styledProps} onDoubleClick={() => onDoubleClick(dayInfo)}>
+      <StyledDateNum>{dateNum}</StyledDateNum>
+      <StyledNote>{dayInfo?.note}</StyledNote>
+      {children}
+      <StyledHoliday>{dayInfo?.holiday}</StyledHoliday>
+    </StyledDay>
+  );
 }

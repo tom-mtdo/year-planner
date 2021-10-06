@@ -3,11 +3,13 @@ import { ContentBox } from "./Planner.style";
 import Row from "../../lib/row/Row";
 import Cell from "../../lib/cell/Cell";
 import Day from "../day/Day";
-import { MONTH_SHORT_NAME, TOTAL_COLUMN } from "../../util/constant";
+import { BOOLEAN_VALUES, MONTH_SHORT_NAME, TOTAL_COLUMN } from "../../util/constant";
 import usePlanner from "../../hook/usePlanner";
-import { DayInfo } from "../../util/util";
+import { DayInfo } from '../../util/util';
 import DayLabel from "../day-label/DayLabel";
 import MonthLabel from "../month-label/MonthLabel";
+import { useContext } from 'react';
+import { DataContext } from '../../data-lib/context/DataProvider';
 
 export const MONTH_LABEL_MIN_WIDTH = "70px";
 
@@ -81,15 +83,31 @@ export const getHeaderRow = (headerData: string[]) => {
   return headerRow;
 };
 
-export const getContentRow = (contentData: any[][] | undefined) => {
-  if (!contentData) {
-    return undefined;
-  }
+// {contentData: any[][] | undefined}
+export const GetContentRow = () => {
   const toDay = new Date();
+  const year = toDay.getFullYear(); // 2021
+  const { content } = usePlanner({ year });
+
+  const headerRow = getHeaderRow(content?.header);
+  const contentData = content?.content;
+  const isDayModalShownPath = 'settings.isDayModalShown';
+  const { setCompValue } = useContext(DataContext);
+
+  if (!contentData) {
+    return <></>;
+  }
+
+  const onDoubleClick = (dayInfo: DayInfo)=> {
+    if (setCompValue) {
+      setCompValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
+    }
+  };
+
   const month = toDay.getMonth(); // 0 - 11
   const date = toDay.getDate(); // 1 - 31
 
-  const months = contentData.map((aMonth, monthIndex) => {
+  const months = contentData.map((aMonth: any, monthIndex: any) => {
     const monthLabelL = (
       <Cell
         key={`month-label-${monthIndex}-L`}
@@ -117,7 +135,7 @@ export const getContentRow = (contentData: any[][] | undefined) => {
         </MonthLabel>
       </Cell>
     );
-    const monthCell = aMonth.map((aDay: DayInfo, dayIndex) => {
+    const monthCell = aMonth.map((aDay: DayInfo, dayIndex: any) => {
       // return a day
       if (!aDay?.date) {
         // void day
@@ -130,7 +148,7 @@ export const getContentRow = (contentData: any[][] | undefined) => {
         //  toDay
         return (
           <Cell key={dayIndex}>
-            <Day onDoubleClick={()=>alert('double click')} dayInfo={aDay} isCurrent={true}></Day>
+            <Day onDoubleClick={onDoubleClick} dayInfo={aDay} isCurrent={true}></Day>
           </Cell>
         );
       } else {
@@ -158,25 +176,13 @@ export const getContentRow = (contentData: any[][] | undefined) => {
     );
   });
 
-  return months;
+  return (<>{headerRow} {months} </>);
 };
 
 export default function Body() {
-  const toDay = new Date();
-  const year = toDay.getFullYear(); // 2021
-  const { content } = usePlanner({ year });
-
-  const headerRow = getHeaderRow(content?.header);
-  const months = getContentRow(content?.content);
-
-  const planner = [headerRow];
-  if (Array.isArray(months)) {
-    planner.push(...months);
-  }
-
   return (
     <ContentBox>
-      {planner}
+      <GetContentRow />
     </ContentBox>
   );
 }
