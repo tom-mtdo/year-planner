@@ -3,186 +3,62 @@ import { ContentBox } from "./Planner.style";
 import Row from "../../lib/row/Row";
 import Cell from "../../lib/cell/Cell";
 import Day from "../day/Day";
-import { BOOLEAN_VALUES, MONTH_SHORT_NAME, TOTAL_COLUMN } from "../../util/constant";
-import usePlanner from "../../hook/usePlanner";
-import { DayInfo } from '../../util/util';
-import DayLabel from "../day-label/DayLabel";
-import MonthLabel from "../month-label/MonthLabel";
-import { useContext } from 'react';
-import { DataContext } from '../../data-lib/context/DataProvider';
-
+import { DayInfo } from "../../util/util";
+import Header from "./Header";
+import { countPadding, useCompHook } from "./compHook";
+import { Padding, MonthLabelCell } from "./comps";
 export const MONTH_LABEL_MIN_WIDTH = "70px";
 
-export const getPadding = (aMonth: DayInfo[]) => {
-  // padding left
-  const firstDay = aMonth[0].date.getDay();
-  const leftIndent = firstDay === 0 ? 6 : firstDay - 1;
-  const paddingLeft = [];
-  for (let i = 0; i < leftIndent; i++) {
-    paddingLeft.push(
-      <Cell key={`l-${i}`} border={"solid 1px burlywood"}>
-        <Day dayInfo={undefined}></Day>
-      </Cell>
-    );
-  }
+export default function Planner() {
+  const { content, month, date, onDoubleClick } = useCompHook();
 
-  // padding right
-  const paddingRight = [];
-  const restNum = TOTAL_COLUMN - 1 - leftIndent - aMonth.length;
-  for (let i = 0; i < restNum; i++) {
-    paddingRight.push(
-      <Cell key={`r-${i}`} border={"solid 1px burlywood"}>
-        <Day dayInfo={undefined}></Day>
-      </Cell>
-    );
-  }
-
-  return { paddingLeft, paddingRight };
-};
-
-export const getHeaderRow = (headerData: string[]) => {
-  // corner
-  let cornerL = (
-    <Cell
-      key={"corner-l"}
-      border={"solid 1px burlywood"}
-      minWidth={MONTH_LABEL_MIN_WIDTH}
-    >
-      <DayLabel colIndex={-5}></DayLabel>
-    </Cell>
-  );
-  let cornerR = (
-    <Cell
-      key={"corner-r"}
-      border={"solid 1px burlywood"}
-      minWidth={MONTH_LABEL_MIN_WIDTH}
-    >
-      <DayLabel colIndex={-5}></DayLabel>
-    </Cell>
-  );
-
-  // header
-  let headerCell: any = [];
-  if (Array.isArray(headerData)) {
-    headerCell = headerData.map((dayLabel, index) => {
-      return (
-        <Cell key={index}>
-          <DayLabel colIndex={index}>
-            <span>{dayLabel}</span>
-          </DayLabel>
-        </Cell>
-      );
-    });
-  }
-  const headerRow = (
-    <Row key={"label"} minHeight={"unset"}>
-      {[cornerL, ...headerCell, cornerR]}
-    </Row>
-  );
-
-  return headerRow;
-};
-
-// {contentData: any[][] | undefined}
-export const GetContentRow = () => {
-  const toDay = new Date();
-  const year = toDay.getFullYear(); // 2021
-  const { content } = usePlanner({ year });
-
-  const headerRow = getHeaderRow(content?.header);
-  const contentData = content?.content;
-  const isDayModalShownPath = 'settings.isDayModalShown';
-  const { setCompValue } = useContext(DataContext);
-
-  if (!contentData) {
-    return <></>;
-  }
-
-  const onDoubleClick = (dayInfo: DayInfo)=> {
-    if (setCompValue) {
-      setCompValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
-    }
-  };
-
-  const month = toDay.getMonth(); // 0 - 11
-  const date = toDay.getDate(); // 1 - 31
-
-  const months = contentData.map((aMonth: any, monthIndex: any) => {
-    const monthLabelL = (
-      <Cell
-        key={`month-label-${monthIndex}-L`}
-        border={"solid 1px burlywood"}
-        minWidth={MONTH_LABEL_MIN_WIDTH}
-      >
-        <MonthLabel>
-          <span style={{ width: "100%", fontWeight: "bold" }}>
-            <h2>{MONTH_SHORT_NAME[monthIndex]}</h2>
-          </span>
-        </MonthLabel>
-      </Cell>
-    );
-
-    const monthLabelR = (
-      <Cell
-        key={`month-label-${monthIndex}-R`}
-        border={"solid 1px burlywood"}
-        minWidth={MONTH_LABEL_MIN_WIDTH}
-      >
-        <MonthLabel>
-          <span style={{ width: "100%", fontWeight: "bold" }}>
-            <h2>{MONTH_SHORT_NAME[monthIndex]}</h2>
-          </span>
-        </MonthLabel>
-      </Cell>
-    );
+  const months = content?.content.map((aMonth: any, monthIndex: any) => {
     const monthCell = aMonth.map((aDay: DayInfo, dayIndex: any) => {
       // return a day
+      // void day
       if (!aDay?.date) {
-        // void day
         return (
           <Cell key={dayIndex} border={"solid 1px burlywood"}>
             <Day dayInfo={aDay}></Day>
           </Cell>
         );
-      } else if (monthIndex === month && dayIndex === date - 1) {
-        //  toDay
-        return (
-          <Cell key={dayIndex}>
-            <Day onDoubleClick={onDoubleClick} dayInfo={aDay} isCurrent={true}></Day>
-          </Cell>
-        );
-      } else {
-        // Other days
-        return (
-          <Cell key={dayIndex}>
-            <Day onDoubleClick={()=>alert('double click')} dayInfo={aDay}></Day>
-          </Cell>
-        );
       }
+      // is today
+      const isToday =
+        monthIndex === month && dayIndex === date - 1 ? true : false;
+      return (
+        <Cell key={dayIndex}>
+          <Day
+            onDoubleClick={onDoubleClick}
+            dayInfo={aDay}
+            isCurrent={isToday}
+          ></Day>
+        </Cell>
+      );
     });
 
-    const padding = getPadding(aMonth);
+    const paddingCounts = countPadding(aMonth);
+    const leftPadding = <Padding count={paddingCounts.left} />;
+    const rightPadding = <Padding count={paddingCounts.right} />;
+
     // return a month
     return (
       <Row key={monthIndex}>
+        <MonthLabelCell monthIndex={monthIndex} />
         {[
-          monthLabelL,
-          ...padding.paddingLeft,
+          leftPadding,
           ...monthCell,
-          ...padding.paddingRight,
-          monthLabelR,
+          rightPadding,
         ]}
+        <MonthLabelCell monthIndex={monthIndex} />
       </Row>
     );
   });
 
-  return (<>{headerRow} {months} </>);
-};
-
-export default function Body() {
   return (
     <ContentBox>
-      <GetContentRow />
+      <Header headerData={content?.header} />
+      {months}
     </ContentBox>
   );
 }
