@@ -6,19 +6,33 @@ import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 
-function DayModal(props: any) {
-  const dataPath = "runtime.dayModal";
-  const isShownPath = `${dataPath}.isShown`;
-  // const { compValue, compOnChange } = useComp({ dataPath: isShownPath });
-  const { getCompValue, setCompValue } = useContext(DataContext);
-  const modalData = getCompValue ? getCompValue(dataPath) : {};
+export const dayModalDataPath = 'runtime.dayModal';
 
-  const onCloseClick = () => {
+function DayModal(props: any) {
+  const notePath = `${dayModalDataPath}.dayInfo.note`;
+  const { getCompValue, setCompValue } = useContext(DataContext);
+  const modalData = getCompValue ? getCompValue(dayModalDataPath) : {};
+
+  const onConfirm = () => {
     saveData();
-    if (setCompValue) {
-      setCompValue(isShownPath, BOOLEAN_STR_VALUES.FALSE);
-    }
+    closeModal();
   };
+
+  const onCancel = () => {
+    closeModal();
+  }
+
+  const closeModal = () => {
+    if (setCompValue) {
+      // close modal and clear data   
+      // clean value only otherwise react will complain in console
+      setCompValue(dayModalDataPath, {
+        isShown: BOOLEAN_STR_VALUES.FALSE,
+        note: '',
+        dayInfo: {}
+      });
+    }
+  }
 
   const saveData = () => {
     const activeDate = modalData?.dayInfo?.date ?? undefined;
@@ -33,18 +47,19 @@ function DayModal(props: any) {
 
     const path = `content.${strYear}.${strYear}${strMonth}${strDate}.note`;
     if (setCompValue) {
-      setCompValue(path, modalData?.note);
+      setCompValue(path, modalData?.dayInfo?.note);
     }
   };
 
   return (
     <Modal
       isShown={BOOLEAN_STR_VALUES.TRUE === modalData.isShown}
-      onCloseClick={onCloseClick}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
     >
       <TextField
         compId={"runtime-dayModal-note"}
-        dataPath={"runtime.dayModal.note"}
+        dataPath={notePath}
         label={"Notes"}
       />
     </Modal>

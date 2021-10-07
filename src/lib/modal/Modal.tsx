@@ -11,12 +11,12 @@ import {
 
 export interface IModal {
   isShown?: boolean;
-  onCloseClick?: any;
+  onConfirm?: any;
   [key: string]: any;
 }
 
 export default function Modal(props: IModal) {
-  const { isShown, onCloseClick, children } = props;
+  const { isShown, onConfirm, onCancel, children } = props;
   return !isShown ? (
     <></>
   ) : (
@@ -25,16 +25,15 @@ export default function Modal(props: IModal) {
         <StyledModalHeader>
           <StyledH2>Modal title</StyledH2>
         </StyledModalHeader>
-        <StyledModalBody>Modal body
-          <div onDoubleClick={()=>alert('double click')}>H aha here</div>
+        <StyledModalBody>
           {children}
         </StyledModalBody>
         <StyledModalFooter>
-          <Button variant="contained" onClick={onCloseClick}>
-            Close
+          <Button variant="contained" onClick={onConfirm}>
+            Confirm
           </Button>
-          <Button variant="contained" onDoubleClick={()=>alert('double click')}>
-            Ha ha
+          <Button variant="contained" onClick={onCancel}>
+            Cancel
           </Button>
         </StyledModalFooter>
       </StyledModalBox>
@@ -44,5 +43,5 @@ export default function Modal(props: IModal) {
 
 Modal.defaultProps = {
   isShown: true,
-  onCloseClick: () => alert("Close modal"),
+  onConfirm: () => alert("Close modal"),
 };

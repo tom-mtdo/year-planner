@@ -11,7 +11,6 @@ export default function Header() {
       <StyledCtrBox>
         <Checkbox compId={"settings.showSettings"} dataPath={"settings.showSettings"}/>
         <strong>Settings</strong>
-        <Button onClick={() => alert('Show modal!')}>Show Modal</Button>
       </StyledCtrBox>
     </StyledHeader>
   );
