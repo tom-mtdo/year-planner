@@ -16,7 +16,7 @@ export interface IModal {
 }
 
 export default function Modal(props: IModal) {
-  const { isShown, onCloseClick } = props;
+  const { isShown, onCloseClick, children } = props;
   return !isShown ? (
     <></>
   ) : (
@@ -27,6 +27,7 @@ export default function Modal(props: IModal) {
         </StyledModalHeader>
         <StyledModalBody>Modal body
           <div onDoubleClick={()=>alert('double click')}>H aha here</div>
+          {children}
         </StyledModalBody>
         <StyledModalFooter>
           <Button variant="contained" onClick={onCloseClick}>

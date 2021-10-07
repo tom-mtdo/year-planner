@@ -1,30 +1,29 @@
 import React from "react";
-import { Checkbox as MuCheckbox } from "@material-ui/core";
+import { TextField as MUTextField } from "@material-ui/core";
 import useComp, { IComp } from "../../../hook/useComp";
 
-export default function Checkbox(props: IComp) {
-  const { compId, dataPath } = props;
+export default function TextField(props: IComp) {
+  const { compId, dataPath, label } = props;
   const { compValue, compOnChange } = useComp({ dataPath });
 
   const myOnChange = (event: any) => {
     const compEvent = {
       target: {
-        dataset: {
-          dataPath,
-        },
-        value: event.target.checked,
+        dataset: { dataPath },
+        value: event.target.value,
       },
-      originalEvent: event
+      originalEvent: event,
     };
     compOnChange(compEvent);
   };
 
   return (
-    <MuCheckbox
+    <MUTextField
       id={compId}
       name={compId}
+      label={label}
+      value={compValue}
       onChange={myOnChange}
-      checked={compValue === true}
       data-data-path={dataPath}
     />
   );

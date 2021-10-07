@@ -6,9 +6,13 @@ export interface IUseInBound {
 
 export default function useInBound(props: any) {
     const prepopData = {
+        runtime: {
+            dayModal: {
+                isShown: BOOLEAN_VALUES.TRUE
+            }            
+        },
         settings: {
-            showSettings: BOOLEAN_VALUES.FALSE,
-            isDayModalShown: BOOLEAN_VALUES.TRUE
+            showSettings: BOOLEAN_VALUES.FALSE
         },
         content: {
             2021: {

@@ -25,12 +25,16 @@ export const useCompHook = () => {
   const date = toDay.getDate(); // 1 - 31
 
   const { content } = usePlanner({ year });
-  const isDayModalShownPath = "settings.isDayModalShown";
+  const isDayModalShownPath = "runtime.dayModal.isShown";
+  const dayInfoPath = "runtime.dayModal.dayInfo";
   const { setCompValue } = useContext(DataContext);
 
   const onDoubleClick = (dayInfo: DayInfo) => {
     if (setCompValue) {
+      // Open modal
       setCompValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
+      // to update details for dayInfo
+      setCompValue(dayInfoPath, dayInfo)
     }
   };
 
