@@ -8,8 +8,9 @@ export default function useInBound(props: any) {
     const prepopData = {
         runtime: {
             dayModal: {
-                isShown: BOOLEAN_VALUES.TRUE
-            }            
+                isShown: BOOLEAN_VALUES.TRUE,
+                note: ''
+            }
         },
         settings: {
             showSettings: BOOLEAN_VALUES.FALSE

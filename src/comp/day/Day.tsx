@@ -21,7 +21,6 @@ export default function Day(props: IDay) {
   const day = dayInfo?.date?.getDay() ?? 0;
   const isWeekend = day % 7 === 6 || day % 7 === 0;
   const styledProps = {
-    isVoid: !dayInfo?.date,
     isCurrent: isCurrent ?? false,
     isHoliday: Boolean(dayInfo?.holiday),
     day,

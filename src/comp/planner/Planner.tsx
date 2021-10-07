@@ -15,15 +15,6 @@ export default function Planner() {
   const months = content?.content.map((aMonth: any, monthIndex: any) => {
     const monthCell = aMonth.map((aDay: DayInfo, dayIndex: any) => {
       // return a day
-      // void day
-      if (!aDay?.date) {
-        return (
-          <Cell key={dayIndex} border={"solid 1px burlywood"}>
-            <Day dayInfo={aDay}></Day>
-          </Cell>
-        );
-      }
-      // is today
       const isToday =
         monthIndex === month && dayIndex === date - 1 ? true : false;
       return (
@@ -45,11 +36,7 @@ export default function Planner() {
     return (
       <Row key={monthIndex}>
         <MonthLabelCell monthIndex={monthIndex} />
-        {[
-          leftPadding,
-          ...monthCell,
-          rightPadding,
-        ]}
+        {[leftPadding, ...monthCell, rightPadding]}
         <MonthLabelCell monthIndex={monthIndex} />
       </Row>
     );
