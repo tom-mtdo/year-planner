@@ -13,7 +13,7 @@ export const Padding = ({ count }: IPadding) => {
   const result = [];
   for (let i = 0; i < count; i++) {
     result.push(
-      <Cell key={`l-${i}`} border={"solid 1px burlywood"}>
+      <Cell key={`${i}`} border={"solid 1px burlywood"}>
         <StyledDayVoid />
       </Cell>
     );

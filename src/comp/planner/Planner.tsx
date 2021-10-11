@@ -29,8 +29,8 @@ export default function Planner() {
     });
 
     const paddingCounts = countPadding(aMonth);
-    const leftPadding = <Padding count={paddingCounts.left} />;
-    const rightPadding = <Padding count={paddingCounts.right} />;
+    const leftPadding = <Padding key='left-padding' count={paddingCounts.left} />;
+    const rightPadding = <Padding key='right-padding' count={paddingCounts.right} />;
 
     // return a month
     return (
