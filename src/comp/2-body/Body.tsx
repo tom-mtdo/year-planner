@@ -2,7 +2,7 @@ import React from "react";
 import { BodyBox, BodyLeftBox, BodyCenterBox, BodyRightBox } from "./Body.style";
 import PlannerContent from '../planner/Planner';
 
-export default function Body() {
+function Body() {
   return (
     <BodyBox>
       <BodyLeftBox />
@@ -13,3 +13,5 @@ export default function Body() {
     </BodyBox>
   );
 }
+
+export default Body;

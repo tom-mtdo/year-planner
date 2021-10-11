@@ -5,16 +5,22 @@ import useHandler from "./useHandler";
 export interface IComp {
   compId?: string;
   dataPath?: string;
+  label?: string;
+
+  onChange?: any;
 }
 
 export default function useComp(props: IComp) {
-  const { compId, dataPath } = props;
+  const { compId, dataPath, onChange } = props;
+  const { onChange: defaultOnChange } = useHandler();
+
+  const compOnChange = onChange || defaultOnChange;
 
   // context
   const { getCompValue } = useContext(DataContext);
   // hooks
-  const { onChange } = useHandler();
+  
   const compValue = getCompValue ? getCompValue(dataPath ?? "") : undefined;
 
-  return { compId, compValue, onChange };
+  return { compId, compValue, compOnChange };
 }

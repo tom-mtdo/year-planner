@@ -32,7 +32,7 @@ export default function useHandler() {
     const dataSet =
       event?.target?.dataset || event?.currentTarget?.dataset || undefined;
     const dataPath = get(dataSet, 'dataPath', 'unknown-comp');
-    const value = event?.target?.value || event?.currentTarget?.value || undefined;
+    const value = event?.target?.value ?? event?.currentTarget?.value ?? undefined;
 
     if( setCompValue ) { setCompValue(dataPath, value); }
   };

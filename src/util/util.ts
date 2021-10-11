@@ -1,4 +1,4 @@
-import Holidays from 'date-holidays';
+import Holidays from "date-holidays";
 import {
   DAY_SHORT_NAME,
   MONTH_NAME,
@@ -18,7 +18,7 @@ export interface MonthInfo {
 export interface DayInfo {
   date: Date;
   holiday?: string; // Queen birthday .etc
-  description?: string;
+  note?: string;
 }
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
@@ -31,7 +31,7 @@ export const getMonthInfo = (year: number, month: number): MonthInfo => {
     lastDate,
     numDay: lastDate.getDate(),
     name: MONTH_NAME[month],
-    shortName: MONTH_SHORT_NAME[month]
+    shortName: MONTH_SHORT_NAME[month],
   };
 };
 
@@ -57,14 +57,11 @@ export const getYearContent = (year: number): any[][] => {
     // other days in month
     for (let j = 1; j <= monthInfo.numDay; j++) {
       aDay = new Date(year, i, j);
-      if (i === 8 && j === 24) {
-        aMonth.push({
-          date: aDay,
-          holiday: "AFL",
-        });
-      } else {
-        aMonth.push({ date: aDay });
-      }
+      aMonth.push({ 
+        date: aDay,
+        note: '',
+        holiday: ''
+      });
     }
 
     aYear.push(aMonth);
@@ -91,8 +88,8 @@ export const isWeekend = (day: number) => {
 };
 
 export const addHoliday = (aYear: any[][]) => {
-  const country = 'AU';
-  const state = 'VIC';
+  const country = "AU";
+  const state = "VIC";
   const hd = new Holidays(country, state);
   const holidays = hd.getHolidays();
   holidays.forEach((holiday, index) => {
@@ -103,4 +100,3 @@ export const addHoliday = (aYear: any[][]) => {
   });
   return aYear;
 };
-
