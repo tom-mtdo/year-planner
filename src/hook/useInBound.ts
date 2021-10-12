@@ -1,10 +1,16 @@
 import { BOOLEAN_VALUES } from "../util/constant";
+import { getCalendar } from "../util/util";
 
 export interface IUseInBound {
     [key: string]: any;
 }
 
 export default function useInBound(props: any) {
+    const toDay = new Date();
+    const currentYear = toDay.getFullYear();
+    const calendar = getCalendar(currentYear);
+
+    // set current year as default
     const prepopData = {
         runtime: {
             dayModal: {
@@ -12,7 +18,9 @@ export default function useInBound(props: any) {
                 dayInfo: {
                     note: ''
                 }
-            }
+            },
+            year: currentYear,
+            calendar
         },
         settings: {
             showSettings: BOOLEAN_VALUES.FALSE
