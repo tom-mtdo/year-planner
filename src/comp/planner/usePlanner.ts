@@ -1,8 +1,7 @@
-import { BOOLEAN_VALUES } from "../../util/constant";
+import { BOOLEAN_VALUES, CalendarPath, YearPath } from "../../util/constant";
 import { DayInfo, getHeader } from "../../util/util";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { YearPath, CalendarPath } from "../YearPlanner/YearPlanner";
 
 // logic hook
 export const usePlanner = () => {
@@ -40,6 +39,6 @@ export const usePlanner = () => {
     isCurrentYear,
     currentMonth,
     currentDate,
-    onDoubleClick,
+    onDoubleClick
   };
 };
