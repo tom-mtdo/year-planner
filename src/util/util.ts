@@ -1,6 +1,8 @@
 import Holidays from "date-holidays";
 import {
   DAY_SHORT_NAME,
+  MaxYear,
+  MinYear,
   MONTH_NAME,
   MONTH_SHORT_NAME,
   TOTAL_COLUMN,
@@ -85,7 +87,7 @@ export const getYearContent = (year: number): any[][] => {
 };
 
 export const getCalendar = (year: number) => {
-  if (year < 1970 || year > 9999) {
+  if (year < MinYear || year > MaxYear) {
     return;
   }
 

@@ -8,6 +8,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
 import { getCalendar } from "../../util/util";
 import { CalendarPath, YearPath } from "../../util/constant";
+import useYearPlanner from "../YearPlanner/useYearPlanner";
 
 export enum CHANGE_YEAR_VALUE_TYPE {
   OFFSET = "offset",
@@ -16,19 +17,21 @@ export enum CHANGE_YEAR_VALUE_TYPE {
 
 export default function Header() {
   const { getCompValue, setCompValue } = useContext(DataContext);
+  const { saveData, updateData } = useYearPlanner();
   const activeYear = getCompValue ? getCompValue(YearPath) : "";
 
   const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
-    
     if (setCompValue && value && isNumber(value)) {
       // Todo: save user data
-      const calendar = getCalendar(activeYear);
+      saveData();
+      const newYear =
+        CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value;
+      const calendar = getCalendar(newYear);
+
+      updateData(calendar, newYear);
       // Todo: combine these 2 set value into one
-      setCompValue(
-        YearPath,
-        CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value
-      );
-      setCompValue(CalendarPath, calendar);
+      // setCompValue(YearPath, newYear);
+      // setCompValue(CalendarPath, calendar);
 
       // Todo: load user data
       // put this code into event handler when user change year

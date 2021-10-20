@@ -1,5 +1,9 @@
 export const YearPath = "runtime.year";
 export const CalendarPath = "runtime.calendar";
+export const UserDataPath = "userData";
+
+export const MinYear = 1970;
+export const MaxYear = 9999;
 
 export const MONTH_NAME = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
