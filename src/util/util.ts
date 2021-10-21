@@ -1,6 +1,8 @@
 import Holidays from "date-holidays";
 import {
   DAY_SHORT_NAME,
+  MaxYear,
+  MinYear,
   MONTH_NAME,
   MONTH_SHORT_NAME,
   TOTAL_COLUMN,
@@ -35,6 +37,18 @@ export const getMonthInfo = (year: number, month: number): MonthInfo => {
   };
 };
 
+export const countPadding = (
+  aMonth: DayInfo[]
+): { left: number; right: number } => {
+  const firstDay = aMonth[0].date.getDay();
+  // padding left
+  const left = firstDay === 0 ? 6 : firstDay - 1;
+  // padding right
+  const right = TOTAL_COLUMN - 1 - left - aMonth.length;
+
+  return { left, right };
+};
+
 export const getHeader = (): any => {
   const header = [];
   for (let i = 0; i < TOTAL_COLUMN - 1; i++) {
@@ -57,10 +71,10 @@ export const getYearContent = (year: number): any[][] => {
     // other days in month
     for (let j = 1; j <= monthInfo.numDay; j++) {
       aDay = new Date(year, i, j);
-      aMonth.push({ 
+      aMonth.push({
         date: aDay,
-        note: '',
-        holiday: ''
+        note: "",
+        holiday: "",
       });
     }
 
@@ -72,15 +86,16 @@ export const getYearContent = (year: number): any[][] => {
   return aYear;
 };
 
-export const getPlannerContent = (year: number) => {
-  if (year < 1970 || year > 9999) {
+export const getCalendar = (year: number) => {
+  if (year < MinYear || year > MaxYear) {
     return;
   }
 
-  return {
-    header: getHeader(),
-    content: getYearContent(year),
-  };
+  return getYearContent(year);
+  // return {
+  //   header: getHeader(),
+  //   content: getYearContent(year),
+  // };
 };
 
 export const isWeekend = (day: number) => {
