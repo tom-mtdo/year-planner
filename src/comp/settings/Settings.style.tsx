@@ -19,7 +19,8 @@ export const StyledSettingsBody = styled.div`
     border-top: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     box-sizing: border-box;
-    padding: 12px;
+    padding: 24px;
+    text-align: left;
 `;
 
 export const StyledSettingsFooter = styled.div`
