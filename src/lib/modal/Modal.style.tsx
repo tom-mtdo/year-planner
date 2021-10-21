@@ -38,4 +38,3 @@ export const StyledModalBody = styled.div`
 export const StyledModalFooter = styled.div`
     padding: 12px;
 `;
-

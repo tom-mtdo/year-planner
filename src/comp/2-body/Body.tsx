@@ -1,6 +1,7 @@
 import React from "react";
-import { BodyBox, BodyLeftBox, BodyCenterBox, BodyRightBox } from "./Body.style";
+import { BodyBox, BodyLeftBox, BodyCenterBox, BodyRightBox } from './Body.style';
 import PlannerContent from '../planner/Planner';
+import Settings from "../settings/Settings";
 
 function Body() {
   return (
@@ -9,7 +10,11 @@ function Body() {
       <BodyCenterBox>
         <PlannerContent />
       </BodyCenterBox>
-      <BodyRightBox />
+      <BodyRightBox>
+        <Settings>
+          <p>Setting here</p>
+        </Settings>
+      </BodyRightBox>
     </BodyBox>
   );
 }
