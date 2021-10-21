@@ -1,7 +1,5 @@
-// import { cloneDeep, isNumber, isEmpty } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-// import { CalendarPath, YearPath } from "./YearPlanner";
 import { DayInfo } from "../../util/util";
 import {
   CalendarPath,

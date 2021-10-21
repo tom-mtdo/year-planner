@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
 import { getCalendar } from "../../util/util";
-import { CalendarPath, YearPath } from "../../util/constant";
+import { YearPath } from "../../util/constant";
 import useYearPlanner from "../YearPlanner/useYearPlanner";
 
 export enum CHANGE_YEAR_VALUE_TYPE {
@@ -22,33 +22,11 @@ export default function Header() {
 
   const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
     if (setCompValue && value && isNumber(value)) {
-      // Todo: save user data
       saveData();
       const newYear =
         CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value;
       const calendar = getCalendar(newYear);
-
       updateData(calendar, newYear);
-      // Todo: combine these 2 set value into one
-      // setCompValue(YearPath, newYear);
-      // setCompValue(CalendarPath, calendar);
-
-      // Todo: load user data
-      // put this code into event handler when user change year
-      // useEffect(() => {
-      //   if (!isEmpty(userContent.current) && getCompValue && setCompValue) {
-      //     const calendar = getCompValue(CalendarPath);
-      //     const draft = cloneDeep(calendar);
-      //     Object.keys(userContent.current).forEach((strDate, index) => {
-      //       const mm = parseInt(strDate.substr(4, 2)) - 1;
-      //       const dd = parseInt(strDate.substr(6, 2)) - 1;
-      //       if (isNumber(mm) && isNumber(dd) && draft[mm][dd]) {
-      //         draft[mm][dd].note = userContent.current[strDate].note;
-      //       }
-      //     });
-      //     setCompValue(CalendarPath, draft);
-      //   }
-      // }, [getCompValue, setCompValue]);
     }
   };
 
