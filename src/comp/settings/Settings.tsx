@@ -17,9 +17,9 @@ export interface ISettings {
 }
 
 export default function Settings(props: ISettings) {
-  const { getCompValue } = useContext(DataContext);
-  const isShown = getCompValue
-    ? getCompValue(SettingsPath.showSettings)
+  const { getValue } = useContext(DataContext);
+  const isShown = getValue
+    ? getValue(SettingsPath.showSettings)
     : false;
 
   const onApply = () => {

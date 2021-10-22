@@ -27,10 +27,10 @@ export const getStrDate = (aDate: Date) => {
 };
 
 const useYearPlanner = function () {
-  const { getCompValue, setCompValue } = useContext(DataContext);
+  const { getValue, setValue } = useContext(DataContext);
 
-  const updateCalendarAndContent = (dayInfo: DayInfo) => {
-    if (getCompValue && setCompValue) {
+  const saveDate = (dayInfo: DayInfo) => {
+    if (getValue && setValue) {
       const activeDate = dayInfo?.date ?? undefined;
       const note = dayInfo?.note ?? "";
       if (!activeDate) {
@@ -42,18 +42,18 @@ const useYearPlanner = function () {
       const date = activeDate.getDate(); // 1 - 31
 
       const notePath = `runtime.calendar[${month - 1}][${date - 1}].note`;
-      setCompValue(notePath, note);
+      setValue(notePath, note);
     }
   };
 
   // Todo save to buffer then call api
   const saveData = () => {
-    if (!getCompValue || !setCompValue) {
+    if (!getValue || !setValue) {
       return;
     }
 
-    const activeYear = getCompValue(YearPath);
-    const calendar = getCompValue(CalendarPath);
+    const activeYear = getValue(YearPath);
+    const calendar = getValue(CalendarPath);
     // extract user data
     if (!calendar || !Array.isArray(calendar)) {
       return;
@@ -73,12 +73,12 @@ const useYearPlanner = function () {
 
     // add string 'year' to fix lodash function
     if (!isEmpty(userData)) {
-      setCompValue(`${UserDataPath}.year${activeYear}`, userData);
+      setValue(`${UserDataPath}.year${activeYear}`, userData);
     }
   };
 
   const updateData = (calendar: any, year: number) => {
-    if (!getCompValue || !setCompValue) {
+    if (!getValue || !setValue) {
       return {};
     }
 
@@ -87,7 +87,7 @@ const useYearPlanner = function () {
     }
 
     // Todo get from buffer or api call
-    const userData = getCompValue(`${UserDataPath}.year${year}`);
+    const userData = getValue(`${UserDataPath}.year${year}`);
     const offset = "date".length;
 
     if (userData && !isEmpty(userData)) {
@@ -101,11 +101,11 @@ const useYearPlanner = function () {
     }
 
     // Todo: combine
-    setCompValue(CalendarPath, calendar);
-    setCompValue(YearPath, year);
+    setValue(CalendarPath, calendar);
+    setValue(YearPath, year);
   };
 
-  return { updateCalendarAndContent, saveData, updateData };
+  return { saveDate, saveData, updateData };
 };
 
 export default useYearPlanner;

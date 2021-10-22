@@ -35,10 +35,10 @@ export default function useInBound(props: any) {
     }
 
     const loadData = () => {
-        //   const year = getCompValue(YearPath);
+        //   const year = getValue(YearPath);
       //   const userContentPath = `content.${year}`;
-      //   const userContent = getCompValue(userContentPath);
-      // const calendar = getCompValue(CalendarPath);
+      //   const userContent = getValue(userContentPath);
+      // const calendar = getValue(CalendarPath);
       // const draft = cloneDeep(calendar);
 
       // update whole lot
@@ -50,7 +50,7 @@ export default function useInBound(props: any) {
       //         draft[mm][dd].note = userContent.current[strDate].note;
       //       }
       //     });
-      //     setCompValue(CalendarPath, draft);
+      //     setValue(CalendarPath, draft);
       //   }
     }
     

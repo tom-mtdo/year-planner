@@ -21,10 +21,10 @@ export default function useComp(props: IComp) {
   const compOnChange = onChange || defaultOnChange;
 
   // context
-  const { getCompValue } = useContext(DataContext);
+  const { getValue } = useContext(DataContext);
   // hooks
   
-  const compValue = getCompValue ? getCompValue(dataPath ?? "") : undefined;
+  const compValue = getValue ? getValue(dataPath ?? "") : undefined;
 
   return { compId, compValue, compOnChange };
 }

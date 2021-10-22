@@ -7,9 +7,9 @@ import { DataContext } from '../../data-lib/context/DataProvider';
 import { stateToSelect } from '../../util/util';
 
 const StateSelect = () => {
-    const {getCompValue} = useContext(DataContext);
-    const country = getCompValue ? getCompValue(SettingsPath.country) : '';
-    const options = getCompValue && country ? stateToSelect(country) : [];
+    const {getValue} = useContext(DataContext);
+    const country = getValue ? getValue(SettingsPath.country) : '';
+    const options = getValue && country ? stateToSelect(country) : [];
     
     return (
         <Select

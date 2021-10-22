@@ -10,9 +10,9 @@ export const dayModalDataPath = 'runtime.dayModal';
 
 function DayModal(props: any) {
   const notePath = `${dayModalDataPath}.dayInfo.note`;
-  const { getCompValue, setCompValue } = useContext(DataContext);
-  const modalData = getCompValue ? getCompValue(dayModalDataPath) : {};
-  const {updateCalendarAndContent} = useYearPlanner();
+  const { getValue, setValue } = useContext(DataContext);
+  const modalData = getValue ? getValue(dayModalDataPath) : {};
+  const {saveDate} = useYearPlanner();
 
   const onConfirm = () => {
     saveData();
@@ -24,10 +24,10 @@ function DayModal(props: any) {
   }
 
   const closeModal = () => {
-    if (setCompValue) {
+    if (setValue) {
       // close modal and clear data   
       // clean value only otherwise react will complain in console
-      setCompValue(dayModalDataPath, {
+      setValue(dayModalDataPath, {
         isShown: BOOLEAN_STR_VALUES.FALSE,
         note: '',
         dayInfo: {}
@@ -36,8 +36,8 @@ function DayModal(props: any) {
   }
 
   const saveData = () => {
-    if (updateCalendarAndContent) {
-      updateCalendarAndContent(modalData?.dayInfo);
+    if (saveDate) {
+      saveDate(modalData?.dayInfo);
     }
   };
 

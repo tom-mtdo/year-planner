@@ -5,11 +5,11 @@ import { produce } from "immer";
 export default function useData(prepop?: any) {
     const [data, setData] = useState(prepop ?? {});
 
-    const getCompValue = (dataPath: string) => {
+    const getValue = (dataPath: string) => {
         return get(data, dataPath, undefined);
     }
 
-    const setCompValue = (dataPath: string, value: any) => {
+    const setValue = (dataPath: string, value: any) => {
         setData((prevData: any) => {
             return produce(prevData, (draft: any) => {
                 set(draft, dataPath, value);
@@ -17,5 +17,5 @@ export default function useData(prepop?: any) {
         });
     }
 
-    return { data, getCompValue, setCompValue };
+    return { data, getValue, setValue };
 }

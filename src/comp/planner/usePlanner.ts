@@ -5,7 +5,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 
 // logic hook
 export const usePlanner = () => {
-  const { getCompValue, setCompValue } = useContext(DataContext);
+  const { getValue, setValue } = useContext(DataContext);
   const isDayModalShownPath = "runtime.dayModal.isShown";
   const dayModalDataPath = "runtime.dayModal.dayInfo";
 
@@ -18,18 +18,18 @@ export const usePlanner = () => {
   let year = 0;
   let calendar: any[] = [];
 
-  if (getCompValue) {
-    year = getCompValue(YearPath);
-    calendar = getCompValue(CalendarPath);
+  if (getValue) {
+    year = getValue(YearPath);
+    calendar = getValue(CalendarPath);
   }
 
   const isCurrentYear = currentYear === year;
   const onDoubleClick = (dayInfo: DayInfo) => {
-    if (setCompValue) {
+    if (setValue) {
       // Open modal
-      setCompValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
+      setValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
       // to update details for dayInfo
-      setCompValue(dayModalDataPath, dayInfo);
+      setValue(dayModalDataPath, dayInfo);
     }
   };
 
