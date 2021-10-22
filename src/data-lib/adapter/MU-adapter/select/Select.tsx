@@ -1,13 +1,14 @@
 import React from "react";
-import {
-  InputLabel,
-  MenuItem,
-  Select as MuSelect
-} from "@material-ui/core";
+import { InputLabel, MenuItem, Select as MuSelect } from "@material-ui/core";
 import useComp, { IComp } from "../../../hook/useComp";
 
+// options = [
+//   ["AU", "Australia"],
+//   ["NZ", "New Zealand"]
+// ]
+
 export default function Select(props: IComp) {
-  const { compId, dataPath, label } = props;
+  const { compId, dataPath, label, options } = props;
   const { compValue, compOnChange } = useComp({ dataPath });
 
   const myOnChange = (event: any) => {
@@ -21,6 +22,15 @@ export default function Select(props: IComp) {
     compOnChange(compEvent);
   };
 
+  const items =
+    options && Array.isArray(options) && options.length > 0 ? (
+      options.map((value, index) => {
+        return <MenuItem value={value[0]}>{value[1]}</MenuItem>;
+      })
+    ) : (
+      <></>
+    );
+
   return (
     <>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
@@ -31,9 +41,7 @@ export default function Select(props: IComp) {
         label={label}
         onChange={myOnChange}
       >
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {items}
       </MuSelect>
     </>
   );

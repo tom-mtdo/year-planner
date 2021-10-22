@@ -2,7 +2,11 @@ import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
 import useHandler from "./useHandler";
 
-export interface IComp {
+export interface IGeneric {
+  [key: string]: any
+}
+
+export interface IComp extends IGeneric{
   compId?: string;
   dataPath?: string;
   label?: string;

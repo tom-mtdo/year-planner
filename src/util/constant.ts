@@ -1,4 +1,5 @@
 import { map } from "lodash";
+import { countriesToSelect } from './util';
 
 export const YearPath = "runtime.year";
 export const CalendarPath = "runtime.calendar";
@@ -64,6 +65,15 @@ export enum BOOLEAN_LABELS {
   FALSE = "False",
 }
 
+export interface IStates {
+  [key: string]: string
+}
+
+export interface ICountry {
+  name: string,
+  states: IStates
+}
+
 const ArrCountries = [
   [
     "AU",
@@ -84,7 +94,7 @@ const ArrCountries = [
   [
     "NZ",
     {
-      name: "Australia",
+      name: "New Zealand",
       states: {
         AUK: "Auckland Province",
         CAN: "Canterbury",
@@ -104,5 +114,6 @@ const ArrCountries = [
 ];
 
 // @ts-ignore
-export const Countries = new Map<string, any>(ArrCountries);
+export const Countries = new Map<string, ICountry>(ArrCountries);
 
+export const CountriesToSelect = countriesToSelect(Countries);

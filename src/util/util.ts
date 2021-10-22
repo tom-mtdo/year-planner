@@ -1,4 +1,6 @@
 import Holidays from "date-holidays";
+import _ from "lodash";
+import { Countries, ICountry } from "./constant";
 import {
   DAY_SHORT_NAME,
   MaxYear,
@@ -114,4 +116,28 @@ export const addHoliday = (aYear: any[][]) => {
     aYear[month][dateNum - 1].holiday = holiday.name;
   });
   return aYear;
+};
+
+export const countriesToSelect = (countries: Map<string, ICountry>) => {
+  const result: [string, string][] = [];
+  if (countries && !_.isEmpty(countries)) {
+    Countries.forEach((value, key) => {
+      result.push([key, value.name]);
+    });
+  }
+
+  return result;
+};
+
+export const stateToSelect = (countryCode: string) => {
+  const country: ICountry = Countries.get(countryCode) as ICountry;
+  const states = country ? country.states : {};
+
+  // @ts-ignore
+  const codes = Object.keys(states);
+  return codes && codes.length > 0
+    ? codes.map((code, index) => {
+        return [code, states[code]];
+      })
+    : [];
 };

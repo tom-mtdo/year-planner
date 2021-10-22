@@ -1,9 +1,28 @@
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import Select from "../../data-lib/adapter/MU-adapter/select/Select";
 import { VSpacer } from "../../lib/styles";
-import { SettingsPath } from "../../util/constant";
+import { CountriesToSelect, SettingsPath } from "../../util/constant";
+import { useContext } from 'react';
+import { DataContext } from '../../data-lib/context/DataProvider';
+import { stateToSelect } from '../../util/util';
+
+const StateSelect = () => {
+    const {getCompValue} = useContext(DataContext);
+    const country = getCompValue ? getCompValue(SettingsPath.country) : '';
+    const options = getCompValue && country ? stateToSelect(country) : [];
+    
+    return (
+        <Select
+        compId="state"
+        dataPath={SettingsPath.state}
+        options = {options}
+        label="State"
+      />
+    );
+}
 
 function SettingsBody() {
+
   return (
     <>
       <TextField
@@ -14,9 +33,12 @@ function SettingsBody() {
       <VSpacer />
       <Select
         compId="demo-simple-select"
-        dataPath={SettingsPath.year}
-        label="Age"
+        dataPath={SettingsPath.country}
+        options = {CountriesToSelect}
+        label="Country"
       />
+      <VSpacer />
+      <StateSelect />
     </>
   );
 }
