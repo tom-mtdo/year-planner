@@ -9,8 +9,9 @@ import {
   StyledSettingsBody,
 } from "./Settings.style";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { SettingsPath } from "../../util/constant";
+import { SettingsPath, YearPath } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
+import useYearPlanner from '../YearPlanner/useYearPlanner';
 
 export interface ISettings {
   children: any;
@@ -18,13 +19,20 @@ export interface ISettings {
 
 export default function Settings(props: ISettings) {
   const { getValue } = useContext(DataContext);
+  const { moveToYear } = useYearPlanner();
   const isShown = getValue
     ? getValue(SettingsPath.showSettings)
     : false;
 
   const onApply = () => {
-    alert("Applying settings...");
+    if(!getValue) { return; }
+    const activeYear = getValue(YearPath);
+    const settingsYear = getValue(SettingsPath.year);
+    if (activeYear !== settingsYear) {
+      moveToYear(settingsYear);
+    }
   };
+  
   const onCancel = () => {
     alert("Cancel settings...");
   };

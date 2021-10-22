@@ -19,7 +19,7 @@ export default function useInBound(props: any) {
                     note: ''
                 }
             },
-            year: currentYear,
+            year: `${currentYear}`,
             calendar
         },
         settings: {

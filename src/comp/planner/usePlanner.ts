@@ -15,7 +15,7 @@ export const usePlanner = () => {
   const currentDate = toDay.getDate(); // 1 - 31
   const headerRow = getHeader();
 
-  let year = 0;
+  let year = '';
   let calendar: any[] = [];
 
   if (getValue) {
@@ -23,7 +23,7 @@ export const usePlanner = () => {
     calendar = getValue(CalendarPath);
   }
 
-  const isCurrentYear = currentYear === year;
+  const isCurrentYear = `${currentYear}` === year;
   const onDoubleClick = (dayInfo: DayInfo) => {
     if (setValue) {
       // Open modal

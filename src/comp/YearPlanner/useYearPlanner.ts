@@ -77,9 +77,11 @@ const useYearPlanner = function () {
     }
   };
 
-  const moveToYear = (year: number) => {
+  const moveToYear = (strYear: string) => {
     // save use data of the active year
     saveData();
+
+    const year = parseInt(strYear);
 
     if (!getValue || !setValue) {
       return {};
@@ -112,7 +114,7 @@ const useYearPlanner = function () {
 
     // Todo: combine
     setValue(CalendarPath, calendar);
-    setValue(YearPath, year);
+    setValue(YearPath, strYear);
   };
 
   return { saveDate, saveData, moveToYear };

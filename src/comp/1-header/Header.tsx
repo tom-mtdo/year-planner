@@ -15,15 +15,16 @@ export enum CHANGE_YEAR_VALUE_TYPE {
 }
 
 export default function Header() {
-  const { getValue, setValue } = useContext(DataContext);
+  const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
-  const activeYear = getValue ? getValue(YearPath) : "";
+  const strActiveYear = getValue ? getValue(YearPath) : "";
+  const activeYear = parseInt(strActiveYear);
 
   const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
-    if (setValue && value && isNumber(value)) {
+    if ( value && isNumber(value)) {
       const newYear =
         CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value;
-      moveToYear(newYear);
+      moveToYear(`${newYear}`);
     }
   };
 
