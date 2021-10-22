@@ -39,8 +39,8 @@ export default function Header() {
         </Button>
         &nbsp;
         <Checkbox
-          compId={"settings.showSettings"}
-          dataPath={"settings.showSettings"}
+          compId={"settings.isShown"}
+          dataPath={"settings.isShown"}
         />
         <strong>Settings</strong>
       </StyledCtrBox>

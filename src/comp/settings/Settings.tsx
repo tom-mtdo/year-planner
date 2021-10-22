@@ -9,7 +9,7 @@ import {
   StyledSettingsBody,
 } from "./Settings.style";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { SettingsPath, YearPath } from '../../util/constant';
+import { SettingsPath, YearPath, BOOLEAN_VALUES } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
 import useYearPlanner from '../YearPlanner/useYearPlanner';
 
@@ -21,7 +21,7 @@ export default function Settings(props: ISettings) {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
   const isShown = getValue
-    ? getValue(SettingsPath.showSettings)
+    ? getValue(SettingsPath.isShown)
     : false;
 
   const onApply = () => {
@@ -37,7 +37,7 @@ export default function Settings(props: ISettings) {
     alert("Cancel settings...");
   };
 
-  return true === isShown ? (
+  return BOOLEAN_VALUES.TRUE === isShown ? (
     <StyledSettingsBox>
       <StyledSettingsHeader>
         <StyledH2>Settings</StyledH2>

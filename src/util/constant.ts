@@ -8,7 +8,7 @@ export const UserDataPath = "userData";
 const SettingsHomePath = "settings";
 export const SettingsPath = {
   settings: `${SettingsHomePath}`,
-  showSettings: `${SettingsHomePath}.showSettings`,
+  isShown: `${SettingsHomePath}.isShown`,
   year: `${SettingsHomePath}.year`,
   country: `${SettingsHomePath}.country`,
   state: `${SettingsHomePath}.state`,

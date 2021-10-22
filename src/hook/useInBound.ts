@@ -23,7 +23,7 @@ export default function useInBound(props: any) {
             calendar
         },
         settings: {
-            showSettings: BOOLEAN_VALUES.FALSE
+            isShown: BOOLEAN_VALUES.FALSE
         }
         // },
         // content: {
