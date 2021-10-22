@@ -1,5 +1,5 @@
 import { BOOLEAN_VALUES } from "../util/constant";
-import { getCalendar } from "../util/util";
+import { getCalendar, IGetCalendar } from '../util/util';
 
 export interface IUseInBound {
     [key: string]: any;
@@ -8,7 +8,7 @@ export interface IUseInBound {
 export default function useInBound(props: any) {
     const toDay = new Date();
     const currentYear = toDay.getFullYear();
-    const calendar = getCalendar(currentYear);
+    const calendar = getCalendar({year: currentYear} as IGetCalendar);
 
     // set current year as default
     const prepopData = {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { DayInfo } from "../../util/util";
+import { DayInfo, getCalendar, IGetCalendar } from '../../util/util';
 import {
   CalendarPath,
   MaxYear,
@@ -77,15 +77,25 @@ const useYearPlanner = function () {
     }
   };
 
-  const updateData = (calendar: any, year: number) => {
+  const moveToYear = (year: number) => {
+    // save use data of the active year
+    saveData();
+
     if (!getValue || !setValue) {
       return {};
     }
-
     if (!year || isNaN(year) || year < MinYear || year > MaxYear) {
-      return calendar;
+      return {};
+    }
+    
+    // generate calendar for new year
+    const calendar = getCalendar({year} as IGetCalendar);
+    
+    if (!calendar) {
+      return {};
     }
 
+    // Populate user data to new calendar
     // Todo get from buffer or api call
     const userData = getValue(`${UserDataPath}.year${year}`);
     const offset = "date".length;
@@ -105,7 +115,7 @@ const useYearPlanner = function () {
     setValue(YearPath, year);
   };
 
-  return { saveDate, saveData, updateData };
+  return { saveDate, saveData, moveToYear };
 };
 
 export default useYearPlanner;

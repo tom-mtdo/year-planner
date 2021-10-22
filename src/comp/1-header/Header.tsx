@@ -6,7 +6,6 @@ import { Button } from "@material-ui/core";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
-import { getCalendar } from "../../util/util";
 import { YearPath } from "../../util/constant";
 import useYearPlanner from "../YearPlanner/useYearPlanner";
 
@@ -17,16 +16,14 @@ export enum CHANGE_YEAR_VALUE_TYPE {
 
 export default function Header() {
   const { getValue, setValue } = useContext(DataContext);
-  const { saveData, updateData } = useYearPlanner();
+  const { moveToYear } = useYearPlanner();
   const activeYear = getValue ? getValue(YearPath) : "";
 
   const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
     if (setValue && value && isNumber(value)) {
-      saveData();
       const newYear =
         CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value;
-      const calendar = getCalendar(newYear);
-      updateData(calendar, newYear);
+      moveToYear(newYear);
     }
   };
 
