@@ -1,7 +1,8 @@
-import { map } from "lodash";
 import { countriesToSelect } from './util';
 
 export const YearPath = "runtime.year";
+export const CountryPath = "runtime.country";
+export const StatePath = "runtime.state";
 export const CalendarPath = "runtime.calendar";
 export const UserDataPath = "userData";
 

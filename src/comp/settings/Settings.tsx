@@ -9,7 +9,7 @@ import {
   StyledSettingsBody,
 } from "./Settings.style";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { SettingsPath, YearPath, BOOLEAN_VALUES } from '../../util/constant';
+import { SettingsPath, YearPath, BOOLEAN_VALUES, CountryPath, StatePath } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
 import useYearPlanner from '../YearPlanner/useYearPlanner';
 
@@ -27,13 +27,23 @@ export default function Settings(props: ISettings) {
   const onApply = () => {
     if(!getValue) { return; }
     const activeYear = getValue(YearPath);
+    const activeCountry = getValue(CountryPath);
+    const activeState = getValue(StatePath);
+
     const settingsYear = getValue(SettingsPath.year);
-    if (activeYear !== settingsYear) {
-      moveToYear(settingsYear);
+    const settingsCountry = getValue(SettingsPath.country);
+    const settingsState = getValue(SettingsPath.state);
+
+    if (activeYear !== settingsYear || activeCountry !== settingsCountry || activeState !== settingsState) {
+      moveToYear(settingsYear, settingsCountry, settingsState);
     }
   };
   
   const onCancel = () => {
+    alert("Cancel settings...");
+  };
+
+  const onClose = () => {
     alert("Cancel settings...");
   };
 
@@ -49,8 +59,13 @@ export default function Settings(props: ISettings) {
         <Button variant="contained" onClick={onApply}>
           Apply
         </Button>
+        &nbsp;&nbsp;
         <Button variant="contained" onClick={onCancel}>
-          Cancel
+          Reset
+        </Button>
+        &nbsp;&nbsp;
+        <Button variant="contained" onClick={onClose}>
+          Close
         </Button>
       </StyledSettingsFooter>
     </StyledSettingsBox>

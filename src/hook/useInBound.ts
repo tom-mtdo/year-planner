@@ -23,7 +23,9 @@ export default function useInBound(props: any) {
             calendar
         },
         settings: {
-            isShown: BOOLEAN_VALUES.FALSE
+            isShown: BOOLEAN_VALUES.FALSE,
+            country: 'AU',
+            state: 'VIC'
         }
         // },
         // content: {

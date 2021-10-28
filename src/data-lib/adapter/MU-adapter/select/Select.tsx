@@ -9,7 +9,7 @@ import useComp, { IComp } from "../../../hook/useComp";
 
 export default function Select(props: IComp) {
   const { compId, dataPath, label, options } = props;
-  const { compValue, compOnChange } = useComp({ dataPath });
+  const { compValue, compOnChange } = useComp(props);
 
   const myOnChange = (event: any) => {
     const compEvent = {

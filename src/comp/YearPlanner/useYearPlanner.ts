@@ -5,10 +5,12 @@ import {
   CalendarPath,
   MaxYear,
   MinYear,
+  StatePath,
   UserDataPath,
   YearPath,
 } from "../../util/constant";
 import { isEmpty, isNumber, set } from "lodash";
+import { CountryPath } from '../../util/constant';
 
 export const getStrDate = (aDate: Date) => {
   if (!aDate) {
@@ -77,21 +79,26 @@ const useYearPlanner = function () {
     }
   };
 
-  const moveToYear = (strYear: string) => {
+  const moveToYear = (inStrYear?: string, inCountry?: string, inState?: string) => {
     // save use data of the active year
     saveData();
-
-    const year = parseInt(strYear);
-
     if (!getValue || !setValue) {
       return {};
     }
+
+    // get year, country & state from context if not pass in
+    const strYear = inStrYear ? inStrYear : getValue(YearPath);
+    let country = inCountry ? inCountry : getValue(CountryPath);
+    let state = inState ? inState : getValue(StatePath);
+
+    // validate input
+    const year = parseInt(strYear);
     if (!year || isNaN(year) || year < MinYear || year > MaxYear) {
       return {};
     }
     
     // generate calendar for new year
-    const calendar = getCalendar({year} as IGetCalendar);
+    const calendar = getCalendar({year, country, state});
     
     if (!calendar) {
       return {};
