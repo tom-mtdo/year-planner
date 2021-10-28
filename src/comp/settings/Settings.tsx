@@ -9,7 +9,7 @@ import {
   StyledSettingsBody,
 } from "./Settings.style";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { SettingsPath, YearPath, BOOLEAN_VALUES, CountryPath, StatePath } from '../../util/constant';
+import { paths, BOOLEAN_VALUES } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
 import useYearPlanner from '../YearPlanner/useYearPlanner';
 
@@ -21,18 +21,18 @@ export default function Settings(props: ISettings) {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
   const isShown = getValue
-    ? getValue(SettingsPath.isShown)
+    ? getValue(paths.temp.settings.isShown)
     : false;
 
   const onApply = () => {
     if(!getValue) { return; }
-    const activeYear = getValue(YearPath);
-    const activeCountry = getValue(CountryPath);
-    const activeState = getValue(StatePath);
+    const activeYear = getValue(paths.runtime.year);
+    const activeCountry = getValue(paths.runtime.country);
+    const activeState = getValue(paths.runtime.state);
 
-    const settingsYear = getValue(SettingsPath.year);
-    const settingsCountry = getValue(SettingsPath.country);
-    const settingsState = getValue(SettingsPath.state);
+    const settingsYear = getValue(paths.temp.settings.year);
+    const settingsCountry = getValue(paths.temp.settings.country);
+    const settingsState = getValue(paths.temp.settings.state);
 
     if (activeYear !== settingsYear || activeCountry !== settingsCountry || activeState !== settingsState) {
       moveToYear(settingsYear, settingsCountry, settingsState);

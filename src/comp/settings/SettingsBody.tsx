@@ -1,7 +1,7 @@
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import Select from "../../data-lib/adapter/MU-adapter/select/Select";
 import { VSpacer } from "../../lib/styles";
-import { CountriesToSelect, SettingsPath } from "../../util/constant";
+import { CountriesToSelect, paths } from "../../util/constant";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
@@ -9,7 +9,7 @@ import useHandler from '../../data-lib/hook/useHandler';
 
 const StateSelect = () => {
   const { getValue } = useContext(DataContext);
-  const country = getValue ? getValue(SettingsPath.country) : "";
+  const country = getValue ? getValue(paths.temp.settings.country) : "";
 
   if (!country) {
     return <></>;
@@ -19,7 +19,7 @@ const StateSelect = () => {
   return (
     <Select
       compId="state"
-      dataPath={SettingsPath.state}
+      dataPath={paths.temp.settings.state}
       options={options}
       label="State"
     />
@@ -32,7 +32,7 @@ const CountrySelect = () => {
 
   const onChange = (event: any) => {
     if(setValue) {
-      setValue(SettingsPath.state, '');
+      setValue(paths.temp.settings.state, '');
     }
     defaultOnChange(event);
   };
@@ -40,7 +40,7 @@ const CountrySelect = () => {
   return (
     <Select
       compId="country"
-      dataPath={SettingsPath.country}
+      dataPath={paths.temp.settings.country}
       options={CountriesToSelect}
       label="Country"
       onChange={onChange}
@@ -53,7 +53,7 @@ function SettingsBody() {
     <>
       <TextField
         compId={"runtime-dayModal-note"}
-        dataPath={SettingsPath.year}
+        dataPath={paths.temp.settings.year}
         label={"Year"}
       />
       <VSpacer />

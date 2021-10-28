@@ -5,13 +5,11 @@ import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import useYearPlanner from "../YearPlanner/useYearPlanner";
-
-export const dayModalDataPath = 'runtime.dayModal';
+import { paths } from '../../util/constant';
 
 function DayModal(props: any) {
-  const notePath = `${dayModalDataPath}.dayInfo.note`;
   const { getValue, setValue } = useContext(DataContext);
-  const modalData = getValue ? getValue(dayModalDataPath) : {};
+  const modalData = getValue ? getValue(paths.temp.dayModal._path) : {};
   const {saveDate} = useYearPlanner();
 
   const onConfirm = () => {
@@ -27,9 +25,8 @@ function DayModal(props: any) {
     if (setValue) {
       // close modal and clear data   
       // clean value only otherwise react will complain in console
-      setValue(dayModalDataPath, {
+      setValue(paths.temp.dayModal._path, {
         isShown: BOOLEAN_STR_VALUES.FALSE,
-        note: '',
         dayInfo: {}
       });
     }
@@ -43,13 +40,13 @@ function DayModal(props: any) {
 
   return (
     <Modal
-      isShown={BOOLEAN_STR_VALUES.TRUE === modalData.isShown}
+      isShown={BOOLEAN_STR_VALUES.TRUE === modalData?.isShown}
       onConfirm={onConfirm}
       onCancel={onCancel}
     >
       <TextField
         compId={"runtime-dayModal-note"}
-        dataPath={notePath}
+        dataPath={paths.temp.dayModal.note}
         label={"Notes"}
       />
     </Modal>

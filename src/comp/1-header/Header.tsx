@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
-import { YearPath } from "../../util/constant";
+import { paths } from '../../util/constant';
 import useYearPlanner from "../YearPlanner/useYearPlanner";
 
 export enum CHANGE_YEAR_VALUE_TYPE {
@@ -17,7 +17,7 @@ export enum CHANGE_YEAR_VALUE_TYPE {
 export default function Header() {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
-  const strActiveYear = getValue ? getValue(YearPath) : "";
+  const strActiveYear = getValue ? getValue(paths.runtime.year) : "";
   const activeYear = parseInt(strActiveYear);
 
   const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
@@ -39,8 +39,8 @@ export default function Header() {
         </Button>
         &nbsp;
         <Checkbox
-          compId={"settings.isShown"}
-          dataPath={"settings.isShown"}
+          compId={"settings-isShown"}
+          dataPath={paths.temp.settings.isShown}
         />
         <strong>Settings</strong>
       </StyledCtrBox>

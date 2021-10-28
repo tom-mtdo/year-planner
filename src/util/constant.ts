@@ -1,19 +1,71 @@
-import { countriesToSelect } from './util';
+import { countriesToSelect } from "./util";
 
-export const YearPath = "runtime.year";
-export const CountryPath = "runtime.country";
-export const StatePath = "runtime.state";
-export const CalendarPath = "runtime.calendar";
-export const UserDataPath = "userData";
+// names used to construct data path & comp id
+// fields in groups in roots
+export const names = {
+  // context root levels
+  userData: "userData",
+  runtime: "runtime",
+  temp: "temp",
 
-const SettingsHomePath = "settings";
-export const SettingsPath = {
-  settings: `${SettingsHomePath}`,
-  isShown: `${SettingsHomePath}.isShown`,
-  year: `${SettingsHomePath}.year`,
-  country: `${SettingsHomePath}.country`,
-  state: `${SettingsHomePath}.state`,
+  // group
+  settings: "settings",
+  dayModal: "dayModal",
+
+  // fields
+  calendar: "calendar",
+  isShown: "isShown",
+  year: "year",
+  date: 'date',
+  country: "country",
+  state: "state",
+  note: 'note',
+  dayInfo: 'dayInfo'
 };
+
+const userDataHome = `${names.userData}`;
+export const userData = {
+  _path: userDataHome
+}
+
+const runtimeHome = `${names.runtime}`;
+const runtime = {
+  _path: runtimeHome,
+  calendar: `${runtimeHome}.${names.calendar}`,
+  year:  `${runtimeHome}.${names.year}`,
+  country:  `${runtimeHome}.${names.country}`,
+  state:  `${runtimeHome}.${names.state}`,
+  userData:  `${runtimeHome}.${names.userData}`,
+}
+
+const settingsHome = `${names.temp}.${names.settings}`;
+const settings = {
+  _path: settingsHome,
+  isShown: `${settingsHome}.${names.isShown}`,
+  year: `${settingsHome}.${names.year}`,
+  country: `${settingsHome}.${names.country}`,
+  state: `${settingsHome}.${names.state}`
+};
+
+const dayModalHome = `${names.temp}.${names.dayModal}`;
+const dayModal = {
+  _path:dayModalHome, 
+  dayInfo: `${dayModalHome}.${names.dayInfo}`,
+  isShown: `${dayModalHome}.${names.isShown}`,
+  note: `${dayModalHome}.${names.dayInfo}.${names.note}`
+};
+
+const temp = {
+  _path: `${names.temp}`,
+  settings,
+  dayModal
+}
+
+export const paths = {
+  runtime,
+  userData,
+  temp
+}
 
 export const MinYear = 1970;
 export const MaxYear = 9999;
@@ -67,12 +119,12 @@ export enum BOOLEAN_LABELS {
 }
 
 export interface IStates {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export interface ICountry {
-  name: string,
-  states: IStates
+  name: string;
+  states: IStates;
 }
 
 const ArrCountries = [
@@ -90,7 +142,7 @@ const ArrCountries = [
         VIC: "Victoria",
         WA: "Western Australia",
       },
-    }
+    },
   ],
   [
     "NZ",
@@ -108,10 +160,10 @@ const ArrCountries = [
         STL: "Southland",
         TKI: "Taranaki",
         WGN: "Wellington Province",
-        WTC: "Westland"
+        WTC: "Westland",
       },
-    }
-  ]
+    },
+  ],
 ];
 
 // @ts-ignore
