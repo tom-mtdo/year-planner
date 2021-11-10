@@ -1,11 +1,13 @@
-import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
+import TextField from "../../data-lib/adapter/MU-adapter/textField2/TextField";
 import Select from "../../data-lib/adapter/MU-adapter/select/Select";
 import { VSpacer } from "../../lib/styles";
 import { CountriesToSelect, paths } from "../../util/constant";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
-import useHandler from '../../data-lib/hook/useHandler';
+import useHandler from "../../data-lib/hook/useHandler";
+import { IComp } from '../../data-lib/hook/useComp';
+import useComp from '../../data-lib/hook/useComp';
 
 const StateSelect = () => {
   const { getValue } = useContext(DataContext);
@@ -27,12 +29,12 @@ const StateSelect = () => {
 };
 
 const CountrySelect = () => {
-  const {onChange: defaultOnChange} = useHandler();
-  const {setValue} = useContext(DataContext);
+  const { onChange: defaultOnChange } = useHandler();
+  const { setValue } = useContext(DataContext);
 
   const onChange = (event: any) => {
-    if(setValue) {
-      setValue(paths.temp.settings.state, '');
+    if (setValue) {
+      setValue(paths.temp.settings.state, "");
     }
     defaultOnChange(event);
   };
@@ -48,14 +50,29 @@ const CountrySelect = () => {
   );
 };
 
+const YearTextField = () => {
+  const props: IComp = {
+    dataPath: paths.temp.settings.year,
+    id: "temp-settings-year",
+    label: "Year"
+  }
+  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+
+  return (
+    <TextField
+      compId={compId}
+      dataPath={dataPath}
+      compValue={compValue}
+      compLabel={compLabel}
+      compOnChange={compOnChange}
+    />
+  );
+};
+
 function SettingsBody() {
   return (
     <>
-      <TextField
-        compId={"runtime-dayModal-note"}
-        dataPath={paths.temp.settings.year}
-        label={"Year"}
-      />
+      <YearTextField />
       <VSpacer />
       <CountrySelect />
       <VSpacer />

@@ -15,12 +15,14 @@ export default function useInBound(props: any) {
     runtime: {
       year: `${currentYear}`,
       calendar,
+      country: "AU",
+      state: "VIC",
     },
     temp: {
       settings: {
         isShown: BOOLEAN_VALUES.FALSE,
-        country: "AU",
-        state: "VIC",
+        country: "",
+        state: "",
       },
       dayModal: {
         isShown: BOOLEAN_VALUES.FALSE,
