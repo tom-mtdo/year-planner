@@ -1,11 +1,10 @@
 import React from "react";
 import { Checkbox as MuCheckbox } from "@material-ui/core";
-import useComp, { IComp } from "../../../hook/useComp";
+import { IComp } from "../../../hook/useComp";
 import { BOOLEAN_STR_VALUES } from '../../../util/constant';
 
 export default function Checkbox(props: IComp) {
-  const { compId, dataPath } = props;
-  const { compValue, compOnChange } = useComp({ dataPath });
+  const { compValue, compId, dataPath, compLabel, compOnChange, ...rest } = props;
 
   const myOnChange = (event: any) => {
     const compEvent = {
@@ -22,6 +21,7 @@ export default function Checkbox(props: IComp) {
 
   return (
     <MuCheckbox
+      {...rest}
       id={compId}
       name={compId}
       onChange={myOnChange}

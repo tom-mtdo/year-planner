@@ -1,27 +1,27 @@
 import React from "react";
 import { TextField as MUTextField } from "@material-ui/core";
-import useComp, { IComp } from "../../../hook/useComp";
+import { IComp } from "../../../hook/useComp";
 
 export default function TextField(props: IComp) {
-  const { compId, dataPath, label } = props;
-  const { compValue, compOnChange } = useComp({ dataPath });
+  const { compValue, compId, dataPath, compLabel, compOnChange, ...rest } = props;
 
   const myOnChange = (event: any) => {
-    const compEvent = {
+    const myEvent = {
       target: {
         dataset: { dataPath },
         value: event.target.value,
       },
       originalEvent: event,
     };
-    compOnChange(compEvent);
+    compOnChange(myEvent);
   };
 
   return (
     <MUTextField
+      {...rest}
       id={compId}
       name={compId}
-      label={label}
+      label={compLabel}
       value={compValue}
       onChange={myOnChange}
       data-data-path={dataPath}

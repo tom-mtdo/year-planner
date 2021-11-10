@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "../../lib/modal/Modal";
 import { BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
-import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
+import TextField from "../../data-lib/adapter/MU-adapter/textField-old/TextField";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import useYearPlanner from "../YearPlanner/useYearPlanner";

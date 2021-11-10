@@ -8,6 +8,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
 import { paths } from '../../util/constant';
 import useYearPlanner from "../YearPlanner/useYearPlanner";
+import useComp from "../../data-lib/hook/useComp";
 
 export enum CHANGE_YEAR_VALUE_TYPE {
   OFFSET = "offset",
@@ -39,8 +40,10 @@ export default function Header() {
         </Button>
         &nbsp;
         <Checkbox
-          compId={"settings-isShown"}
-          dataPath={paths.temp.settings.isShown}
+          {...useComp({
+            dataPath: paths.temp.settings.isShown,
+            id: "temp-settings-isShown"
+          })}
         />
         <strong>Settings</strong>
       </StyledCtrBox>

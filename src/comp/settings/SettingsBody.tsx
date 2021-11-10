@@ -1,15 +1,21 @@
-import TextField from "../../data-lib/adapter/MU-adapter/textField2/TextField";
+import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import Select from "../../data-lib/adapter/MU-adapter/select/Select";
 import { VSpacer } from "../../lib/styles";
 import { CountriesToSelect, paths } from "../../util/constant";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
-import useHandler from "../../data-lib/hook/useHandler";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
 
 const StateSelect = () => {
+  const props: IComp = {
+    dataPath: paths.temp.settings.state,
+    id: "temp-settings-state",
+    label: "State"
+  }
+  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+
   const { getValue } = useContext(DataContext);
   const country = getValue ? getValue(paths.temp.settings.country) : "";
 
@@ -17,35 +23,43 @@ const StateSelect = () => {
     return <></>;
   }
 
-  const options = getValue && country ? stateToSelect(country) : [];
+  const options = Boolean(country) ? stateToSelect(country) : [];
   return (
     <Select
-      compId="state"
-      dataPath={paths.temp.settings.state}
-      options={options}
-      label="State"
+      compId={compId}
+      dataPath={dataPath}
+      compValue={compValue}
+      compOptions={options}
+      compLabel={compLabel}
+      compOnChange={compOnChange}
     />
   );
 };
 
 const CountrySelect = () => {
-  const { onChange: defaultOnChange } = useHandler();
+  const props: IComp = {
+    dataPath: paths.temp.settings.country,
+    id: "temp-settings-country",
+    label: "Country"
+  }
+  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
   const { setValue } = useContext(DataContext);
 
   const onChange = (event: any) => {
     if (setValue) {
       setValue(paths.temp.settings.state, "");
     }
-    defaultOnChange(event);
+    compOnChange(event);
   };
 
   return (
     <Select
-      compId="country"
-      dataPath={paths.temp.settings.country}
-      options={CountriesToSelect}
-      label="Country"
-      onChange={onChange}
+      compId={compId}
+      dataPath={dataPath}
+      compValue={compValue}
+      compOptions={CountriesToSelect}
+      compLabel={compLabel}
+      compOnChange={onChange}
     />
   );
 };

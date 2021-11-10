@@ -1,6 +1,6 @@
 import React from "react";
 import { InputLabel, MenuItem, Select as MuSelect } from "@material-ui/core";
-import useComp, { IComp } from "../../../hook/useComp";
+import { IComp } from "../../../hook/useComp";
 
 // options = [
 //   ["AU", "Australia"],
@@ -8,8 +8,18 @@ import useComp, { IComp } from "../../../hook/useComp";
 // ]
 
 export default function Select(props: IComp) {
-  const { compId, dataPath, label, options } = props;
-  const { compValue, compOnChange } = useComp(props);
+  const {
+    compValue,
+    compId,
+    dataPath,
+    compLabel,
+    compOnChange,
+    compOptions,
+    ...rest
+  } = props;
+
+  // const { compId, dataPath, label, options } = props;
+  // const { compValue, compOnChange } = useComp(props);
 
   const myOnChange = (event: any) => {
     const compEvent = {
@@ -23,22 +33,25 @@ export default function Select(props: IComp) {
   };
 
   const items =
-    options && Array.isArray(options) && options.length > 0 ? (
-      options.map((value, index) => {
+    Array.isArray(compOptions) && compOptions.length > 0 ? (
+      compOptions.map((value, index) => {
         return <MenuItem value={value[0]}>{value[1]}</MenuItem>;
       })
     ) : (
       <></>
     );
 
+  const labelId = `${compId}-label`;
+
   return (
     <>
-      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+      <InputLabel id={labelId}>{compLabel}</InputLabel>
       <MuSelect
-        labelId="demo-simple-select-label"
+        {...rest}
+        labelId={labelId}
         id={compId}
         value={compValue}
-        label={label}
+        label={compLabel}
         onChange={myOnChange}
       >
         {items}
