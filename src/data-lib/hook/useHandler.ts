@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
 
 export default function useHandler() {
-  const { setCompValue } = useContext(DataContext);
+  const { setValue } = useContext(DataContext);
 
   /**
    * 
@@ -34,7 +34,7 @@ export default function useHandler() {
     const dataPath = get(dataSet, 'dataPath', 'unknown-comp');
     const value = event?.target?.value ?? event?.currentTarget?.value ?? undefined;
 
-    if( setCompValue ) { setCompValue(dataPath, value); }
+    if( setValue ) { setValue(dataPath, value); }
   };
 
   return { onChange }

@@ -1,4 +1,6 @@
 import Holidays from "date-holidays";
+import _ from "lodash";
+import { Countries, ICountry } from "./constant";
 import {
   DAY_SHORT_NAME,
   MaxYear,
@@ -58,7 +60,8 @@ export const getHeader = (): any => {
   return header;
 };
 
-export const getYearContent = (year: number): any[][] => {
+export const getYearContent = (input: IGetCalendar): any[][] => {
+  const {year, country, state} = input;
   const aYear = [];
   let aMonth;
   let aDay;
@@ -81,17 +84,24 @@ export const getYearContent = (year: number): any[][] => {
     aYear.push(aMonth);
   }
 
-  addHoliday(aYear);
+  addHoliday(aYear, country, state);
 
   return aYear;
 };
 
-export const getCalendar = (year: number) => {
+export interface IGetCalendar {
+  year: number,
+  country: string,
+  state: string
+};
+
+export const getCalendar = (input: IGetCalendar) => {
+  const {year} = input;
   if (year < MinYear || year > MaxYear) {
     return;
   }
 
-  return getYearContent(year);
+  return getYearContent(input);
   // return {
   //   header: getHeader(),
   //   content: getYearContent(year),
@@ -102,9 +112,7 @@ export const isWeekend = (day: number) => {
   return Math.abs(day) % 7 === 5 || Math.abs(day) % 7 === 6;
 };
 
-export const addHoliday = (aYear: any[][]) => {
-  const country = "AU";
-  const state = "VIC";
+export const addHoliday = (aYear: any[][], country='AU', state='VIC') => {
   const hd = new Holidays(country, state);
   const holidays = hd.getHolidays();
   holidays.forEach((holiday, index) => {
@@ -114,4 +122,28 @@ export const addHoliday = (aYear: any[][]) => {
     aYear[month][dateNum - 1].holiday = holiday.name;
   });
   return aYear;
+};
+
+export const countriesToSelect = (countries: Map<string, ICountry>) => {
+  const result: [string, string][] = [];
+  if (countries && !_.isEmpty(countries)) {
+    Countries.forEach((value, key) => {
+      result.push([key, value.name]);
+    });
+  }
+
+  return result;
+};
+
+export const stateToSelect = (countryCode: string) => {
+  const country: ICountry = Countries.get(countryCode) as ICountry;
+  const states = country ? country.states : {};
+
+  // @ts-ignore
+  const codes = Object.keys(states);
+  return codes && codes.length > 0
+    ? codes.map((code, index) => {
+        return [code, states[code]];
+      })
+    : [];
 };

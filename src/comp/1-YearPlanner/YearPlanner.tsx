@@ -1,7 +1,7 @@
 import { AppBox } from "../../App.style";
-import Header from "../1-header/Header";
-import Body from "../2-body/Body";
-import Footer from "../3-footer/Footer";
+import Header from "../2-header/Header";
+import Body from "../3-body/Body";
+import Footer from "../4-footer/Footer";
 import DayModal from "../day-modal/DayModal";
 
 const YearPlanner = function () {

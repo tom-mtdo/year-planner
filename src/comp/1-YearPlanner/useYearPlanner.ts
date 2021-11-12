@@ -1,13 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { DayInfo } from "../../util/util";
-import {
-  CalendarPath,
-  MaxYear,
-  MinYear,
-  UserDataPath,
-  YearPath,
-} from "../../util/constant";
+import { DayInfo, getCalendar } from "../../util/util";
+import { paths, MaxYear, MinYear, names } from "../../util/constant";
 import { isEmpty, isNumber, set } from "lodash";
 
 export const getStrDate = (aDate: Date) => {
@@ -27,10 +21,10 @@ export const getStrDate = (aDate: Date) => {
 };
 
 const useYearPlanner = function () {
-  const { getCompValue, setCompValue } = useContext(DataContext);
+  const { getValue, setValue } = useContext(DataContext);
 
-  const updateCalendarAndContent = (dayInfo: DayInfo) => {
-    if (getCompValue && setCompValue) {
+  const saveDate = (dayInfo: DayInfo) => {
+    if (getValue && setValue) {
       const activeDate = dayInfo?.date ?? undefined;
       const note = dayInfo?.note ?? "";
       if (!activeDate) {
@@ -42,18 +36,18 @@ const useYearPlanner = function () {
       const date = activeDate.getDate(); // 1 - 31
 
       const notePath = `runtime.calendar[${month - 1}][${date - 1}].note`;
-      setCompValue(notePath, note);
+      setValue(notePath, note);
     }
   };
 
   // Todo save to buffer then call api
   const saveData = () => {
-    if (!getCompValue || !setCompValue) {
+    if (!getValue || !setValue) {
       return;
     }
 
-    const activeYear = getCompValue(YearPath);
-    const calendar = getCompValue(CalendarPath);
+    const activeYear = getValue(paths.runtime.year);
+    const calendar = getValue(paths.runtime.calendar);
     // extract user data
     if (!calendar || !Array.isArray(calendar)) {
       return;
@@ -73,22 +67,43 @@ const useYearPlanner = function () {
 
     // add string 'year' to fix lodash function
     if (!isEmpty(userData)) {
-      setCompValue(`${UserDataPath}.year${activeYear}`, userData);
+      setValue(`${paths.userData._path}.${names.year}${activeYear}`, userData);
     }
   };
 
-  const updateData = (calendar: any, year: number) => {
-    if (!getCompValue || !setCompValue) {
+  const moveToYear = (
+    inStrYear?: string,
+    inCountry?: string,
+    inState?: string
+  ) => {
+    // save use data of the active year
+    saveData();
+    if (!getValue || !setValue) {
       return {};
     }
 
+    // get year, country & state from context if not pass in
+    const strYear = inStrYear ? inStrYear : getValue(paths.runtime.year);
+    let country = inCountry ? inCountry : getValue(paths.runtime.country);
+    let state = inState ? inState : getValue(paths.runtime.state);
+
+    // validate input
+    const year = parseInt(strYear);
     if (!year || isNaN(year) || year < MinYear || year > MaxYear) {
-      return calendar;
+      return {};
     }
 
+    // generate calendar for new year
+    const calendar = getCalendar({ year, country, state });
+
+    if (!calendar) {
+      return {};
+    }
+
+    // Populate user data to new calendar
     // Todo get from buffer or api call
-    const userData = getCompValue(`${UserDataPath}.year${year}`);
-    const offset = "date".length;
+    const userData = getValue(`${paths.userData._path}.${names.year}${year}`);
+    const offset = `${names.date}`.length;
 
     if (userData && !isEmpty(userData)) {
       Object.keys(userData).forEach((strDate, index) => {
@@ -101,11 +116,11 @@ const useYearPlanner = function () {
     }
 
     // Todo: combine
-    setCompValue(CalendarPath, calendar);
-    setCompValue(YearPath, year);
+    setValue(paths.runtime.calendar, calendar);
+    setValue(paths.runtime.year, strYear);
   };
 
-  return { updateCalendarAndContent, saveData, updateData };
+  return { saveDate, saveData, moveToYear };
 };
 
 export default useYearPlanner;

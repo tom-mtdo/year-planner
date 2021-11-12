@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Notes
+### naming
+- Var & const name start with lower case, camel
+- Class & React comp start with uppercase, camel
+- Enum all uppercase, underscore
+
 ## Available Scripts
 
 In the project directory, you can run:

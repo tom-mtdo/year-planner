@@ -1,35 +1,33 @@
-import { BOOLEAN_VALUES, CalendarPath, YearPath } from "../../util/constant";
+import { BOOLEAN_VALUES, paths } from "../../util/constant";
 import { DayInfo, getHeader } from "../../util/util";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 
 // logic hook
 export const usePlanner = () => {
-  const { getCompValue, setCompValue } = useContext(DataContext);
-  const isDayModalShownPath = "runtime.dayModal.isShown";
-  const dayModalDataPath = "runtime.dayModal.dayInfo";
-
+  const { getValue, setValue } = useContext(DataContext);
+  
   const toDay = new Date();
   const currentYear = toDay.getFullYear();
   const currentMonth = toDay.getMonth(); // 0 - 11
   const currentDate = toDay.getDate(); // 1 - 31
   const headerRow = getHeader();
 
-  let year = 0;
+  let year = '';
   let calendar: any[] = [];
 
-  if (getCompValue) {
-    year = getCompValue(YearPath);
-    calendar = getCompValue(CalendarPath);
+  if (getValue) {
+    year = getValue(paths.runtime.year);
+    calendar = getValue(paths.runtime.calendar);
   }
 
-  const isCurrentYear = currentYear === year;
+  const isCurrentYear = `${currentYear}` === year;
   const onDoubleClick = (dayInfo: DayInfo) => {
-    if (setCompValue) {
+    if (setValue) {
       // Open modal
-      setCompValue(isDayModalShownPath, BOOLEAN_VALUES.TRUE);
+      setValue(paths.temp.dayModal.isShown, BOOLEAN_VALUES.TRUE);
       // to update details for dayInfo
-      setCompValue(dayModalDataPath, dayInfo);
+      setValue(paths.temp.dayModal.dayInfo, dayInfo);
     }
   };
 

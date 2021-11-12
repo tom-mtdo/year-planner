@@ -5,6 +5,11 @@ export const HSpacer = styled.div`
     min-width: 30px;
 `;
 
+export const VSpacer = styled.div`
+    min-height: 24px;
+    width: 100%;
+`;
+
 export const StyledH1 = styled.h1`
     margin: 0;
     padding 0;
