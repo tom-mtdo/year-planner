@@ -11,7 +11,7 @@ import {
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { paths, BOOLEAN_VALUES } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
-import useYearPlanner from '../YearPlanner/useYearPlanner';
+import useYearPlanner from '../1-YearPlanner/useYearPlanner';
 
 export interface ISettings {
   children: any;

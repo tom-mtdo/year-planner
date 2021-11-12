@@ -4,7 +4,7 @@ import { BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
 import TextField from "../../data-lib/adapter/MU-adapter/textField-old/TextField";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import useYearPlanner from "../YearPlanner/useYearPlanner";
+import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import { paths } from '../../util/constant';
 
 function DayModal(props: any) {

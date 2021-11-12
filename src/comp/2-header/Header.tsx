@@ -7,10 +7,10 @@ import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { isNumber } from "lodash";
 import { paths } from '../../util/constant';
-import useYearPlanner from "../YearPlanner/useYearPlanner";
+import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import useComp from "../../data-lib/hook/useComp";
 
-export enum CHANGE_YEAR_VALUE_TYPE {
+export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
   VALUE = "value",
 }
@@ -21,10 +21,10 @@ export default function Header() {
   const strActiveYear = getValue ? getValue(paths.runtime.year) : "";
   const activeYear = parseInt(strActiveYear);
 
-  const changeYear = (value: number, valueType?: CHANGE_YEAR_VALUE_TYPE) => {
-    if ( value && isNumber(value)) {
+  const changeYear = (value: number, valueType?: CHANGE_YEAR_TYPE) => {
+    if ( isNumber(value) ) {
       const newYear =
-        CHANGE_YEAR_VALUE_TYPE.VALUE === valueType ? value : activeYear + value;
+      CHANGE_YEAR_TYPE.VALUE === valueType ? value : activeYear + value;
       moveToYear(`${newYear}`);
     }
   };
