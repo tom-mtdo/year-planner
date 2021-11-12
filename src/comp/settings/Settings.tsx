@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyledH2 } from "../../lib/styles";
 import { useContext } from "react";
 import {
@@ -12,14 +12,14 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { paths, BOOLEAN_VALUES } from '../../util/constant';
 import SettingsBody from "./SettingsBody";
 import useYearPlanner from '../1-YearPlanner/useYearPlanner';
+import useForm from '../../data-lib/hook/useForm';
+import { FORM_STATUS } from '../../data-lib/hook/useForm';
 
-export interface ISettings {
-  children: any;
-}
-
-export default function Settings(props: ISettings) {
+export default function Settings() {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
+  const { resetForm } = useForm({dataPath: paths.temp.settings._status});
+
   const isShown = getValue
     ? getValue(paths.temp.settings.isShown)
     : false;
@@ -39,17 +39,27 @@ export default function Settings(props: ISettings) {
     }
   };
   
-  const onCancel = () => {
-    alert("Cancel settings...");
+  const onReset = () => {
+    resetForm();
   };
 
   const onClose = () => {
     alert("Cancel settings...");
   };
 
+  const domRef: any = React.createRef();
+
+  useEffect(() => {
+    
+    // window.addEventListener('focusin', () => {alert('input')});
+    if(domRef.current) {domRef.current.addEventListener('focusin', () => {alert('input')}); }
+  }, []);
+
+  const isEditing = getValue && getValue(paths.temp.settings._status) === FORM_STATUS.DIRTY ? true : false;
+
   return BOOLEAN_VALUES.TRUE === isShown ? (
-    <StyledSettingsBox>
-      <StyledSettingsHeader>
+    <StyledSettingsBox ref={domRef}>
+      <StyledSettingsHeader isEditing={isEditing}>
         <StyledH2>Settings</StyledH2>
       </StyledSettingsHeader>
       <StyledSettingsBody>
@@ -60,7 +70,7 @@ export default function Settings(props: ISettings) {
           Apply
         </Button>
         &nbsp;&nbsp;
-        <Button variant="contained" onClick={onCancel}>
+        <Button variant="contained" onClick={onReset}>
           Reset
         </Button>
         &nbsp;&nbsp;

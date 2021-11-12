@@ -7,6 +7,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
+import useForm from '../../data-lib/hook/useForm';
 
 const StateSelect = () => {
   const props: IComp = {
@@ -64,13 +65,22 @@ const CountrySelect = () => {
   );
 };
 
-const YearTextField = () => {
-  const props: IComp = {
+
+const YearTextField = (props: {touchForm: Function}) => {
+  const {touchForm} = props;
+  const compProps: IComp = {
     dataPath: paths.temp.settings.year,
     id: "temp-settings-year",
     label: "Year"
   }
-  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(compProps);
+  
+  const myOnChange = (event: any) => {
+    if( typeof touchForm === 'function') {
+      touchForm();
+    }
+    compOnChange(event);
+  }
 
   return (
     <TextField
@@ -78,15 +88,16 @@ const YearTextField = () => {
       dataPath={dataPath}
       compValue={compValue}
       compLabel={compLabel}
-      compOnChange={compOnChange}
+      compOnChange={myOnChange}
     />
   );
 };
 
 function SettingsBody() {
+  const { touchForm } = useForm({dataPath: paths.temp.settings._status});
   return (
     <>
-      <YearTextField />
+      <YearTextField touchForm={touchForm} />
       <VSpacer />
       <CountrySelect />
       <VSpacer />

@@ -11,9 +11,7 @@ function Body() {
         <PlannerContent />
       </BodyCenterBox>
       <BodyRightBox>
-        <Settings>
-          <p>Setting here</p>
-        </Settings>
+        <Settings />
       </BodyRightBox>
     </BodyBox>
   );

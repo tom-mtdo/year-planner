@@ -20,7 +20,10 @@ export const names = {
   country: "country",
   state: "state",
   note: 'note',
-  dayInfo: 'dayInfo'
+  dayInfo: 'dayInfo',
+
+  // comp itself
+  _status: '_status'
 };
 
 const userDataHome = `${names.userData}`;
@@ -41,6 +44,7 @@ const runtime = {
 const settingsHome = `${names.temp}.${names.settings}`;
 const settings = {
   _path: settingsHome,
+  _status: `${settingsHome}.${names._status}`,
   isShown: `${settingsHome}.${names.isShown}`,
   year: `${settingsHome}.${names.year}`,
   country: `${settingsHome}.${names.country}`,
