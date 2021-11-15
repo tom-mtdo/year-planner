@@ -6,12 +6,12 @@ export enum FORM_STATUS {
     DIRTY = 'dirty'
 }
 
-const useForm = (input: {dataPath: string}) => {
-    const [dataPath] = useState(input.dataPath);
+const useForm = (input?: {dataPath?: string}) => {
+    const [dataPath, setFormPath] = useState<string>(input?.dataPath ?? '');
     const {getValue, setValue} = useContext(DataContext);
 
     const resetForm = () => {
-        if( getValue && setValue && dataPath) { 
+        if( getValue && setValue && Boolean(dataPath)) { 
             const currentStatus = getValue(dataPath);
             // if status is clean already then return
             // clean mean status = clean or undefined or null
@@ -23,8 +23,9 @@ const useForm = (input: {dataPath: string}) => {
     }
 
     const touchForm = () => {
-        if( getValue && setValue && dataPath) { 
+        if( getValue && setValue && Boolean(dataPath)) { 
             const currentStatus = getValue(dataPath);
+            // if status is dirty already then don't need to update status
             if(currentStatus === FORM_STATUS.DIRTY) {
                 return;
             }
@@ -32,7 +33,7 @@ const useForm = (input: {dataPath: string}) => {
         }
     }
 
-    return {resetForm, touchForm};
+    return {resetForm, touchForm, setFormPath};
 };
 
 export default useForm;

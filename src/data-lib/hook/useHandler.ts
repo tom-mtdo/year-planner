@@ -1,9 +1,11 @@
 import { get } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
+import useForm from "./useForm";
 
-export default function useHandler() {
+export default function useHandler(props?: {compForm?: string}) {
   const { setValue } = useContext(DataContext);
+  // const { touchForm } = useForm({dataPath: props?.compForm});
 
   /**
    * 
@@ -34,7 +36,11 @@ export default function useHandler() {
     const dataPath = get(dataSet, 'dataPath', 'unknown-comp');
     const value = event?.target?.value ?? event?.currentTarget?.value ?? undefined;
 
-    if( setValue ) { setValue(dataPath, value); }
+    if( setValue ) { 
+      setValue(dataPath, value); 
+      // mark form dirty
+      // touchForm();
+    }
   };
 
   return { onChange }

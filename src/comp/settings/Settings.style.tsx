@@ -13,6 +13,7 @@ export const StyledSettingsHeader = styled.div<any>`
     padding: 12px;
     background: ${props => props.isEditing ? "palevioletred" : "white"};
     width: 100%;
+    box-sizing: border-box;
 `;
 
 export const StyledSettingsBody = styled.div`
