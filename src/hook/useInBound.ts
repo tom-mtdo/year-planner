@@ -20,12 +20,12 @@ export default function useInBound(props: any) {
     },
     temp: {
       settings: {
-        isShown: BOOLEAN_VALUES.FALSE,
+        _isShown: BOOLEAN_VALUES.FALSE,
         country: "",
         state: "",
       },
       dayModal: {
-        isShown: BOOLEAN_VALUES.FALSE,
+        _isShown: BOOLEAN_VALUES.FALSE,
         dayInfo: {
           note: "",
         },

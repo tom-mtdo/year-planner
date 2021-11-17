@@ -1,3 +1,9 @@
+export const compKeys = {
+  _path: '_path',
+  _status: '_status',
+  _isShown: '_isShown'
+}
+
 export enum BOOLEAN_STR_VALUES {
   YES = 'yes',
   NO = 'no',

@@ -25,7 +25,7 @@ export const usePlanner = () => {
   const onDoubleClick = (dayInfo: DayInfo) => {
     if (setValue) {
       // Open modal
-      setValue(paths.temp.dayModal.isShown, BOOLEAN_VALUES.TRUE);
+      setValue(paths.temp.dayModal._isShown, BOOLEAN_VALUES.TRUE);
       // to update details for dayInfo
       setValue(paths.temp.dayModal.dayInfo, dayInfo);
     }

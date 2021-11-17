@@ -26,7 +26,7 @@ function DayModal(props: any) {
       // close modal and clear data   
       // clean value only otherwise react will complain in console
       setValue(paths.temp.dayModal._path, {
-        isShown: BOOLEAN_STR_VALUES.FALSE,
+        _isShown: BOOLEAN_STR_VALUES.FALSE,
         dayInfo: {}
       });
     }
@@ -40,7 +40,7 @@ function DayModal(props: any) {
 
   return (
     <Modal
-      isShown={BOOLEAN_STR_VALUES.TRUE === modalData?.isShown}
+      isShown={BOOLEAN_STR_VALUES.TRUE === modalData?._isShown}
       onConfirm={onConfirm}
       onCancel={onCancel}
     >

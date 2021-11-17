@@ -3,6 +3,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { DayInfo, getCalendar } from "../../util/util";
 import { paths, MaxYear, MinYear, names } from "../../util/constant";
 import { isEmpty, isNumber, set } from "lodash";
+import { compKeys } from '../../data-lib/util/constant';
 
 export const getStrDate = (aDate: Date) => {
   if (!aDate) {
@@ -115,9 +116,12 @@ const useYearPlanner = function () {
       });
     }
 
-    // Todo: combine
-    setValue(paths.runtime.calendar, calendar);
-    setValue(paths.runtime.year, strYear);
+    setValue(paths.runtime[compKeys._path], {
+      [names.calendar]: calendar,
+      [names.year]: strYear,
+      [names.country]: country,
+      [names.state]: state
+    })
   };
 
   return { saveDate, saveData, moveToYear };

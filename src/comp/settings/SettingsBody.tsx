@@ -7,14 +7,16 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
+import { compKeys } from '../../data-lib/util/constant';
 
 const StateSelect = () => {
   const props: IComp = {
     dataPath: paths.temp.settings.state,
     id: "temp-settings-state",
-    label: "State"
+    label: "State",
+    formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(props);
 
   const { getValue } = useContext(DataContext);
   const country = getValue ? getValue(paths.temp.settings.country) : "";
@@ -31,7 +33,7 @@ const StateSelect = () => {
       compValue={compValue}
       compOptions={options}
       compLabel={compLabel}
-      compOnChange={compOnChange}
+      compOnChange={compOnChangeInForm}
     />
   );
 };
@@ -40,16 +42,17 @@ const CountrySelect = () => {
   const props: IComp = {
     dataPath: paths.temp.settings.country,
     id: "temp-settings-country",
-    label: "Country"
+    label: "Country",
+    formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(props);
   const { setValue } = useContext(DataContext);
 
   const onChange = (event: any) => {
     if (setValue) {
       setValue(paths.temp.settings.state, "");
     }
-    compOnChange(event);
+    compOnChangeInForm(event);
   };
 
   return (
@@ -65,12 +68,13 @@ const CountrySelect = () => {
 };
 
 const YearTextField = () => {
-  const props: IComp = {
+  const compProps: IComp = {
     dataPath: paths.temp.settings.year,
     id: "temp-settings-year",
-    label: "Year"
+    label: "Year",
+    formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(compProps);
 
   return (
     <TextField
@@ -78,7 +82,7 @@ const YearTextField = () => {
       dataPath={dataPath}
       compValue={compValue}
       compLabel={compLabel}
-      compOnChange={compOnChange}
+      compOnChange={compOnChangeInForm}
     />
   );
 };
