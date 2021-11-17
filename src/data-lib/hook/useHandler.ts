@@ -5,7 +5,7 @@ import useForm from "./useForm";
 
 export default function useHandler(props?: {compForm?: string}) {
   const { setValue } = useContext(DataContext);
-  // const { touchForm } = useForm({dataPath: props?.compForm});
+  const { touchForm } = useForm();
 
   /**
    * 
@@ -38,8 +38,6 @@ export default function useHandler(props?: {compForm?: string}) {
 
     if( setValue ) { 
       setValue(dataPath, value); 
-      // mark form dirty
-      // touchForm();
     }
   };
 

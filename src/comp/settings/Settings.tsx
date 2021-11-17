@@ -19,7 +19,7 @@ import styled from "styled-components";
 export default function Settings() {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
-  const { resetForm } = useForm({ dataPath: paths.temp.settings._status });
+  const { resetForm } = useForm();
 
   const isShown = getValue ? getValue(paths.temp.settings.isShown) : false;
 
@@ -41,11 +41,12 @@ export default function Settings() {
       activeState !== settingsState
     ) {
       moveToYear(settingsYear, settingsCountry, settingsState);
+      resetForm(paths.temp.settings._path);
     }
   };
 
   const onReset = () => {
-    resetForm();
+    resetForm(paths.temp.settings._path);
   };
 
   const onClose = () => {

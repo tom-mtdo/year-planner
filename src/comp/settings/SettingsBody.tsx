@@ -66,21 +66,14 @@ const CountrySelect = () => {
 };
 
 
-const YearTextField = (props: {touchForm: Function}) => {
-  const {touchForm} = props;
+const YearTextField = () => {
   const compProps: IComp = {
     dataPath: paths.temp.settings.year,
     id: "temp-settings-year",
-    label: "Year"
+    label: "Year",
+    formDataPath: paths.temp.settings._path
   }
-  const { compValue, compId, dataPath, compLabel, compOnChange } = useComp(compProps);
-  
-  const myOnChange = (event: any) => {
-    if( typeof touchForm === 'function') {
-      touchForm();
-    }
-    compOnChange(event);
-  }
+  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(compProps);
 
   return (
     <TextField
@@ -88,16 +81,15 @@ const YearTextField = (props: {touchForm: Function}) => {
       dataPath={dataPath}
       compValue={compValue}
       compLabel={compLabel}
-      compOnChange={myOnChange}
+      compOnChange={compOnChangeInForm}
     />
   );
 };
 
 function SettingsBody() {
-  const { touchForm } = useForm({dataPath: paths.temp.settings._status});
   return (
     <>
-      <YearTextField touchForm={touchForm} />
+      <YearTextField />
       <VSpacer />
       <CountrySelect />
       <VSpacer />
