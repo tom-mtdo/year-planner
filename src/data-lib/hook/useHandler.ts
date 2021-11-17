@@ -1,11 +1,9 @@
 import { get } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
-import useForm from "./useForm";
 
 export default function useHandler(props?: {compForm?: string}) {
   const { setValue } = useContext(DataContext);
-  const { touchForm } = useForm();
 
   /**
    * 

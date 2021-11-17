@@ -15,11 +15,13 @@ import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import useForm from "../../data-lib/hook/useForm";
 import { FORM_STATUS } from "../../data-lib/hook/useForm";
 import styled from "styled-components";
+import useSettings from './useSettings';
 
 export default function Settings() {
   const { getValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
   const { resetForm } = useForm();
+  const {resetData} = useSettings();
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
@@ -46,6 +48,7 @@ export default function Settings() {
   };
 
   const onReset = () => {
+    resetData();
     resetForm(paths.temp.settings._path);
   };
 
