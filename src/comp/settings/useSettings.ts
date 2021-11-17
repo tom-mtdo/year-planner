@@ -3,6 +3,7 @@ import { DataContext } from '../../data-lib/context/DataProvider';
 import { paths } from '../../util/constant';
 import { compKeys } from '../../data-lib/util/constant';
 import { names } from '../../util/constant';
+import { FORM_STATUS } from '../../data-lib/hook/useForm';
 
 const useSettings = () => {
     const {getValue, setValue} = useContext(DataContext);
@@ -19,6 +20,7 @@ const useSettings = () => {
         
         setValue(path, {
             ...settingsData,
+            [compKeys._status]: FORM_STATUS.CLEAN,
             [names.year]: year,
             [names.country]: country,
             [names.state]: state
