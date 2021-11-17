@@ -16,9 +16,10 @@ import useForm from "../../data-lib/hook/useForm";
 import { FORM_STATUS } from "../../data-lib/hook/useForm";
 import styled from "styled-components";
 import useSettings from './useSettings';
+import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 
 export default function Settings() {
-  const { getValue } = useContext(DataContext);
+  const { getValue, setValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
   const { resetForm } = useForm();
   const {resetData} = useSettings();
@@ -53,7 +54,13 @@ export default function Settings() {
   };
 
   const onClose = () => {
-    alert("Cancel settings...");
+    if (!getValue || !setValue) { return; }
+    
+    resetData();
+    const isShown = getValue(paths.temp.settings[compKeys._isShown]);
+    if (BOOLEAN_STR_VALUES.FALSE !== isShown) {
+      setValue(paths.temp.settings[compKeys._isShown], BOOLEAN_STR_VALUES.FALSE);
+    }
   };
 
   const isEditing =
@@ -80,7 +87,7 @@ export default function Settings() {
         </Button>
         &nbsp;&nbsp;
         <Button variant="contained" onClick={onClose}>
-          Close
+          Cancel
         </Button>
       </StyledSettingsFooter>
     </StyledSettingsBox>
