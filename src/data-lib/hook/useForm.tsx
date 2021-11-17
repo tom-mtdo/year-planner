@@ -11,29 +11,25 @@ const useForm = () => {
     // const [dataPath, setFormPath] = useState<string>(input?.dataPath ?? '');
     const {getValue, setValue} = useContext(DataContext);
 
-    const resetForm = (formDataPath: string = '') => {
+    const setFormStatus = (formDataPath: string = '', status: FORM_STATUS) => {
         if( getValue && setValue && Boolean(formDataPath)) { 
             const statusPath = `${formDataPath}.${compKeys._status}`;
             const currentStatus = getValue(statusPath);
             // if status is clean already then return
             // clean mean status = clean or undefined or null
-            if(currentStatus === FORM_STATUS.CLEAN || !Boolean(currentStatus)) {
+            if(currentStatus === status) {
                 return;
             }
-            setValue(statusPath, FORM_STATUS.CLEAN);
+            setValue(statusPath, status);
         }
     }
 
+    const resetForm = (formDataPath: string = '') => {
+        setFormStatus(formDataPath, FORM_STATUS.CLEAN);
+    }
+
     const touchForm = (formDataPath: string = '') => {
-        if( getValue && setValue && Boolean(formDataPath)) { 
-            const statusPath = `${formDataPath}.${compKeys._status}`;
-            const currentStatus = getValue(statusPath);
-            // if status is dirty already then don't need to update status
-            if(currentStatus === FORM_STATUS.DIRTY) {
-                return;
-            }
-            setValue(statusPath, FORM_STATUS.DIRTY); 
-        }
+        setFormStatus(formDataPath, FORM_STATUS.DIRTY);
     }
 
     return {resetForm, touchForm};

@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyledH2 } from "../../lib/styles";
 import { useContext } from "react";
 import {
@@ -53,24 +53,13 @@ export default function Settings() {
     alert("Cancel settings...");
   };
 
-  const domRef: any = React.createRef();
-
-  useEffect(() => {
-    // window.addEventListener('focusin', () => {alert('input')});
-    if (domRef.current) {
-      domRef.current.addEventListener("focusin", () => {
-        alert("input");
-      });
-    }
-  }, []);
-
   const isEditing =
     getValue && getValue(paths.temp.settings._status) === FORM_STATUS.DIRTY
       ? true
       : false;
 
   return BOOLEAN_VALUES.TRUE === isShown ? (
-    <StyledSettingsBox ref={domRef}>
+    <StyledSettingsBox>
       <StyledSettingsHeader isEditing={isEditing}>
         <StyledH2>Settings</StyledH2>
         <EdittingPrompt isShown={isEditing} />

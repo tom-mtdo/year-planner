@@ -1,4 +1,5 @@
 import { countriesToSelect } from "./util";
+import { compKeys } from '../data-lib/util/constant';
 
 // names used to construct data path & comp id
 // fields in groups in roots
@@ -22,18 +23,16 @@ export const names = {
   note: 'note',
   dayInfo: 'dayInfo',
 
-  // comp itself
-  _status: '_status'
 };
 
 const userDataHome = `${names.userData}`;
 export const userData = {
-  _path: userDataHome
+  [compKeys._path]: userDataHome
 }
 
 const runtimeHome = `${names.runtime}`;
 const runtime = {
-  _path: runtimeHome,
+  [compKeys._path]: runtimeHome,
   calendar: `${runtimeHome}.${names.calendar}`,
   year:  `${runtimeHome}.${names.year}`,
   country:  `${runtimeHome}.${names.country}`,
@@ -43,8 +42,8 @@ const runtime = {
 
 const settingsHome = `${names.temp}.${names.settings}`;
 const settings = {
-  _path: settingsHome,
-  _status: `${settingsHome}.${names._status}`,
+  [compKeys._path]: settingsHome,
+  [compKeys._status]: `${settingsHome}.${compKeys._status}`,
   isShown: `${settingsHome}.${names.isShown}`,
   year: `${settingsHome}.${names.year}`,
   country: `${settingsHome}.${names.country}`,
@@ -53,14 +52,14 @@ const settings = {
 
 const dayModalHome = `${names.temp}.${names.dayModal}`;
 const dayModal = {
-  _path:dayModalHome, 
+  [compKeys._path]:dayModalHome, 
   dayInfo: `${dayModalHome}.${names.dayInfo}`,
   isShown: `${dayModalHome}.${names.isShown}`,
   note: `${dayModalHome}.${names.dayInfo}.${names.note}`
 };
 
 const temp = {
-  _path: `${names.temp}`,
+  [compKeys._path]: `${names.temp}`,
   settings,
   dayModal
 }
