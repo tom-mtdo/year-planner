@@ -21,7 +21,7 @@ export default function Settings() {
   const { moveToYear } = useYearPlanner();
   const { resetForm } = useForm();
 
-  const isShown = getValue ? getValue(paths.temp.settings.isShown) : false;
+  const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
   const onApply = () => {
     if (!getValue) {

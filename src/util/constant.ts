@@ -15,7 +15,6 @@ export const names = {
 
   // fields
   calendar: "calendar",
-  isShown: "isShown",
   year: "year",
   date: 'date',
   country: "country",
@@ -44,7 +43,7 @@ const settingsHome = `${names.temp}.${names.settings}`;
 const settings = {
   [compKeys._path]: settingsHome,
   [compKeys._status]: `${settingsHome}.${compKeys._status}`,
-  isShown: `${settingsHome}.${names.isShown}`,
+  [compKeys._isShown]: `${settingsHome}.${compKeys._isShown}`,
   year: `${settingsHome}.${names.year}`,
   country: `${settingsHome}.${names.country}`,
   state: `${settingsHome}.${names.state}`
@@ -52,9 +51,9 @@ const settings = {
 
 const dayModalHome = `${names.temp}.${names.dayModal}`;
 const dayModal = {
-  [compKeys._path]:dayModalHome, 
+  [compKeys._path]:dayModalHome,
+  [compKeys._isShown]: `${dayModalHome}.${compKeys._isShown}`,
   dayInfo: `${dayModalHome}.${names.dayInfo}`,
-  isShown: `${dayModalHome}.${names.isShown}`,
   note: `${dayModalHome}.${names.dayInfo}.${names.note}`
 };
 

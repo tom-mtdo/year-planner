@@ -41,7 +41,7 @@ export default function Header() {
         &nbsp;
         <Checkbox
           {...useComp({
-            dataPath: paths.temp.settings.isShown,
+            dataPath: paths.temp.settings._isShown,
             id: "temp-settings-isShown"
           })}
         />
