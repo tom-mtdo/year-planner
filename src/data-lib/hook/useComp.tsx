@@ -18,13 +18,13 @@ export interface IComp extends IGeneric{
 }
 
 export default function useComp(props: IComp) {
-  const { dataPath, onChange, id, label, name, description, formDataPath, isVisible, ...rest } = props;
+  const { dataPath, onChange, onBlur, id, label, name, description, formDataPath, isVisible, validation, ...rest } = props;
   const compId = id;
 
   // context
   const { getValue } = useContext(DataContext);
   // hooks
-  const { onChange: defaultOnChange } = useHandler();
+  const { onChange: defaultOnChange, onBlur: devaultOnBlur } = useHandler();
   const {touchForm} = useForm();
   const { runFunction } = useRuntime();
 
@@ -37,6 +37,7 @@ export default function useComp(props: IComp) {
   // return comp props, which handle by library
   // handlers
   const compOnChange = onChange || defaultOnChange;
+  const compOnBlur = onBlur || devaultOnBlur;
   
 
   // to support dynamic values;
@@ -50,5 +51,5 @@ export default function useComp(props: IComp) {
   const compVisible = typeof isVisible === 'function' ? runFunction(isVisible, {compId, compDataPath: dataPath, compValue})
   : isVisible
 
-  return { compId, compName, compLabel, compDescription, dataPath, compValue, compVisible, compOnChange, compOnChangeInForm, ...rest };
+  return { ...rest, compId, compName, compLabel, compDescription, dataPath, compValue, compVisible, compOnChange, compOnChangeInForm, compOnBlur };
 }

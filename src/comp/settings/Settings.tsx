@@ -87,7 +87,7 @@ export default function Settings() {
         </Button>
         &nbsp;&nbsp;
         <Button variant="contained" onClick={onClose}>
-          Cancel
+          Close
         </Button>
       </StyledSettingsFooter>
     </StyledSettingsBox>

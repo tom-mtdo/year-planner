@@ -1,9 +1,11 @@
 import { get } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
+import { yearPlanner as yearPlannerValidation } from "../../util/validation";
+import { validateComp } from "../util/validation";
 
 export default function useHandler(props?: {compForm?: string}) {
-  const { setValue } = useContext(DataContext);
+  const { data, setValue, getValue } = useContext(DataContext);
 
   /**
    * 
@@ -39,5 +41,28 @@ export default function useHandler(props?: {compForm?: string}) {
     }
   };
 
-  return { onChange }
+  const onBlur = (event: any) => {
+    const dataSet =
+      event?.target?.dataset || event?.currentTarget?.dataset || undefined;
+    const dataPath = get(dataSet, 'dataPath', 'unknown-comp');
+
+    if( dataPath ) { 
+      validate(dataPath); 
+    }
+  };
+
+  const validate = (dataPath: string) => {
+    const compValidation = get(yearPlannerValidation, dataPath);
+    const compValue = getValue ? getValue(dataPath) : '';
+    const runtimeParam = {
+      compDataPath: dataPath,
+      compValue,
+      data
+    };
+
+    const error = validateComp(compValidation, runtimeParam);
+    alert(`Validate error: ${error}`);
+  };
+
+  return { onChange, onBlur }
 }

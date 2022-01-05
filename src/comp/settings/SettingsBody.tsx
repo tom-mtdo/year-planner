@@ -1,13 +1,14 @@
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import Select from "../../data-lib/adapter/MU-adapter/select/Select";
 import { VSpacer } from "../../lib/styles";
-import { CountriesToSelect, paths } from "../../util/constant";
+import { CountriesToSelect, names, paths } from "../../util/constant";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
 import { compKeys } from '../../data-lib/util/constant';
+import { settings as settingsValidation } from './Settings.validation';
 
 const StateSelect = () => {
   const props: IComp = {
@@ -72,17 +73,20 @@ const YearTextField = () => {
     dataPath: paths.temp.settings.year,
     id: "temp-settings-year",
     label: "Year",
-    formDataPath: paths.temp.settings[compKeys._path]
+    formDataPath: paths.temp.settings[compKeys._path],
+    validation: settingsValidation[names.year]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(compProps);
+  const { compValue, compId, dataPath, compLabel, compOnBlur, compOnChangeInForm } = useComp(compProps);
 
   return (
     <TextField
+      compName={names.year}
       compId={compId}
       dataPath={dataPath}
       compValue={compValue}
       compLabel={compLabel}
       compOnChange={compOnChangeInForm}
+      compOnBlur={compOnBlur}
     />
   );
 };
