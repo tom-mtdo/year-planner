@@ -3,6 +3,7 @@ import { DataContext } from "../context/DataProvider";
 import useHandler from "./useHandler";
 import useForm from './useForm';
 import useRuntime from "./useRuntime";
+import { paths } from "../util/constant";
 
 export interface IGeneric {
   [key: string]: any
@@ -47,9 +48,11 @@ export default function useComp(props: IComp) {
   const compDescription = description;
   
   const compValue = getValue ? getValue(dataPath ?? "") : undefined;
+  // TODO: allow override root path for error 
+  const compError = getValue ? getValue(`${paths.error}['${dataPath}']`) : undefined;
 
   const compVisible = typeof isVisible === 'function' ? runFunction(isVisible, {compId, compDataPath: dataPath, compValue})
   : isVisible
 
-  return { ...rest, compId, compName, compLabel, compDescription, dataPath, compValue, compVisible, compOnChange, compOnChangeInForm, compOnBlur };
+  return { ...rest, compId, compName, compLabel, compDescription, compError, dataPath, compValue, compVisible, compOnChange, compOnChangeInForm, compOnBlur };
 }

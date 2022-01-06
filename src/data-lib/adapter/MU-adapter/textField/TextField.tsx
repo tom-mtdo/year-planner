@@ -4,7 +4,7 @@ import { IComp } from "../../../hook/useComp";
 
 // just standardise comp event then pass to handlers
 export default function TextField(props: IComp) {
-  const { compValue, compId, dataPath, compLabel, compOnChange, compOnBlur, ...rest } = props;
+  const { compValue, compError, compId, dataPath, compLabel, compOnChange, compOnBlur, ...rest } = props;
 
   const standardiseEvent = (event: any) => {
     return {
@@ -36,6 +36,7 @@ export default function TextField(props: IComp) {
       onChange={myOnChange}
       onBlur={myOnBlur}
       data-data-path={dataPath}
+      error={compError}
     />
   );
 }

@@ -1,3 +1,7 @@
+export const paths = {
+  error: 'error'
+}
+
 export const compKeys = {
   _path: '_path',
   _status: '_status',

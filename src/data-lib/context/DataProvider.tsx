@@ -8,6 +8,7 @@ export interface IDataContext {
     data?: any;
     getValue?: (dataPath: string) => any;
     setValue?: (dataPath: string, value: any) => void;
+    removeValue?: (dataPath: string, removeKey: string) => void;
 }
 
 export const DataContext = React.createContext<IDataContext>({});
@@ -22,10 +23,10 @@ export interface IDataProvider {
 
 export const DataProvider = (props: IDataProvider) => {
     const { children, prepopData } = props;
-    const { data, getValue, setValue } = useData(prepopData);
+    const { data, getValue, setValue, removeValue } = useData(prepopData);
 
     return (
-        <DataContext.Provider value={{data, getValue, setValue}}>
+        <DataContext.Provider value={{data, getValue, setValue, removeValue}}>
             {children}
         </DataContext.Provider>
     )

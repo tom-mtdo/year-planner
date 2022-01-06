@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { get, set } from "lodash";
+import { get, pickBy, set } from "lodash";
 import { produce } from "immer";
 
 export default function useData(prepop?: any) {
@@ -17,5 +17,19 @@ export default function useData(prepop?: any) {
         });
     }
 
-    return { data, getValue, setValue };
+    // Remove key value from an object specified by dataPath
+    const removeValue = (dataPath: string, removeKey: string) => {
+        setData((prevData: any) => {
+            return produce(prevData, (draft: any) => {
+                const prevSubData = get(prevData, dataPath, {});
+                const newSubData = pickBy(prevSubData, (value, key) => {
+                    return key !== removeKey
+                });
+
+                set(draft, dataPath, newSubData);
+            });            
+        });
+    }
+
+    return { data, getValue, setValue, removeValue };
 }

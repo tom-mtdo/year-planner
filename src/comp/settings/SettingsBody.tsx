@@ -76,7 +76,7 @@ const YearTextField = () => {
     formDataPath: paths.temp.settings[compKeys._path],
     validation: settingsValidation[names.year]
   }
-  const { compValue, compId, dataPath, compLabel, compOnBlur, compOnChangeInForm } = useComp(compProps);
+  const { compValue, compId, dataPath, compLabel, compError, compOnBlur, compOnChangeInForm } = useComp(compProps);
 
   return (
     <TextField
@@ -87,6 +87,7 @@ const YearTextField = () => {
       compLabel={compLabel}
       compOnChange={compOnChangeInForm}
       compOnBlur={compOnBlur}
+      compError={compError}
     />
   );
 };
