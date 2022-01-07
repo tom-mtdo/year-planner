@@ -35,7 +35,7 @@ export default function Select(props: IComp) {
   const items =
     Array.isArray(compOptions) && compOptions.length > 0 ? (
       compOptions.map((value, index) => {
-        return <MenuItem value={value[0]}>{value[1]}</MenuItem>;
+        return <MenuItem key={index} value={value[0]}>{value[1]}</MenuItem>;
       })
     ) : (
       <></>
