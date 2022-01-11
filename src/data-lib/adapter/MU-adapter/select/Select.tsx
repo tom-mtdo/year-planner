@@ -1,6 +1,8 @@
 import React from "react";
 import { InputLabel, MenuItem, Select as MuSelect } from "@material-ui/core";
 import { IComp } from "../../../hook/useComp";
+import FieldWrapper from "../../../../lib/fieldWrapper/FieldWrapper";
+import { standardiseEvent } from "../../../util/util";
 
 // options = [
 //   ["AU", "Australia"],
@@ -14,7 +16,9 @@ export default function Select(props: IComp) {
     dataPath,
     compLabel,
     compOnChange,
+    compOnBlur,
     compOptions,
+    compError,
     ...rest
   } = props;
 
@@ -32,6 +36,11 @@ export default function Select(props: IComp) {
     compOnChange(compEvent);
   };
 
+  const myOnBlur = (event: any) => {
+    const myEvent = standardiseEvent(event, dataPath);
+    compOnBlur(myEvent);
+  };
+
   const items =
     Array.isArray(compOptions) && compOptions.length > 0 ? (
       compOptions.map((value, index) => {
@@ -43,8 +52,13 @@ export default function Select(props: IComp) {
 
   const labelId = `${compId}-label`;
 
+  const wrapperProps = {
+    key: `${compId}-wrapper`,
+    errorMsg: compError
+  }
+
   return (
-    <>
+    <FieldWrapper {...wrapperProps}>
       <InputLabel id={labelId}>{compLabel}</InputLabel>
       <MuSelect
         {...rest}
@@ -52,10 +66,11 @@ export default function Select(props: IComp) {
         id={compId}
         value={compValue}
         label={compLabel}
+        onBlur={myOnBlur}
         onChange={myOnChange}
       >
         {items}
       </MuSelect>
-    </>
+    </FieldWrapper>
   );
 }

@@ -7,5 +7,8 @@ export const yearPlanner = {
   },
   [paths.temp.settings.country]: {
     required: { expression: true, message: "Please select a country" },
+  },
+  [paths.temp.settings.state]: {
+    required: { expression: true, message: "Please select a state" },
   }
 };

@@ -17,7 +17,7 @@ const StateSelect = () => {
     label: "State",
     formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
 
   const { getValue } = useContext(DataContext);
   const country = getValue ? getValue(paths.temp.settings.country) : "";
@@ -34,7 +34,9 @@ const StateSelect = () => {
       compValue={compValue}
       compOptions={options}
       compLabel={compLabel}
+      compOnBlur={compOnBlur}
       compOnChange={compOnChangeInForm}
+      compError={compError}
     />
   );
 };
@@ -46,7 +48,7 @@ const CountrySelect = () => {
     label: "Country",
     formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnChangeInForm } = useComp(props);
+  const { compValue, compId, dataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
   const { setValue } = useContext(DataContext);
 
   const onChange = (event: any) => {
@@ -63,7 +65,9 @@ const CountrySelect = () => {
       compValue={compValue}
       compOptions={CountriesToSelect}
       compLabel={compLabel}
+      compOnBlur={compOnBlur}
       compOnChange={onChange}
+      compError={compError}
     />
   );
 };
