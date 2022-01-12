@@ -1,5 +1,6 @@
 export const paths = {
-  error: 'error'
+  error: 'error',
+  registry: 'registry'
 }
 
 export const compKeys = {

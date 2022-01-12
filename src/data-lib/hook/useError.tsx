@@ -1,7 +1,6 @@
-import { get } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
-import { names } from "../../util/constant";
+import { paths } from "../util/constant";
 
 export default function useError() {
   const { setValue, removeValue, removeValue2 } = useContext(DataContext);
@@ -21,7 +20,7 @@ export default function useError() {
     // }
 
     if (errorMsg && setValue) {
-      const errorPath = `${names.error}['${compDataPath}']`;
+      const errorPath = `${paths.error}['${compDataPath}']`;
       setValue(errorPath, errorMsg);
     }
   };
@@ -32,7 +31,7 @@ export default function useError() {
       return;
     }
 
-    removeValue2(names.error, compDataPath);
+    removeValue2(paths.error, compDataPath);
   };
 
   return { setError, removeError };
