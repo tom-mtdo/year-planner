@@ -65,9 +65,16 @@ export default function useHandler(props?: { compForm?: string }) {
     const errorMsg = validateComp(compValidation, runtimeParam);
 
     // save error
-    // note error is an array of key value (not json object tree structure)
-    // where key is data path, value is error message.
+    // note error is an object, which has:
+    // each key is data path, value is error message.
     // this make it easier to check if there is any error or not.
+    // Todo: error root should be override?
+    // e.g. data: {
+    //   error: {
+    //      settings.year: "lenght should be 4 chars"
+    //   }
+    // }
+
     if (errorMsg && setValue) {
       const errorPath = `${names.error}['${dataPath}']`;
       setValue(errorPath, errorMsg);
