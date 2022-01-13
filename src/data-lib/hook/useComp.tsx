@@ -38,8 +38,8 @@ export default function useComp(props: IComp) {
 
   // Build compId and dataPath
   // if no parent info and name, then it will use id & data path passed in
-  const compId = buildId(parentId, name) || id;
-  const compDataPath = buildPath(parentDataPath, name) || dataPath;
+  const compId = id || buildId(parentId, name);
+  const compDataPath = dataPath || buildPath(parentDataPath, name);
 
   // context
   const { getValue } = useContext(DataContext);
