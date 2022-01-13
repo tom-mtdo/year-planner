@@ -8,6 +8,7 @@ export const names = {
   userData: "userData",
   runtime: "runtime",
   temp: "temp",
+  error: "error",
 
   // group
   settings: "settings",
@@ -24,6 +25,7 @@ export const names = {
 
 };
 
+// Paths - data structure
 const userDataHome = `${names.userData}`;
 export const userData = {
   [compKeys._path]: userDataHome
@@ -63,12 +65,17 @@ const temp = {
   dayModal
 }
 
+const error = names.error;
+
 export const paths = {
   runtime,
   userData,
-  temp
+  temp,
+  error
 }
+// End of Paths
 
+// Other const
 export const MinYear = 1970;
 export const MaxYear = 9999;
 

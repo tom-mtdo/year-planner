@@ -31,6 +31,7 @@ export default function useInBound(props: any) {
         },
       },
     },
+    error: {}
     // },
     // content: {
     //     2021: {

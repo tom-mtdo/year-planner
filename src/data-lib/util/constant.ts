@@ -1,3 +1,8 @@
+export const paths = {
+  error: 'error',
+  registry: 'registry'
+}
+
 export const compKeys = {
   _path: '_path',
   _status: '_status',

@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { compKeys } from '../util/constant';
+import { compKeys, paths } from '../util/constant';
+import { pickBy } from 'lodash';
+import useError from './useError';
 
 export enum FORM_STATUS {
     CLEAN = 'clean',
@@ -10,6 +12,7 @@ export enum FORM_STATUS {
 const useForm = () => {
     // const [dataPath, setFormPath] = useState<string>(input?.dataPath ?? '');
     const {getValue, setValue} = useContext(DataContext);
+    const {removeError} = useError();
 
     const setFormStatus = (formDataPath: string = '', status: FORM_STATUS) => {
         if( getValue && setValue && Boolean(formDataPath)) { 
@@ -26,6 +29,7 @@ const useForm = () => {
 
     const resetForm = (formDataPath: string = '') => {
         setFormStatus(formDataPath, FORM_STATUS.CLEAN);
+        removeError(formDataPath);
     }
 
     const touchForm = (formDataPath: string = '') => {
