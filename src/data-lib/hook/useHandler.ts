@@ -34,7 +34,7 @@ export default function useHandler(props?: { compForm?: string }) {
   const onChange = (event: any) => {
     const dataSet =
       event?.target?.dataset || event?.currentTarget?.dataset || undefined;
-    const dataPath = get(dataSet, "dataPath", "unknown-comp");
+    const dataPath = get(dataSet, "compDataPath", "unknown-comp");
     const value =
       event?.target?.value ?? event?.currentTarget?.value ?? undefined;
 
@@ -46,18 +46,18 @@ export default function useHandler(props?: { compForm?: string }) {
   const onBlur = (event: any) => {
     const dataSet =
       event?.target?.dataset || event?.currentTarget?.dataset || undefined;
-    const dataPath = get(dataSet, "dataPath", "unknown-comp");
+    const dataPath = get(dataSet, "compDataPath", "unknown-comp");
 
     if (dataPath) {
       validate(dataPath);
     }
   };
 
-  const validate = (dataPath: string) => {
-    const compValidation = get(yearPlannerValidation, dataPath);
-    const compValue = getValue ? getValue(dataPath) : "";
+  const validate = (compDataPath: string) => {
+    const compValidation = get(yearPlannerValidation, compDataPath);
+    const compValue = getValue ? getValue(compDataPath) : "";
     const runtimeParam = {
-      compDataPath: dataPath,
+      compDataPath,
       compValue,
       data,
     };
@@ -76,12 +76,12 @@ export default function useHandler(props?: { compForm?: string }) {
     // }
 
     if (errorMsg && setValue) {
-      const errorPath = `${names.error}['${dataPath}']`;
+      const errorPath = `${names.error}['${compDataPath}']`;
       setValue(errorPath, errorMsg);
     }
 
     if (!errorMsg && removeValue) {
-      removeValue(names.error, dataPath);
+      removeValue(names.error, compDataPath);
     }
   };
 

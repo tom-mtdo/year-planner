@@ -5,27 +5,26 @@ import { isEmpty } from "../util/validation";
 
 export interface ICompEntry {
   compId: string;
-  dataPath?: string;
+  compDataPath?: string;
 }
 
 export default function useRegistry() {
   const { setValue, removeValue } = useContext(DataContext);
 
   const registerComp = (params: ICompEntry) => {
-    const {dataPath, compId} = params;
-    // Check need at least compId or dataPath
-    if (isEmpty(params) || !Boolean(compId) || !Boolean(dataPath) || !setValue) {
+    const {compDataPath, compId} = params;
+    // Check need at least compId or compDataPath
+    if (isEmpty(params) || !Boolean(compId) || !Boolean(compDataPath) || !setValue) {
       return;
     }
 
     const registerPath = `${paths.registry}['${compId}']`;
-    const compEntry = {dataPath};
+    const compEntry = {compDataPath};
     setValue(registerPath, compEntry);
   };
 
   const unRegisterComp = (params: Pick<ICompEntry, 'compId'>) => {
     const {compId} = params;
-    // Check need at least compId or dataPath
     if (isEmpty(params) || !Boolean(compId) || !removeValue) {
       return;
     }

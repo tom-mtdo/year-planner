@@ -5,6 +5,7 @@ import useForm from "./useForm";
 import useRuntime from "./useRuntime";
 import { paths } from "../util/constant";
 import useRegistry from "./useRegistry";
+import { buildId, buildPath } from "../util/util";
 
 export interface IGeneric {
   [key: string]: any;
@@ -12,30 +13,33 @@ export interface IGeneric {
 
 export interface IComp extends IGeneric {
   compId?: string;
-  dataPath?: string;
+  compDataPath?: string;
   compLabel?: string;
   compOnChange?: any;
-  formDataPath?: string;
   compVisible?: any;
+  formDataPath?: string;
 }
 
 export default function useComp(props: IComp) {
   const {
+    parentId,
+    parentDataPath,
+    name,
     dataPath,
     onChange,
     onBlur,
     id,
     label,
-    name,
     description,
     formDataPath,
     isVisible,
-    validation,
     ...rest
   } = props;
 
-  // TODO: build compId
-  const compId = id;
+  // Build compId and dataPath
+  // if no parent info and name, then it will use id & data path passed in
+  const compId = buildId(parentId, name) || id;
+  const compDataPath = buildPath(parentDataPath, name) || dataPath;
 
   // context
   const { getValue } = useContext(DataContext);
@@ -59,36 +63,36 @@ export default function useComp(props: IComp) {
   // to support dynamic values;
   // const dataPath = dataPath;
   const compLabel = label;
-  const compName = name;
   const compDescription = description;
 
-  const compValue = getValue ? getValue(dataPath ?? "") : undefined;
+  const compValue = getValue ? getValue(compDataPath ?? "") : undefined;
   // TODO: allow override root path for error
   const compError = getValue
-    ? getValue(`${paths.error}['${dataPath}']`)
+    ? getValue(`${paths.error}['${compDataPath}']`)
     : undefined;
 
   const compVisible =
     typeof isVisible === "function"
-      ? runFunction(isVisible, { compId, compDataPath: dataPath, compValue })
+      ? runFunction(isVisible, { compId, compDataPath, compValue })
       : isVisible;
 
   useEffect(() => {
-    registerComp({compId, dataPath})
+    registerComp({compId, compDataPath})
 
     return () => {
       unRegisterComp({compId});
     }
   }, []);
 
+  // Prop processed and specific for data lib start with "comp"
   return {
     ...rest,
+    name,
     compId,
-    compName,
+    compDataPath,
     compLabel,
     compDescription,
     compError,
-    dataPath,
     compValue,
     compVisible,
     compOnChange,

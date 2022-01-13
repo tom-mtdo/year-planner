@@ -10,7 +10,6 @@ export enum FORM_STATUS {
 }
 
 const useForm = () => {
-    // const [dataPath, setFormPath] = useState<string>(input?.dataPath ?? '');
     const {getValue, setValue} = useContext(DataContext);
     const {removeError} = useError();
 

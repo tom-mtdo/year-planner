@@ -8,34 +8,30 @@ import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
 import { compKeys } from '../../data-lib/util/constant';
-import { settings as settingsValidation } from './Settings.validation';
+import { pathToId } from '../../data-lib/util/util';
 
-const StateSelect = () => {
+const settingsId = pathToId(paths.temp.settings[compKeys._path]);
+
+const YearTextField = () => {
   const props: IComp = {
-    dataPath: paths.temp.settings.state,
-    id: "temp-settings-state",
-    label: "State",
+    parentId: settingsId,
+    parentDataPath: paths.temp.settings[compKeys._path],
+    name: names.year,
+
+    label: "Year",
     formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
+  const { compValue, compId, compDataPath, compLabel, compError, compOnBlur, compOnChangeInForm } = useComp(props);
 
-  const { getValue } = useContext(DataContext);
-  const country = getValue ? getValue(paths.temp.settings.country) : "";
-
-  if (!country) {
-    return <></>;
-  }
-
-  const options = Boolean(country) ? stateToSelect(country) : [];
   return (
-    <Select
+    <TextField
+      compName={props.name}
       compId={compId}
-      dataPath={dataPath}
+      compDataPath={compDataPath}
       compValue={compValue}
-      compOptions={options}
       compLabel={compLabel}
-      compOnBlur={compOnBlur}
       compOnChange={compOnChangeInForm}
+      compOnBlur={compOnBlur}
       compError={compError}
     />
   );
@@ -43,12 +39,14 @@ const StateSelect = () => {
 
 const CountrySelect = () => {
   const props: IComp = {
-    dataPath: paths.temp.settings.country,
-    id: "temp-settings-country",
+    parentId: settingsId,
+    parentDataPath: paths.temp.settings[compKeys._path],
+    name: names.country,
+
     label: "Country",
     formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
+  const { compValue, compId, compDataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
   const { setValue } = useContext(DataContext);
 
   const onChange = (event: any) => {
@@ -61,7 +59,7 @@ const CountrySelect = () => {
   return (
     <Select
       compId={compId}
-      dataPath={dataPath}
+      compDataPath={compDataPath}
       compValue={compValue}
       compOptions={CountriesToSelect}
       compLabel={compLabel}
@@ -72,24 +70,34 @@ const CountrySelect = () => {
   );
 };
 
-const YearTextField = () => {
-  const compProps: IComp = {
-    dataPath: paths.temp.settings.year,
-    id: "temp-settings-year",
-    label: "Year",
+const StateSelect = () => {
+  const props: IComp = {
+    parentId: settingsId,
+    parentDataPath: paths.temp.settings[compKeys._path],
+    name: names.state,
+
+    label: "State",
     formDataPath: paths.temp.settings[compKeys._path]
   }
-  const { compValue, compId, dataPath, compLabel, compError, compOnBlur, compOnChangeInForm } = useComp(compProps);
+  const { compValue, compId, compDataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
 
+  const { getValue } = useContext(DataContext);
+  const country = getValue ? getValue(paths.temp.settings.country) : "";
+
+  if (!country) {
+    return <></>;
+  }
+
+  const options = Boolean(country) ? stateToSelect(country) : [];
   return (
-    <TextField
-      compName={names.year}
+    <Select
       compId={compId}
-      dataPath={dataPath}
+      compDataPath={compDataPath}
       compValue={compValue}
+      compOptions={options}
       compLabel={compLabel}
-      compOnChange={compOnChangeInForm}
       compOnBlur={compOnBlur}
+      compOnChange={compOnChangeInForm}
       compError={compError}
     />
   );
