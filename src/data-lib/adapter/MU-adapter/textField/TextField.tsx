@@ -11,7 +11,7 @@ export default function TextField(props: IComp) {
     compValue,
     compError,
     compId,
-    dataPath,
+    compDataPath,
     compLabel,
     compOnChange,
     compOnBlur,
@@ -20,12 +20,12 @@ export default function TextField(props: IComp) {
   } = props;
 
   const myOnChange = (event: any) => {
-    const myEvent = standardiseEvent(event, dataPath);
+    const myEvent = standardiseEvent(event, compDataPath);
     compOnChange(myEvent);
   };
 
   const myOnBlur = (event: any) => {
-    const myEvent = standardiseEvent(event, dataPath);
+    const myEvent = standardiseEvent(event, compDataPath);
     compOnBlur(myEvent);
   };
 
@@ -39,12 +39,12 @@ export default function TextField(props: IComp) {
       <MUTextField
         {...rest}
         id={compId}
-        name={compId}
+        name={compName}
         label={compLabel}
         value={compValue}
         onChange={myOnChange}
         onBlur={myOnBlur}
-        data-data-path={dataPath}
+        data-data-path={compDataPath}
       />
     </FieldWrapper>
   );

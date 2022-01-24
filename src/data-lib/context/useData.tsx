@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { get, pickBy, set } from "lodash";
+import { get, pick, pickBy, set } from "lodash";
 import { produce } from "immer";
 
 export default function useData(prepop?: any) {
@@ -16,6 +16,25 @@ export default function useData(prepop?: any) {
       });
     });
   };
+
+  /**
+   * 
+   * @param dataPath dataPath to object
+   * @param pickKey key to return value
+   * return: key & value pair of the object
+   * 
+   * e.g. registry : {
+   *  page1.comp1: "Tom"
+   * }
+   * 
+   * dataPath = registry
+   * pickKey = page1.comp1
+   * return page1.comp1: "Tom"
+   * 
+   */
+  const pickKeyValue = (dataPath: string, pickKey: string) => {
+    return pick(data[dataPath], pickKey);
+  }
 
   // Todo Use Regex
   // Remove key value from an object specified by dataPath
@@ -55,5 +74,5 @@ export default function useData(prepop?: any) {
     });
   };
 
-  return { data, getValue, setValue, removeValue, removeValue2 };
+  return { data, getValue, setValue, removeValue, removeValue2, pickKeyValue };
 }

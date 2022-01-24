@@ -23,6 +23,9 @@ export const names = {
   note: 'note',
   dayInfo: 'dayInfo',
 
+  // self prop
+  _isShown: '_isShown'
+
 };
 
 // Paths - data structure

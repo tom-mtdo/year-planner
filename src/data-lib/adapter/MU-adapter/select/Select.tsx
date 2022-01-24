@@ -13,7 +13,7 @@ export default function Select(props: IComp) {
   const {
     compValue,
     compId,
-    dataPath,
+    compDataPath,
     compLabel,
     compOnChange,
     compOnBlur,
@@ -22,13 +22,10 @@ export default function Select(props: IComp) {
     ...rest
   } = props;
 
-  // const { compId, dataPath, label, options } = props;
-  // const { compValue, compOnChange } = useComp(props);
-
   const myOnChange = (event: any) => {
     const compEvent = {
       target: {
-        dataset: { dataPath },
+        dataset: { compDataPath },
         value: event.target.value,
       },
       originalEvent: event,
@@ -37,7 +34,7 @@ export default function Select(props: IComp) {
   };
 
   const myOnBlur = (event: any) => {
-    const myEvent = standardiseEvent(event, dataPath);
+    const myEvent = standardiseEvent(event, compDataPath);
     compOnBlur(myEvent);
   };
 
