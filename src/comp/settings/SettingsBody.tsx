@@ -12,6 +12,10 @@ import { pathToId } from '../../data-lib/util/util';
 
 const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 
+// Components in this page show how to use dynamic id & data path
+// Dynamic id & data path are useful for repeating items
+// To use static id & path, have a look at Header component
+
 const YearTextField = () => {
   const props: IComp = {
     parentId: settingsId,

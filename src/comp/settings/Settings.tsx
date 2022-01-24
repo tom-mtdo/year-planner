@@ -17,16 +17,21 @@ import { FORM_STATUS } from "../../data-lib/hook/useForm";
 import styled from "styled-components";
 import useSettings from './useSettings';
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
+import {yearPlanner as validation} from '../../util/validation';
+import { isEmpty } from "../../data-lib/util/validation";
 
 export default function Settings() {
   const { getValue, setValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
-  const { resetForm } = useForm();
+  const { resetForm, validateForm } = useForm();
   const {resetData} = useSettings();
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
   const onApply = () => {
+    const errors = validateForm(paths.temp.settings[compKeys._path], validation);
+    if (!isEmpty(errors)) { return; }
+
     if (!getValue) {
       return;
     }

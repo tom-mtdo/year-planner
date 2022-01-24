@@ -49,12 +49,38 @@ export default function useHandler(props?: { compForm?: string }) {
     const dataPath = get(dataSet, "compDataPath", "unknown-comp");
 
     if (dataPath) {
-      validate(dataPath);
+      validate(dataPath, yearPlannerValidation);
     }
   };
 
-  const validate = (compDataPath: string) => {
-    const compValidation = get(yearPlannerValidation, compDataPath);
+  /**
+   * 
+   * @param compDataPath 
+   * 
+   * TODO: 
+   * 1. Need to remove iteration index, e.g. [1] before getting compValidation
+   * - validation should be:
+   * yearPlannerValidation = {
+   *  "temp.settings.year": {
+   *    required: {expression: true, message: "Please provide year in format YYYY"},
+   *    length: {expression: 4, message: "Length is 4 chars"}
+   *  },
+   *  "personalDetails.otherNames.lastName": {
+   *    required: {expression: true, message: "Please provide last name"}
+   *  }
+   * }
+   * 
+   * - Field to be validate can have dataPath like:
+   * "personalDetails.otherNames[1].lastName"
+   * so need to remove index to get personalDetails.otherNames.lastName
+   * 
+   * - Each comp in repeat still can have diffrent validation base on compDataPath pass in through runtimeParam
+   * 
+   * 2. pass in validation object instead of direct import like this
+   */
+
+  const validate = (compDataPath: string, validation: any) => {
+    const compValidation = get(validation, compDataPath) || {};
     const compValue = getValue ? getValue(compDataPath) : "";
     const runtimeParam = {
       compDataPath,
@@ -83,7 +109,9 @@ export default function useHandler(props?: { compForm?: string }) {
     if (!errorMsg && removeValue) {
       removeValue(names.error, compDataPath);
     }
+
+    return errorMsg;
   };
 
-  return { onChange, onBlur };
+  return { onChange, onBlur, validate };
 }

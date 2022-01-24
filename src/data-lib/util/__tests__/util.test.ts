@@ -45,4 +45,16 @@ describe("Util", () => {
       });
     });
   });
+
+  describe("Remove iteration", () => {
+    it("should pass", () => {
+      const input = 'page1.group1[0].group2[2].comp';
+      const expected = 'page1.group1.group2.comp';
+
+      const output = util.removeIteration(input);
+      expect(output).toEqual(expected);
+    })
+  })
+
+  // TODO: unit test for compare path
 });

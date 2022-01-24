@@ -1,8 +1,12 @@
 import { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
-import { compKeys, paths } from '../util/constant';
-import { pickBy } from 'lodash';
+import { compKeys } from '../util/constant';
+import { get } from 'lodash';
 import useError from './useError';
+import useRegistry from './useRegistry';
+import { pathToId } from '../util/util';
+import useHandler from './useHandler';
+import { isEmpty } from '../util/validation';
 
 export enum FORM_STATUS {
     CLEAN = 'clean',
@@ -12,6 +16,8 @@ export enum FORM_STATUS {
 const useForm = () => {
     const {getValue, setValue} = useContext(DataContext);
     const {removeError} = useError();
+    const {getChildren} = useRegistry();
+    const {validate} = useHandler();
 
     const setFormStatus = (formDataPath: string = '', status: FORM_STATUS) => {
         if( getValue && setValue && Boolean(formDataPath)) { 
@@ -35,7 +41,22 @@ const useForm = () => {
         setFormStatus(formDataPath, FORM_STATUS.DIRTY);
     }
 
-    return {resetForm, touchForm};
+    const validateForm = (formDataPath: string, validation: any) => {
+        const errors: any = {};
+        const children = getChildren(pathToId(formDataPath)) || {};
+        const childKeys = Object.keys(children);
+
+        childKeys.forEach((key, index) => {
+            const path = get(children[key], 'compDataPath');
+            const errorMsg = validate(path, validation);
+            if (!isEmpty(errorMsg)) {
+                errors[`'${path}'`] = errorMsg;
+              }
+        })
+        return errors;
+    }
+
+    return {resetForm, touchForm, validateForm};
 };
 
 export default useForm;
