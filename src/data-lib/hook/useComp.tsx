@@ -66,7 +66,6 @@ export default function useComp(props: IComp) {
   const compDescription = description;
 
   const compValue = getValue ? getValue(compDataPath ?? "") : undefined;
-  // TODO: allow override root path for error
   const compError = getValue
     ? getValue(`${paths.error}['${compDataPath}']`)
     : undefined;

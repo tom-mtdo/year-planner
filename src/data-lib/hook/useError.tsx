@@ -10,7 +10,6 @@ export default function useError() {
     // note error is an object, which has:
     // each key is data path, value is error message.
     // this make it easier to check if there is any error or not.
-    // Todo: error root should be override?
     // e.g. data: {
     //   error: {
     //      settings: "Please complete the form"
