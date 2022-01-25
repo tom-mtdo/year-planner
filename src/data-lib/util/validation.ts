@@ -51,10 +51,18 @@ export const length = (expression: string, value: any) => {
     return valueLength === lengthNum;
 }
 
+export const pattern = (expression: string, value: string) => {
+  if (!expression || ! value) { return true; }
+
+  const regex = new RegExp(expression);
+  return regex.test(value);
+}
+
 export const predefined = {
   required,
   minLength,
-  length
+  length,
+  pattern
 };
 
 export const validateComp = (compValidation: any, runtimeParam: any): string => {

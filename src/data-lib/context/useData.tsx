@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { get, pick, pickBy, set } from "lodash";
+import { cloneDeep, get, pick, pickBy, set } from "lodash";
 import { produce } from "immer";
 
 export default function useData(prepop?: any) {
@@ -39,40 +39,30 @@ export default function useData(prepop?: any) {
   // Todo Use Regex
   // Remove key value from an object specified by dataPath
   // if keyPattern is empty, then the object will be empty
-  const removeValue = (dataPath: string, keyPattern: string = '') => {
+  const removeValue = (dataPath: string, keyPattern: string = '', includeChildren: boolean = false) => {
     // const regex = new RegExp(keyPattern);
-
+    let result;
     setData((prevData: any) => {
       return produce(prevData, (draft: any) => {
         const prevSubData = get(prevData, dataPath, {});
         const newSubData = Boolean(keyPattern)
           ? pickBy(prevSubData, (value, key) => {
-              return key !== keyPattern;
+              return includeChildren === true
+              ? !key.includes(keyPattern)
+              : key !== keyPattern;
             })
           : {};
 
         set(draft, dataPath, newSubData);
+
+        // this is for unit test only
+        // TODO remove when jest is setup for work with wait/async
+        result = cloneDeep(draft);
       });
     });
+
+    return result;
   };
 
-  // Todo Use Regex to merge 2 functions into 1
-  const removeValue2 = (dataPath: string, keyPattern: string = '') => {
-    // const regex = new RegExp(keyPattern);
-
-    setData((prevData: any) => {
-      return produce(prevData, (draft: any) => {
-        const prevSubData = get(prevData, dataPath, {});
-        const newSubData = Boolean(keyPattern)
-          ? pickBy(prevSubData, (value, key) => {
-              return !key.includes(keyPattern);
-            })
-          : {};
-
-        set(draft, dataPath, newSubData);
-      });
-    });
-  };
-
-  return { data, getValue, setValue, removeValue, removeValue2, pickKeyValue };
+  return { data, getValue, setValue, removeValue, pickKeyValue };
 }
