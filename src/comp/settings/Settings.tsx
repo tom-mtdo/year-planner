@@ -7,15 +7,15 @@ import {
   StyledSettingsFooter,
   StyledSettingsBody,
 } from "./Settings.style";
-import { BOOLEAN_VALUES } from "../../util/constant";
 import SettingsBody from "./SettingsBody";
 import styled from "styled-components";
 import useSettings from './useSettings';
+import { isTrue } from "../../data-lib/util/util";
 
 // Form to collect settings from users
 export default function Settings() {
   const {isEditing, isShown, resetSettings, closeSettings, applySettings} = useSettings();
-  if (BOOLEAN_VALUES.TRUE !== isShown) { return <></>; }
+  if (!isTrue(isShown)) { return <></>; }
 
   return (
     <StyledSettingsBox>

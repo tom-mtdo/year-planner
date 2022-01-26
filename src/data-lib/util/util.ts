@@ -1,6 +1,8 @@
 import { get } from "lodash";
+import { BOOLEAN_STR_VALUES } from "./constant";
 import { isEmpty } from "./validation";
 
+//// Utils to support lib
 // Todo, make input into object for generic
 export const standardiseEvent = (
   event: any,
@@ -252,3 +254,17 @@ export const comparePath = (
   // Shouldn't reach here
   return 0;
 };
+
+
+//// other utils
+export const isTrue = (value: any) => {
+  return (
+    true === value || BOOLEAN_STR_VALUES.TRUE === value || BOOLEAN_STR_VALUES.YES === value
+  );
+}
+
+export const isFalse = (value: any) => {
+  return (
+    false === value || BOOLEAN_STR_VALUES.FALSE === value || BOOLEAN_STR_VALUES.NO === value
+  );
+}

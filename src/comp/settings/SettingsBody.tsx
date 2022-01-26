@@ -8,7 +8,7 @@ import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
 import { compKeys } from '../../data-lib/util/constant';
-import { pathToId, getSiblingValue } from '../../data-lib/util/util';
+import { pathToId, getSiblingValue, isTrue } from '../../data-lib/util/util';
 import { IRuntimeArgs } from '../../data-lib/hook/useRuntime';
 
 const settingsId = pathToId(paths.temp.settings[compKeys._path]);
@@ -103,7 +103,7 @@ const StateSelect = () => {
   }
   const { compVisible, compValue, compId, compDataPath, compLabel, compOnBlur, compError, compDynaProp, compOnChangeInForm } = useComp(props);
 
-  if (!compVisible) {
+  if (!isTrue(compVisible)) {
     return <></>;
   }
 

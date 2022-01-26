@@ -12,6 +12,7 @@ import useComp, { IComp } from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
+import { isTrue } from "../../data-lib/util/util";
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
@@ -60,7 +61,7 @@ const PreviousYearBtn = (props: {changeYear: any}) => {
 
   const { compVisible } = useComp(compProps);
 
-  return compVisible && <Button onClick={() => props.changeYear(-1)}>{"<"}</Button>;
+  return isTrue(compVisible) ? <Button onClick={() => props.changeYear(-1)}>{"<"}</Button> : <></>;
 };
 
 const NextYearBtn = (props: {changeYear: any}) => {
@@ -71,7 +72,7 @@ const NextYearBtn = (props: {changeYear: any}) => {
 
   const { compVisible } = useComp(compProps);
 
-  return compVisible && <Button onClick={() => props.changeYear(1)}>{">"}</Button>;
+  return isTrue(compVisible) ? <Button onClick={() => props.changeYear(1)}>{">"}</Button> : <></>;
 };
 
 export default function Header() {
