@@ -6,20 +6,18 @@ import { Button } from "@material-ui/core";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { get, isNumber } from "lodash";
-import { names, paths } from "../../util/constant";
+import { paths } from "../../util/constant";
 import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
-import { pathToId } from "../../data-lib/util/util";
+import { isTrue } from "../../data-lib/util/util";
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
   VALUE = "value",
 }
-
-const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 
 const SettingsCheck = () => {
   const props: IComp = {
@@ -32,10 +30,10 @@ const SettingsCheck = () => {
   };
   const { compValue, compId, compDataPath, compLabel, compOnChange } =
     useComp(props);
-  const { resetData: resetSettingsForm } = useSettings();
+  const { resetSettings } = useSettings();
 
   const myCompOnChange = (event: any) => {
-    resetSettingsForm();
+    resetSettings();
     compOnChange(event);
   };
 
@@ -50,7 +48,7 @@ const SettingsCheck = () => {
   );
 };
 
-const isVisible = (args: IRuntimeArgs) => {
+const isQuickNavVisible = (args: IRuntimeArgs) => {
   const isSettingsShown = get(args.data, paths.temp.settings[compKeys._isShown]);
   return BOOLEAN_STR_VALUES.FALSE === isSettingsShown;
 };
@@ -58,23 +56,23 @@ const isVisible = (args: IRuntimeArgs) => {
 const PreviousYearBtn = (props: {changeYear: any}) => {
   const compProps = {
     id: "btnPreviousYear",
-    isVisible,
+    isVisible: isQuickNavVisible,
   };
 
   const { compVisible } = useComp(compProps);
 
-  return compVisible && <Button onClick={() => props.changeYear(-1)}>{"<"}</Button>;
+  return isTrue(compVisible) ? <Button onClick={() => props.changeYear(-1)}>{"<"}</Button> : <></>;
 };
 
 const NextYearBtn = (props: {changeYear: any}) => {
   const compProps = {
     id: "btnNextYear",
-    isVisible,
+    isVisible: isQuickNavVisible,
   };
 
   const { compVisible } = useComp(compProps);
 
-  return compVisible && <Button onClick={() => props.changeYear(1)}>{">"}</Button>;
+  return isTrue(compVisible) ? <Button onClick={() => props.changeYear(1)}>{">"}</Button> : <></>;
 };
 
 export default function Header() {

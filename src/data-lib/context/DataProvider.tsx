@@ -8,8 +8,7 @@ export interface IDataContext {
     data?: any;
     getValue?: (dataPath: string) => any;
     setValue?: (dataPath: string, value: any) => void;
-    removeValue?: (dataPath: string, removeKey?: string) => void;
-    removeValue2?: (dataPath: string, removeKey?: string) => void;
+    removeValue?: (dataPath: string, removeKey?: string, includeChildren?: boolean) => void;
     pickKeyValue?: (dataPath: string, pickKey: string) => void;
 }
 
@@ -25,10 +24,10 @@ export interface IDataProvider {
 
 export const DataProvider = (props: IDataProvider) => {
     const { children, prepopData } = props;
-    const { data, getValue, setValue, removeValue, removeValue2, pickKeyValue } = useData(prepopData);
+    const { data, getValue, setValue, removeValue, pickKeyValue } = useData(prepopData);
 
     return (
-        <DataContext.Provider value={{data, getValue, setValue, removeValue, removeValue2, pickKeyValue}}>
+        <DataContext.Provider value={{data, getValue, setValue, removeValue, pickKeyValue}}>
             {children}
         </DataContext.Provider>
     )

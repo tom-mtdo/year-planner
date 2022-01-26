@@ -1,6 +1,8 @@
 import { get } from "lodash";
+import { BOOLEAN_STR_VALUES } from "./constant";
 import { isEmpty } from "./validation";
 
+//// Utils to support lib
 // Todo, make input into object for generic
 export const standardiseEvent = (
   event: any,
@@ -63,15 +65,15 @@ export const removeIteration = (aPath: string) => {
 
 /**
  *
- * @param aPath page1.group1[0].group2[2].comp1
+ * @param compPath page1.group1[0].group2[2].comp1
  * @returns page1.group1[0].group2[2]
  *
  */
-export const getParentPath = (aPath: string): string => {
-  if (isEmpty(aPath)) {
-    return "";
+export const getParentPath = (compPath: string = ''): string => {
+  if (isEmpty(compPath)) {
+    return '';
   }
-  return `${aPath.substring(0, aPath.lastIndexOf("."))}`;
+  return `${compPath.substring(0, compPath.lastIndexOf("."))}`;
 };
 
 /**
@@ -92,18 +94,18 @@ export const isIterationPath = (aPath: string) => {
   return aPath.charAt(aPath.length - 1) === "]";
 };
 
-export const getSiblingPath = (aPath: string, siblingName: string) => {
-  const parentPath = getParentPath(aPath) || "";
+export const getSiblingPath = (compPath: string | undefined, siblingName: string) => {
+  const parentPath = getParentPath(compPath) || "";
   return `${parentPath.length > 0 ? parentPath.concat(".") : ""}${siblingName}`;
 };
 
 export const getSiblingValue = (
-  aPath: string,
+  compDataPath: string | undefined,
   siblingName: string,
   data: any
 ) => {
-  const siblingPath = getSiblingPath(aPath, siblingName) || "";
-  return get(data, siblingPath);
+  const siblingDataPath = getSiblingPath(compDataPath, siblingName) || "";
+  return get(data, siblingDataPath);
 };
 
 export const getIteration = (aPath: string) => {
@@ -252,3 +254,17 @@ export const comparePath = (
   // Shouldn't reach here
   return 0;
 };
+
+
+//// other utils
+export const isTrue = (value: any) => {
+  return (
+    true === value || BOOLEAN_STR_VALUES.TRUE === value || BOOLEAN_STR_VALUES.YES === value
+  );
+}
+
+export const isFalse = (value: any) => {
+  return (
+    false === value || BOOLEAN_STR_VALUES.FALSE === value || BOOLEAN_STR_VALUES.NO === value
+  );
+}

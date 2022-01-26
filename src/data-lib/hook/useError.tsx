@@ -3,14 +3,13 @@ import { DataContext } from "../context/DataProvider";
 import { paths } from "../util/constant";
 
 export default function useError() {
-  const { setValue, removeValue, removeValue2 } = useContext(DataContext);
+  const { setValue, removeValue } = useContext(DataContext);
 
   const setError = (compDataPath: string, errorMsg: string) => {
     // save error
     // note error is an object, which has:
     // each key is data path, value is error message.
     // this make it easier to check if there is any error or not.
-    // Todo: error root should be override?
     // e.g. data: {
     //   error: {
     //      settings: "Please complete the form"
@@ -27,11 +26,11 @@ export default function useError() {
 
   // remove error of children as well for now
   const removeError = (compDataPath: string) => {
-    if (!removeValue2) {
+    if (!removeValue) {
       return;
     }
 
-    removeValue2(paths.error, compDataPath);
+    removeValue(paths.error, compDataPath, true);
   };
 
   return { setError, removeError };
