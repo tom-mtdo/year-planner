@@ -48,7 +48,7 @@ const SettingsCheck = () => {
   );
 };
 
-const isVisible = (args: IRuntimeArgs) => {
+const isQuickNavVisible = (args: IRuntimeArgs) => {
   const isSettingsShown = get(args.data, paths.temp.settings[compKeys._isShown]);
   return BOOLEAN_STR_VALUES.FALSE === isSettingsShown;
 };
@@ -56,7 +56,7 @@ const isVisible = (args: IRuntimeArgs) => {
 const PreviousYearBtn = (props: {changeYear: any}) => {
   const compProps = {
     id: "btnPreviousYear",
-    isVisible,
+    isVisible: isQuickNavVisible,
   };
 
   const { compVisible } = useComp(compProps);
@@ -67,7 +67,7 @@ const PreviousYearBtn = (props: {changeYear: any}) => {
 const NextYearBtn = (props: {changeYear: any}) => {
   const compProps = {
     id: "btnNextYear",
-    isVisible,
+    isVisible: isQuickNavVisible,
   };
 
   const { compVisible } = useComp(compProps);
