@@ -6,20 +6,17 @@ import { Button } from "@material-ui/core";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { get, isNumber } from "lodash";
-import { names, paths } from "../../util/constant";
+import { paths } from "../../util/constant";
 import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
-import { pathToId } from "../../data-lib/util/util";
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
   VALUE = "value",
 }
-
-const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 
 const SettingsCheck = () => {
   const props: IComp = {
@@ -32,10 +29,10 @@ const SettingsCheck = () => {
   };
   const { compValue, compId, compDataPath, compLabel, compOnChange } =
     useComp(props);
-  const { resetData: resetSettingsForm } = useSettings();
+  const { resetSettings } = useSettings();
 
   const myCompOnChange = (event: any) => {
-    resetSettingsForm();
+    resetSettings();
     compOnChange(event);
   };
 

@@ -57,7 +57,7 @@ export default function useData(prepop?: any) {
 
         // this is for unit test only
         // TODO remove when jest is setup for work with wait/async
-        result = cloneDeep(draft);
+        // result = cloneDeep(draft);
       });
     });
 

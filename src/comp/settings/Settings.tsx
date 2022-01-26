@@ -20,11 +20,12 @@ import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import {yearPlanner as validation} from '../../util/validation';
 import { isEmpty } from "../../data-lib/util/validation";
 
+// Form to collect settings from users
 export default function Settings() {
+  const { resetForm, validateForm } = useForm();
   const { getValue, setValue } = useContext(DataContext);
   const { moveToYear } = useYearPlanner();
-  const { resetForm, validateForm } = useForm();
-  const {resetData} = useSettings();
+  const {resetSettings} = useSettings();
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
@@ -54,14 +55,15 @@ export default function Settings() {
   };
 
   const onReset = () => {
-    resetData();
-    resetForm(paths.temp.settings._path);
+    resetSettings();
+    // resetData();
+    // resetForm(paths.temp.settings._path);
   };
 
   const onClose = () => {
     if (!getValue || !setValue) { return; }
-    
-    resetData();
+    resetSettings();
+    // resetData();
     const isShown = getValue(paths.temp.settings[compKeys._isShown]);
     if (BOOLEAN_STR_VALUES.FALSE !== isShown) {
       setValue(paths.temp.settings[compKeys._isShown], BOOLEAN_STR_VALUES.FALSE);

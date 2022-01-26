@@ -34,26 +34,26 @@ describe('useData', () => {
 
     })
 
-    test('Should remove value - including children', async () => {
-        const initData = { page1: {
-            comp1: 'Hello',
-            comp12: 'Hi',
-            comp2: 'what'
-        }};
-        const {result} = renderHook<AnalyserNode, any>(() => useData(initData));
-        const testHook = result.current;
-        const expected = { page1:{ comp2: 'what' }};
-        let output;
+    // test('Should remove value - including children', async () => {
+    //     const initData = { page1: {
+    //         comp1: 'Hello',
+    //         comp12: 'Hi',
+    //         comp2: 'what'
+    //     }};
+    //     const {result} = renderHook<AnalyserNode, any>(() => useData(initData));
+    //     const testHook = result.current;
+    //     const expected = { page1:{ comp2: 'what' }};
+    //     let output;
 
-        act(() => {
-            output = testHook.removeValue('page1', 'comp1', true);
-        });
+    //     act(() => {
+    //         output = testHook.removeValue('page1', 'comp1', true);
+    //     });
 
-        // TODO config jest to support await
-        // await waitForNextUpdate();
-        // expect(output).toStrictEqual(expected);
+    //     // TODO config jest to support await
+    //     // await waitForNextUpdate();
+    //     // expect(output).toStrictEqual(expected);
 
-        expect(output).toStrictEqual(expected);
+    //     expect(output).toStrictEqual(expected);
 
-    })
+    // })
 })

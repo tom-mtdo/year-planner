@@ -3,12 +3,13 @@ import { DataContext } from '../../data-lib/context/DataProvider';
 import { paths } from '../../util/constant';
 import { compKeys } from '../../data-lib/util/constant';
 import { names } from '../../util/constant';
-import { FORM_STATUS } from '../../data-lib/hook/useForm';
+import useForm, { FORM_STATUS } from '../../data-lib/hook/useForm';
 
 const useSettings = () => {
     const {getValue, setValue} = useContext(DataContext);
+    const { resetForm } = useForm();
 
-    const resetData = () => {
+    const resetSettings = () => {
         if(!getValue || !setValue) { return; }
 
         const year = getValue(paths.runtime.year);
@@ -25,10 +26,10 @@ const useSettings = () => {
             [names.country]: country,
             [names.state]: state
         });
-
+        resetForm(paths.temp.settings._path);
     };
 
-    return {resetData};
+    return {resetSettings};
 };
 
 export default useSettings;
