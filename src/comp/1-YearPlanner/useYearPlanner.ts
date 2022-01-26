@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect } from 'react';
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { DayInfo, getCalendar } from "../../util/util";
 import { paths, MaxYear, MinYear, names } from "../../util/constant";
 import { isEmpty, isNumber, set } from "lodash";
 import { compKeys } from '../../data-lib/util/constant';
+import useRuntime from '../../data-lib/hook/useRuntime';
+import { yearPlanner as yearPlannerValidation} from '../../util/validation';
 
 export const getStrDate = (aDate: Date) => {
   if (!aDate) {
@@ -23,6 +25,11 @@ export const getStrDate = (aDate: Date) => {
 
 const useYearPlanner = function () {
   const { getValue, setValue } = useContext(DataContext);
+  const { loadValidation } = useRuntime();
+
+  useEffect(() => {
+    loadValidation(yearPlannerValidation);
+  }, []);
 
   const saveDate = (dayInfo: DayInfo) => {
     if (getValue && setValue) {

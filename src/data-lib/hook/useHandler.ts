@@ -1,12 +1,14 @@
 import { get } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../context/DataProvider";
-import { yearPlanner as yearPlannerValidation } from "../../util/validation";
 import { validateComp } from "../util/validation";
 import { names } from "../../util/constant";
+import useRuntime from "./useRuntime";
 
 export default function useHandler(props?: { compForm?: string }) {
   const { data, setValue, getValue, removeValue } = useContext(DataContext);
+  const { getValidation } = useRuntime();
+  const yearPlannerValidation = getValidation();
 
   /**
    *

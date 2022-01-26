@@ -63,15 +63,15 @@ export const removeIteration = (aPath: string) => {
 
 /**
  *
- * @param aPath page1.group1[0].group2[2].comp1
+ * @param compPath page1.group1[0].group2[2].comp1
  * @returns page1.group1[0].group2[2]
  *
  */
-export const getParentPath = (aPath: string): string => {
-  if (isEmpty(aPath)) {
-    return "";
+export const getParentPath = (compPath: string = ''): string => {
+  if (isEmpty(compPath)) {
+    return '';
   }
-  return `${aPath.substring(0, aPath.lastIndexOf("."))}`;
+  return `${compPath.substring(0, compPath.lastIndexOf("."))}`;
 };
 
 /**
@@ -92,18 +92,18 @@ export const isIterationPath = (aPath: string) => {
   return aPath.charAt(aPath.length - 1) === "]";
 };
 
-export const getSiblingPath = (aPath: string, siblingName: string) => {
-  const parentPath = getParentPath(aPath) || "";
+export const getSiblingPath = (compPath: string | undefined, siblingName: string) => {
+  const parentPath = getParentPath(compPath) || "";
   return `${parentPath.length > 0 ? parentPath.concat(".") : ""}${siblingName}`;
 };
 
 export const getSiblingValue = (
-  aPath: string,
+  compDataPath: string | undefined,
   siblingName: string,
   data: any
 ) => {
-  const siblingPath = getSiblingPath(aPath, siblingName) || "";
-  return get(data, siblingPath);
+  const siblingDataPath = getSiblingPath(compDataPath, siblingName) || "";
+  return get(data, siblingDataPath);
 };
 
 export const getIteration = (aPath: string) => {

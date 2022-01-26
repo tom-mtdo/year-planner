@@ -8,7 +8,8 @@ import { stateToSelect } from "../../util/util";
 import { IComp } from '../../data-lib/hook/useComp';
 import useComp from '../../data-lib/hook/useComp';
 import { compKeys } from '../../data-lib/util/constant';
-import { pathToId } from '../../data-lib/util/util';
+import { pathToId, getSiblingValue } from '../../data-lib/util/util';
+import { IRuntimeArgs } from '../../data-lib/hook/useRuntime';
 
 const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 
@@ -16,6 +17,7 @@ const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 // Dynamic id & data path are useful for repeating items
 // To use static id & path, have a look at Header component
 
+// Year text field
 const YearTextField = () => {
   const props: IComp = {
     parentId: settingsId,
@@ -41,6 +43,7 @@ const YearTextField = () => {
   );
 };
 
+// Country select
 const CountrySelect = () => {
   const props: IComp = {
     parentId: settingsId,
@@ -74,6 +77,19 @@ const CountrySelect = () => {
   );
 };
 
+// State
+// State -- Logic to generate dynamic values & props is separated from comp and handle by lib
+const isStateShown = (param: IRuntimeArgs) => {
+  const country = getSiblingValue(param.compDataPath, names.country, param.data);
+  return Boolean(country);
+};
+
+const stateOptions = (param: IRuntimeArgs) => {
+  const country = getSiblingValue(param.compDataPath, names.country, param.data);
+  return Boolean(country) ? stateToSelect(country) : [];
+};
+
+// State -- comp
 const StateSelect = () => {
   const props: IComp = {
     parentId: settingsId,
@@ -81,24 +97,22 @@ const StateSelect = () => {
     name: names.state,
 
     label: "State",
-    formDataPath: paths.temp.settings[compKeys._path]
+    formDataPath: paths.temp.settings[compKeys._path],
+    isVisible: isStateShown,
+    dynaProp: stateOptions
   }
-  const { compValue, compId, compDataPath, compLabel, compOnBlur, compError, compOnChangeInForm } = useComp(props);
+  const { compVisible, compValue, compId, compDataPath, compLabel, compOnBlur, compError, compDynaProp, compOnChangeInForm } = useComp(props);
 
-  const { getValue } = useContext(DataContext);
-  const country = getValue ? getValue(paths.temp.settings.country) : "";
-
-  if (!country) {
+  if (!compVisible) {
     return <></>;
   }
 
-  const options = Boolean(country) ? stateToSelect(country) : [];
   return (
     <Select
       compId={compId}
       compDataPath={compDataPath}
       compValue={compValue}
-      compOptions={options}
+      compOptions={compDynaProp}
       compLabel={compLabel}
       compOnBlur={compOnBlur}
       compOnChange={compOnChangeInForm}
@@ -107,6 +121,7 @@ const StateSelect = () => {
   );
 };
 
+// Main
 function SettingsBody() {
   return (
     <>

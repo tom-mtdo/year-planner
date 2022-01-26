@@ -17,6 +17,7 @@ export interface IComp extends IGeneric {
   compLabel?: string;
   compOnChange?: any;
   compVisible?: any;
+  compDynaProp?: any; // whatever other unknown props like options in a select,
   formDataPath?: string;
 }
 
@@ -33,6 +34,7 @@ export default function useComp(props: IComp) {
     description,
     formDataPath,
     isVisible,
+    dynaProp,
     ...rest
   } = props;
 
@@ -43,44 +45,44 @@ export default function useComp(props: IComp) {
 
   // context
   const { getValue } = useContext(DataContext);
-  // hooks
+  // import hooks
   const { registerComp, unRegisterComp } = useRegistry();
   const { onChange: defaultOnChange, onBlur: devaultOnBlur } = useHandler();
   const { touchForm } = useForm();
-  const { runFunction } = useRuntime();
+  const { getRuntimeValue } = useRuntime();
 
+  // Value & error
+  const compValue = getValue ? getValue(compDataPath ?? "") : undefined;
+  const compError = getValue
+    ? getValue(`${paths.error}['${compDataPath}']`)
+    : undefined;
+
+  // Support dynamic props values;
+  const compInfo = { compId, compDataPath, compValue };
+  const compLabel = getRuntimeValue(label, compInfo);
+  const compDescription = getRuntimeValue(description, compInfo);
+  const compVisible = getRuntimeValue(isVisible, compInfo);
+  const compDynaProp = getRuntimeValue(dynaProp, compInfo);
+
+  // Handlers
+  // -- For comp inside a form
   const compOnChangeInForm = (event: any) => {
     if (Boolean(formDataPath)) {
       touchForm(formDataPath);
     }
     defaultOnChange(event);
   };
-  // return comp props, which handle by library
-  // handlers
+  
   const compOnChange = onChange || defaultOnChange;
   const compOnBlur = onBlur || devaultOnBlur;
 
-  // to support dynamic values;
-  // const dataPath = dataPath;
-  const compLabel = label;
-  const compDescription = description;
-
-  const compValue = getValue ? getValue(compDataPath ?? "") : undefined;
-  const compError = getValue
-    ? getValue(`${paths.error}['${compDataPath}']`)
-    : undefined;
-
-  const compVisible =
-    typeof isVisible === "function"
-      ? runFunction(isVisible, { compId, compDataPath, compValue })
-      : isVisible;
-
+  // Registry
   useEffect(() => {
-    registerComp({compId, compDataPath})
+    registerComp({ compId, compDataPath });
 
     return () => {
-      unRegisterComp({compId});
-    }
+      unRegisterComp({ compId });
+    };
   }, []);
 
   // Prop processed and specific for data lib start with "comp"
@@ -94,6 +96,7 @@ export default function useComp(props: IComp) {
     compError,
     compValue,
     compVisible,
+    compDynaProp,
     compOnChange,
     compOnChangeInForm,
     compOnBlur,
