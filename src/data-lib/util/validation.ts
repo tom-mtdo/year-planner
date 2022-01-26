@@ -1,4 +1,4 @@
-import { forEach, get, isEmpty as lodashIsEmpty, keys } from "lodash";
+import { findIndex, forEach, get, isEmpty as lodashIsEmpty, keys } from "lodash";
 import { BOOLEAN_STR_VALUES } from './constant';
 
 export const isEmpty = (value: any) => {
@@ -40,6 +40,17 @@ export const minLength = (expression: string, value: any) => {
     return valueLength >= minNum;
 }
 
+export const maxLength = (expression: string, value: any) => {
+    if (isEmpty(expression) || isEmpty(value)) {
+        return false;
+    }
+
+    const maxNum = parseInt(expression, 10);
+    const valueLength = !!value && !!value.length ? value.lenght : 0;
+
+    return valueLength <= maxNum;
+}
+
 export const length = (expression: string, value: any) => {
     if (isEmpty(expression) || isEmpty(value)) {
         return false;
@@ -58,11 +69,51 @@ export const pattern = (expression: string, value: string) => {
   return regex.test(value);
 }
 
+export const min = (expression: string, value: any) => {
+  if (!expression || ! value) { return true; }
+
+  let result;
+  // put in try block just incase can't compare
+  try {
+    result = value >= expression;
+  } catch (e) {
+    result = true;
+  }
+
+  return result;
+}
+
+export const max = (expression: string, value: any) => {
+  if (!expression || ! value) { return true; }
+
+  let result;
+  // put in try block just incase can't compare
+  try {
+    result = value <= expression;
+  } catch (e) {
+    result = true;
+  }
+
+  return result;
+}
+
+export const valIn = (expression: any[], value: any) => {
+  return (
+    findIndex(expression, (eValue, key) => {
+      return eValue ===value;
+    }) > -1
+  );
+}
+
 export const predefined = {
   required,
   minLength,
+  maxLength,
   length,
-  pattern
+  min,
+  max,
+  pattern,
+  valIn
 };
 
 export const validateComp = (compValidation: any, runtimeParam: any): string => {
