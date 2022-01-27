@@ -1,34 +1,25 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { DayInfo, getCalendar } from "../../util/util";
-import { paths, MaxYear, MinYear, names } from "../../util/constant";
+import { DayInfo, getCalendar, getStrDate } from "../../util/util";
+import { paths, MaxYear, MinYear, names } from '../../util/constant';
 import { isEmpty, isNumber, set } from "lodash";
 import { compKeys } from '../../data-lib/util/constant';
 import useRuntime from '../../data-lib/hook/useRuntime';
 import { yearPlanner as yearPlannerValidation} from '../../util/validation';
-
-export const getStrDate = (aDate: Date) => {
-  if (!aDate) {
-    return "";
-  }
-
-  const year = aDate.getFullYear();
-  const month = aDate.getMonth() + 1; // because month is 0 - 11
-  const date = aDate.getDate(); // 1 - 31
-
-  const strYear = "" + year;
-  const strMonth = month < 10 ? "0" + month : "" + month;
-  const strDate = date < 10 ? "0" + date : "" + date;
-
-  return `${strYear}${strMonth}${strDate}`;
-};
+import useInBound from '../../hook/useInBound';
 
 const useYearPlanner = function () {
   const { getValue, setValue } = useContext(DataContext);
   const { loadValidation } = useRuntime();
+  const {loadData} = useInBound();
 
   useEffect(() => {
     loadValidation(yearPlannerValidation);
+    const userData = loadData();
+    if(setValue) {
+      setValue(`${paths.userData._path}`, userData);
+    }
+    // saveUserDataToContext();
   }, []);
 
   const saveDate = (dayInfo: DayInfo) => {
@@ -75,7 +66,11 @@ const useYearPlanner = function () {
 
     // add string 'year' to fix lodash function
     if (!isEmpty(userData)) {
-      setValue(`${paths.userData._path}.${names.year}${activeYear}`, userData);
+      const prevData = getValue(paths.userData._path);
+      const newData = {...prevData, [`${names.year}${activeYear}`]: userData};
+      localStorage.setItem('userData', JSON.stringify(newData));
+      setValue(`${paths.userData._path}`, newData);
+      // setValue(`${paths.userData._path}.${names.year}${activeYear}`, userData);
     }
   };
 

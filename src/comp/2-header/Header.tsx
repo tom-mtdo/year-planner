@@ -77,7 +77,7 @@ const NextYearBtn = (props: {changeYear: any}) => {
 
 export default function Header() {
   const { getValue } = useContext(DataContext);
-  const { moveToYear } = useYearPlanner();
+  const { moveToYear, saveData } = useYearPlanner();
   const strActiveYear = getValue ? getValue(paths.runtime.year) : "";
   const activeYear = parseInt(strActiveYear);
 
@@ -95,7 +95,7 @@ export default function Header() {
       <StyledH1>Year Planner - {activeYear}</StyledH1>
       <NextYearBtn changeYear={changeYear} />
       <StyledCtrBox>
-        <Button variant="outlined" onClick={() => alert("Saving data...")}>
+        <Button variant="outlined" onClick={saveData}>
           Save
         </Button>
         &nbsp;
