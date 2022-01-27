@@ -16,11 +16,11 @@ export default function useInBound(props?: any) {
   const calendar = getCalendar({ year: currentYear } as IGetCalendar);
 
   // If uuid empty then generate a new one and save to local storage
-  useEffect(() => {
+  const setUuid = () => {
     if (isEmpty(localStorage.getItem(UUID))) {
       localStorage.setItem(UUID, uuidv4());
     }
-  }, [])
+  };
 
   const loadData = () => {
     const savedData = localStorage.getItem('userData') ?? '';
@@ -51,13 +51,18 @@ export default function useInBound(props?: any) {
     //   }
   };
 
+  const savedData = loadData();
+  const country = 'AU';
+  const state = 'VIC';
+  const year = `${currentYear}`;
+
   // set current year as default
   const prepopData = {
     runtime: {
-      year: `${currentYear}`,
+      year,
       calendar,
-      country: "AU",
-      state: "VIC",
+      country,
+      state,
     },
     temp: {
       settings: {
@@ -72,8 +77,8 @@ export default function useInBound(props?: any) {
         },
       },
     },
-    error: {}
-    // userData: loadData()
+    error: {},
+    userData: savedData
     // },
     // content: {
     //     2021: {
@@ -83,5 +88,5 @@ export default function useInBound(props?: any) {
     // }
   };
 
-  return { prepopData, loadData };
+  return { prepopData, year, country, state, setUuid };
 }

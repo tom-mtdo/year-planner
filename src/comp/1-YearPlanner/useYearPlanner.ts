@@ -2,25 +2,12 @@ import { useContext, useEffect, useRef } from 'react';
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { DayInfo, getCalendar, getStrDate } from "../../util/util";
 import { paths, MaxYear, MinYear, names } from '../../util/constant';
-import { isEmpty, isNumber, set } from "lodash";
+import { isNumber, set } from "lodash";
 import { compKeys } from '../../data-lib/util/constant';
-import useRuntime from '../../data-lib/hook/useRuntime';
-import { yearPlanner as yearPlannerValidation} from '../../util/validation';
-import useInBound from '../../hook/useInBound';
+import { isEmpty } from '../../data-lib/util/validation';
 
 const useYearPlanner = function () {
   const { getValue, setValue } = useContext(DataContext);
-  const { loadValidation } = useRuntime();
-  const {loadData} = useInBound();
-
-  useEffect(() => {
-    loadValidation(yearPlannerValidation);
-    const userData = loadData();
-    if(setValue) {
-      setValue(`${paths.userData._path}`, userData);
-    }
-    // saveUserDataToContext();
-  }, []);
 
   const saveDate = (dayInfo: DayInfo) => {
     if (getValue && setValue) {

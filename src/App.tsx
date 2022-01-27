@@ -5,10 +5,10 @@ import useInBound from "./hook/useInBound";
 import YearPlanner from "./comp/1-YearPlanner/YearPlanner";
 
 function App() {
-const { prepopData } = useInBound({});
+  const { prepopData } = useInBound();
   return (
     <DataProvider prepopData={prepopData}>
-      <YearPlanner/>
+      <YearPlanner />
     </DataProvider>
   );
 }
