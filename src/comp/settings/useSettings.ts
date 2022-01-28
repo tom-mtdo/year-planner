@@ -6,12 +6,12 @@ import { names } from "../../util/constant";
 import useForm, { FORM_STATUS } from "../../data-lib/hook/useForm";
 import { isEmpty } from "../../data-lib/util/validation";
 import { yearPlanner as validation } from "../../util/validation";
-import useYearPlanner from "../1-YearPlanner/useYearPlanner";
+import useCommon from '../../hook/useCommon';
 
 const useSettings = () => {
   const { getValue, setValue } = useContext(DataContext);
   const { resetForm, validateForm } = useForm();
-  const { moveToYear } = useYearPlanner();
+  const { moveToYear } = useCommon();
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 

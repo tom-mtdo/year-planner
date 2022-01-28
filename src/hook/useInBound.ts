@@ -1,26 +1,15 @@
 import { BOOLEAN_VALUES } from "../util/constant";
 import { getCalendar, IGetCalendar } from "../util/util";
-import { useEffect } from 'react';
-import {v4 as uuidv4} from 'uuid';
-import { isEmpty } from '../data-lib/util/validation';
 
 export interface IUseInBound {
   [key: string]: any;
 }
 
-const UUID = 'uuid';
-
+// TODO: this hook and appConfig are overlap, need clean
 export default function useInBound(props?: any) {
   const toDay = new Date();
   const currentYear = toDay.getFullYear();
   const calendar = getCalendar({ year: currentYear } as IGetCalendar);
-
-  // If uuid empty then generate a new one and save to local storage
-  const setUuid = () => {
-    if (isEmpty(localStorage.getItem(UUID))) {
-      localStorage.setItem(UUID, uuidv4());
-    }
-  };
 
   const loadData = () => {
     const savedData = localStorage.getItem('userData') ?? '';
@@ -33,22 +22,6 @@ export default function useInBound(props?: any) {
     }
 
     return data
-    //   const year = getValue(YearPath);
-    //   const userContentPath = `content.${year}`;
-    //   const userContent = getValue(userContentPath);
-    // const calendar = getValue(CalendarPath);
-    // const draft = cloneDeep(calendar);
-    // update whole lot
-    //   if (userContent && !isEmpty(userContent)) {
-    //     Object.keys(userContent).forEach((strDate, index) => {
-    //       const mm = parseInt(strDate.substr(4, 2)) - 1;
-    //       const dd = parseInt(strDate.substr(6, 2)) - 1;
-    //       if (isNumber(mm) && isNumber(dd) && draft[mm][dd]) {
-    //         draft[mm][dd].note = userContent.current[strDate].note;
-    //       }
-    //     });
-    //     setValue(CalendarPath, draft);
-    //   }
   };
 
   const savedData = loadData();
@@ -79,14 +52,7 @@ export default function useInBound(props?: any) {
     },
     error: {},
     userData: savedData
-    // },
-    // content: {
-    //     2021: {
-    //         20210907: { note: 'Start using' },
-    //         20211001: { note: 'Checkprogress' }
-    //     }
-    // }
   };
 
-  return { prepopData, year, country, state, setUuid };
+  return { prepopData, year, country, state };
 }

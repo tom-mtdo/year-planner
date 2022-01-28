@@ -1,19 +1,21 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { AppBox } from "../../App.style";
-import { DataContext } from "../../data-lib/context/DataProvider";
 import useRuntime from "../../data-lib/hook/useRuntime";
 import useInBound from "../../hook/useInBound";
-import Header from "../2-header/Header";
-import Body from "../3-body/Body";
-import Footer from "../4-footer/Footer";
+import Header from "../1-header/Header";
+import Body from "../2-body/Body";
+import Footer from "../3-footer/Footer";
 import DayModal from "../day-modal/DayModal";
 import { yearPlanner as yearPlannerValidation} from '../../util/validation';
-import useYearPlanner from './useYearPlanner';
+import useOutBound from "../../hook/useOutBound";
+import useCommon from '../../hook/useCommon';
 
 const YearPlanner = function () {
   const { loadValidation } = useRuntime();
-  const {setUuid, year, country, state } = useInBound();
-  const { moveToYear } = useYearPlanner();
+  const { year, country, state } = useInBound();
+  const { setUuid } = useOutBound();
+
+  const { moveToYear } = useCommon();
 
   useEffect(() => {
     loadValidation(yearPlannerValidation);

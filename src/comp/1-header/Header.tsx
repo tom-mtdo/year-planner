@@ -7,12 +7,13 @@ import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { get, isNumber } from "lodash";
 import { paths } from "../../util/constant";
-import useYearPlanner from "../1-YearPlanner/useYearPlanner";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
 import { isTrue } from "../../data-lib/util/util";
+import useCommon from '../../hook/useCommon';
+import useOutBound from '../../hook/useOutBound';
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
@@ -77,7 +78,9 @@ const NextYearBtn = (props: {changeYear: any}) => {
 
 export default function Header() {
   const { getValue } = useContext(DataContext);
-  const { moveToYear, saveData } = useYearPlanner();
+  const { moveToYear } = useCommon();
+  const { saveData } = useOutBound();
+
   const strActiveYear = getValue ? getValue(paths.runtime.year) : "";
   const activeYear = parseInt(strActiveYear);
 

@@ -1,13 +1,14 @@
 import React from "react";
 import "./App.css";
 import { DataProvider } from "./data-lib/context/DataProvider";
-import useInBound from "./hook/useInBound";
-import YearPlanner from "./comp/1-YearPlanner/YearPlanner";
+import YearPlanner from "./comp/0-YearPlanner/YearPlanner";
+import {getInitData} from './appConfig';
 
 function App() {
-  const { prepopData } = useInBound();
+  const initData = getInitData();
+
   return (
-    <DataProvider prepopData={prepopData}>
+    <DataProvider prepopData={initData}>
       <YearPlanner />
     </DataProvider>
   );
