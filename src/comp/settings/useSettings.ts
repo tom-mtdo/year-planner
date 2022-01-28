@@ -5,7 +5,7 @@ import { BOOLEAN_STR_VALUES, compKeys } from "../../data-lib/util/constant";
 import { names } from "../../util/constant";
 import useForm, { FORM_STATUS } from "../../data-lib/hook/useForm";
 import { isEmpty } from "../../data-lib/util/validation";
-import { yearPlanner as validation } from "../../util/validation";
+import { yearPlanner as validation } from "../0-YearPlanner/validation";
 import useCommon from '../../hook/useCommon';
 
 const useSettings = () => {

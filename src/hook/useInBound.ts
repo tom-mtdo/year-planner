@@ -1,5 +1,6 @@
 import { BOOLEAN_VALUES } from "../util/constant";
 import { getCalendar, IGetCalendar } from "../util/util";
+import { YEAR_PLANNER } from "./useOutBound";
 
 export interface IUseInBound {
   [key: string]: any;
@@ -12,22 +13,20 @@ export default function useInBound(props?: any) {
   const calendar = getCalendar({ year: currentYear } as IGetCalendar);
 
   const loadData = () => {
-    const savedData = localStorage.getItem('userData') ?? '';
-    let data;
+    const savedData = localStorage.getItem(YEAR_PLANNER) ?? '';
+    let data: any = {};
 
     try {
       data = JSON.parse(savedData);
     } catch (ex) {
-      data = undefined;
+      // data = undefined;
+      console.log('error');
     }
 
     return data
   };
 
-  const savedData = loadData();
-  const country = 'AU';
-  const state = 'VIC';
-  const year = `${currentYear}`;
+  const {year = currentYear, country = 'AU', state = 'VIC', userData = undefined} = loadData();
 
   // set current year as default
   const prepopData = {
@@ -51,7 +50,7 @@ export default function useInBound(props?: any) {
       },
     },
     error: {},
-    userData: savedData
+    userData
   };
 
   return { prepopData, year, country, state };

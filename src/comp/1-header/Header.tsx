@@ -3,17 +3,15 @@ import { StyledH1 } from "../comp.style";
 import { StyledCtrBox, StyledHeader } from "./Header.style";
 import Checkbox from "../../data-lib/adapter/MU-adapter/checkbox/Checkbox";
 import { Button } from "@material-ui/core";
-import { useContext } from "react";
-import { DataContext } from "../../data-lib/context/DataProvider";
-import { get, isNumber } from "lodash";
+import { get } from "lodash";
 import { paths } from "../../util/constant";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from '../../data-lib/util/constant';
 import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
 import { isTrue } from "../../data-lib/util/util";
-import useCommon from '../../hook/useCommon';
 import useOutBound from '../../hook/useOutBound';
+import useHeader from "./useHeader";
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
@@ -77,20 +75,8 @@ const NextYearBtn = (props: {changeYear: any}) => {
 };
 
 export default function Header() {
-  const { getValue } = useContext(DataContext);
-  const { moveToYear } = useCommon();
+  const {activeYear, changeYear} = useHeader();
   const { saveData } = useOutBound();
-
-  const strActiveYear = getValue ? getValue(paths.runtime.year) : "";
-  const activeYear = parseInt(strActiveYear);
-
-  const changeYear = (value: number, valueType?: CHANGE_YEAR_TYPE) => {
-    if (isNumber(value)) {
-      const newYear =
-        CHANGE_YEAR_TYPE.VALUE === valueType ? value : activeYear + value;
-      moveToYear(`${newYear}`);
-    }
-  };
 
   return (
     <StyledHeader>

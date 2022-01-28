@@ -9,7 +9,7 @@ import { useCalendar } from "./useCalendar";
 import { Padding, MonthLabelCell } from "./comps";
 export const MONTH_LABEL_MIN_WIDTH = "70px";
 
-export default function Planner() {
+export default function Calendar() {
   const {
     headerRow,
     calendar,
@@ -61,6 +61,7 @@ export default function Planner() {
     ) : (
       <></>
     );
+    
   return (
     <ContentBox>
       <Header headerData={headerRow} />

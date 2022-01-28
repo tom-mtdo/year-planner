@@ -4,11 +4,12 @@ import { isEmpty } from "../data-lib/util/validation";
 import { v4 as uuidv4 } from "uuid";
 import { useContext } from "react";
 import { DataContext } from "../data-lib/context/DataProvider";
-import { names, paths } from "../util/constant";
+import { names, paths } from '../util/constant';
 import { DayInfo, getStrDate } from "../util/util";
 import { set } from "lodash";
 
 const UUID = "uuid";
+export const YEAR_PLANNER = 'yearPlanner';
 
 const useOutBound = function () {
   const { getValue, setValue } = useContext(DataContext);
@@ -25,7 +26,9 @@ const useOutBound = function () {
       return;
     }
 
-    const activeYear = getValue(paths.runtime.year);
+    const year = getValue(paths.runtime.year);
+    const country = getValue(paths.runtime.country);
+    const state = getValue(paths.runtime.state);
     const calendar = getValue(paths.runtime.calendar);
     // extract user data
     if (!calendar || !Array.isArray(calendar)) {
@@ -44,14 +47,24 @@ const useOutBound = function () {
       }
     });
 
+    const prevData = getValue(paths.userData._path);
+    const storeData = {
+      year,
+      country,
+      state,
+      userData: prevData
+    };
+
     // add string 'year' to fix lodash function
+    // TODO: check function: if userData is empty, clear userData saved in local storage
     if (!isEmpty(userData)) {
-      const prevData = getValue(paths.userData._path);
-      const newData = { ...prevData, [`${names.year}${activeYear}`]: userData };
-      localStorage.setItem("userData", JSON.stringify(newData));
-      setValue(`${paths.userData._path}`, newData);
+      const newUserData = { ...prevData, [`${names.year}${year}`]: userData };
+      setValue(`${paths.userData._path}`, newUserData);
+      storeData.userData = newUserData;
       // setValue(`${paths.userData._path}.${names.year}${activeYear}`, userData);
     }
+
+    localStorage.setItem(YEAR_PLANNER, JSON.stringify(storeData));
   };
 
   return { setUuid, saveData };
