@@ -33,7 +33,7 @@ const useCommon = function() {
         inCountry?: string,
         inState?: string
       ) => {
-        // save use data of the active year
+        // save user data of the active year
         saveData();
         if (!getValue || !setValue) {
           return {};
