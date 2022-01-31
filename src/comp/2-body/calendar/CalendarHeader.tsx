@@ -1,7 +1,7 @@
-import Cell from "../../lib/cell/Cell";
-import Row from "../../lib/row/Row";
+import Cell from "../../../lib/cell/Cell";
+import Row from "../../../lib/row/Row";
 import DayLabel from "../day-label/DayLabel";
-import { MONTH_LABEL_MIN_WIDTH } from "./Planner";
+import { MONTH_LABEL_MIN_WIDTH } from "./Calendar";
 
 export interface IHeader {
   headerData: string[];

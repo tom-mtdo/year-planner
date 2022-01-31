@@ -1,6 +1,6 @@
 import React from "react";
 import { BodyBox, BodyLeftBox, BodyCenterBox, BodyRightBox } from './Body.style';
-import PlannerContent from '../planner/Planner';
+import PlannerContent from './calendar/Calendar';
 import Settings from "../settings/Settings";
 
 function Body() {

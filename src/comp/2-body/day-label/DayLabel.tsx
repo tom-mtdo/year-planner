@@ -1,5 +1,5 @@
 import React from "react";
-import { isWeekend } from "../../util/util";
+import { isWeekend } from "../../../util/util";
 import { StlyedDayLabel } from "./DayLabel.style";
 
 export default function DayLabel(props: any){

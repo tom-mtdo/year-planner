@@ -1,4 +1,4 @@
-import { paths } from "./constant";
+import { paths } from "../../util/constant";
 
 export const yearPlanner = {
   [paths.temp.settings.year]: {

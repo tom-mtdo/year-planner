@@ -1,19 +1,19 @@
-import { BOOLEAN_VALUES, paths } from "../../util/constant";
-import { DayInfo, getHeader } from "../../util/util";
+import { BOOLEAN_VALUES, paths } from "../../../util/constant";
+import { DayInfo, getHeader } from "../../../util/util";
 import { useContext } from "react";
-import { DataContext } from "../../data-lib/context/DataProvider";
+import { DataContext } from "../../../data-lib/context/DataProvider";
 
 // logic hook
-export const usePlanner = () => {
+export const useCalendar = () => {
   const { getValue, setValue } = useContext(DataContext);
-  
+
   const toDay = new Date();
   const currentYear = toDay.getFullYear();
   const currentMonth = toDay.getMonth(); // 0 - 11
   const currentDate = toDay.getDate(); // 1 - 31
   const headerRow = getHeader();
 
-  let year = '';
+  let year = "";
   let calendar: any[] = [];
 
   if (getValue) {
@@ -37,6 +37,6 @@ export const usePlanner = () => {
     isCurrentYear,
     currentMonth,
     currentDate,
-    onDoubleClick
+    onDoubleClick,
   };
 };

@@ -147,3 +147,19 @@ export const stateToSelect = (countryCode: string) => {
       })
     : [];
 };
+
+export const getStrDate = (aDate: Date) => {
+  if (!aDate) {
+    return "";
+  }
+
+  const year = aDate.getFullYear();
+  const month = aDate.getMonth() + 1; // because month is 0 - 11
+  const date = aDate.getDate(); // 1 - 31
+
+  const strYear = "" + year;
+  const strMonth = month < 10 ? "0" + month : "" + month;
+  const strDate = date < 10 ? "0" + date : "" + date;
+
+  return `${strYear}${strMonth}${strDate}`;
+};

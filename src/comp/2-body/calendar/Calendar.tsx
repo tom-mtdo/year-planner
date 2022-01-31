@@ -1,15 +1,15 @@
 import React from "react";
-import { ContentBox } from "./Planner.style";
-import Row from "../../lib/row/Row";
-import Cell from "../../lib/cell/Cell";
+import { ContentBox } from "./Calendar.style";
+import Row from "../../../lib/row/Row";
+import Cell from "../../../lib/cell/Cell";
 import Day from "../day/Day";
-import { countPadding, DayInfo } from "../../util/util";
-import Header from "./Header";
-import { usePlanner } from "./usePlanner";
+import { countPadding, DayInfo } from "../../../util/util";
+import Header from "./CalendarHeader";
+import { useCalendar } from "./useCalendar";
 import { Padding, MonthLabelCell } from "./comps";
 export const MONTH_LABEL_MIN_WIDTH = "70px";
 
-export default function Planner() {
+export default function Calendar() {
   const {
     headerRow,
     calendar,
@@ -17,7 +17,7 @@ export default function Planner() {
     currentMonth,
     currentDate,
     onDoubleClick,
-  } = usePlanner();
+  } = useCalendar();
 
   const months =
     calendar && Array.isArray(calendar) ? (
@@ -61,6 +61,7 @@ export default function Planner() {
     ) : (
       <></>
     );
+    
   return (
     <ContentBox>
       <Header headerData={headerRow} />

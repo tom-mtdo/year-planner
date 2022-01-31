@@ -1,5 +1,5 @@
 import React from "react";
-import { DayInfo } from "../../util/util";
+import { DayInfo } from "../../../util/util";
 // import { isWeekend, DayInfo } from '../../util/util';
 import {
   StyledDay,
