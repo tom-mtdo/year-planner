@@ -4,7 +4,6 @@ import { BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import useYearPlanner from "../0-YearPlanner/useYearPlanner";
 import { paths } from "../../util/constant";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import useCommon from '../../hook/useCommon';
