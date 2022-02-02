@@ -1,14 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { AppBox } from './App.style';
-import Header from './comp/header/Header';
+import React from "react";
+import "./App.css";
+import { DataProvider } from "./data-lib/context/DataProvider";
+import YearPlanner from "./comp/0-YearPlanner/YearPlanner";
+// import {getInitData} from './appConfig';
+import useInBound from './hook/useInBound';
 
 function App() {
+  // const initData = getInitData();
+  const {prepopData} = useInBound();
+
   return (
-    <AppBox>
-      <Header />
-    </AppBox>
+    <DataProvider prepopData={prepopData}>
+      <YearPlanner />
+    </DataProvider>
   );
 }
 
