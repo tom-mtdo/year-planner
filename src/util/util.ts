@@ -148,6 +148,10 @@ export const stateToSelect = (countryCode: string) => {
     : [];
 };
 
+export const countryCodeToName = (countryCode: string) => {
+  return (Countries.get(countryCode) as ICountry)?.name ?? undefined; 
+}
+
 export const getStrDate = (aDate: Date) => {
   if (!aDate) {
     return "";

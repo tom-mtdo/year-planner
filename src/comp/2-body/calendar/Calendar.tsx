@@ -51,7 +51,7 @@ export default function Calendar() {
 
         // return a month
         return (
-          <Row key={monthIndex}>
+          <Row key={monthIndex} minHeight={'90px'}>
             <MonthLabelCell monthIndex={monthIndex} />
             {[leftPadding, ...monthCell, rightPadding]}
             <MonthLabelCell monthIndex={monthIndex} />
