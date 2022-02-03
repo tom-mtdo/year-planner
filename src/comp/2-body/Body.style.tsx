@@ -9,7 +9,7 @@ export const BodyBox = styled.div`
 export const BodyLeftBox = styled.div`
     text-align: center;
     flex-grow: 1;
-    padding: 0 24px;
+    padding: 0 12px;
 `;
 
 export const BodyCenterBox = styled.div`
@@ -21,5 +21,5 @@ export const BodyCenterBox = styled.div`
 export const BodyRightBox = styled.div`
     text-align: center;
     flex-grow: 1;
-    padding: 0 24px;
+    padding: 0 12px;
 `;
