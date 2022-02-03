@@ -1,8 +1,8 @@
 import Cell from "../../../lib/cell/Cell";
 import { MONTH_SHORT_NAME } from "../../../util/constant";
 import { MONTH_LABEL_MIN_WIDTH } from "./Calendar";
-import MonthLabel from "../month-label/MonthLabel";
 import { StyledDayVoid } from "../day/Day.style";
+import {StyledMonthLabelCell, StyledMonthLabel} from './Calendar.style';
 
 // padding left & right
 export interface IPadding {
@@ -25,19 +25,19 @@ export const Padding = ({ count }: IPadding) => {
 export interface IMonthLabel {
   monthIndex: number;
 }
-export const MonthLabelCell = ({monthIndex}: IMonthLabel) => {
 
-  return(
-  <Cell
-    key={`month-label-${monthIndex}-L`}
-    border={"solid 1px burlywood"}
-    minWidth={MONTH_LABEL_MIN_WIDTH}
-  >
-    <MonthLabel>
-      <span style={{ width: "100%", fontWeight: "bold" }}>
-        <h2>{MONTH_SHORT_NAME[monthIndex]}</h2>
-      </span>
-    </MonthLabel>
-  </Cell>
+
+
+export const MonthLabelCell = ({ monthIndex }: IMonthLabel) => {
+  return (
+    <Cell
+      key={`month-label-${monthIndex}-L`}
+      border={"solid 1px burlywood"}
+      minWidth={MONTH_LABEL_MIN_WIDTH}
+    >
+      <StyledMonthLabelCell>
+        <StyledMonthLabel>{MONTH_SHORT_NAME[monthIndex]}</StyledMonthLabel>
+      </StyledMonthLabelCell>
+    </Cell>
   );
 };
