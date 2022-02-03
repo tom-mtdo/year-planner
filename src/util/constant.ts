@@ -4,6 +4,8 @@ import { compKeys } from '../data-lib/util/constant';
 // names used to construct data path & comp id
 // fields in groups in roots
 export const names = {
+  // app name
+  yearPlanner: 'yearPlanner',
   // context root levels
   userData: "userData",
   runtime: "runtime",
@@ -27,6 +29,10 @@ export const names = {
   _isShown: '_isShown'
 
 };
+
+export const labels = {
+  yearPlanner: 'Year planner'
+}
 
 // Paths - data structure
 const userDataHome = `${names.userData}`;
