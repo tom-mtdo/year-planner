@@ -6,3 +6,9 @@ export const StyledNote = styled.div`
     padding: 1em;
     font-style: italic;
 `
+
+export const StyledInfo = styled.div`
+    position: absolute;
+    right: 0;
+    padding: 1em;
+`

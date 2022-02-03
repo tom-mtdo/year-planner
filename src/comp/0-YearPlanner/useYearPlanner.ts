@@ -4,7 +4,7 @@ import useRuntime from "../../data-lib/hook/useRuntime";
 import useCommon from "../../hook/useCommon";
 import useInBound from "../../hook/useInBound";
 import useOutBound, { YEAR_PLANNER } from "../../hook/useOutBound";
-import { paths } from "../../util/constant";
+import { labels, paths } from "../../util/constant";
 import { yearPlanner as yearPlannerValidation} from './validation';
 
 const useYearPlanner = function () {
@@ -18,6 +18,7 @@ const useYearPlanner = function () {
     loadValidation(yearPlannerValidation);
     setUuid();
     moveToYear(year, country, state);
+    document.title = labels.yearPlanner;
   }, []);
 
   // TODO: review this function to be more efficient
