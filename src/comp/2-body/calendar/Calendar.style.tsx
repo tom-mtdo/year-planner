@@ -11,6 +11,7 @@ export const StyledMonthLabelCell = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
+    padding: 0 0 0 4px;
 `;
 
 export const StyledMonthLabel = styled.span`
