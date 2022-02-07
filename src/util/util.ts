@@ -84,7 +84,7 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
     aYear.push(aMonth);
   }
 
-  addHoliday(aYear, country, state);
+  addHoliday(aYear, country, state, year);
 
   return aYear;
 };
@@ -102,19 +102,15 @@ export const getCalendar = (input: IGetCalendar) => {
   }
 
   return getYearContent(input);
-  // return {
-  //   header: getHeader(),
-  //   content: getYearContent(year),
-  // };
 };
 
 export const isWeekend = (day: number) => {
   return Math.abs(day) % 7 === 5 || Math.abs(day) % 7 === 6;
 };
 
-export const addHoliday = (aYear: any[][], country='AU', state='VIC') => {
+export const addHoliday = (aYear: any[][], country='AU', state='VIC', yearNumber: number) => {
   const hd = new Holidays(country, state);
-  const holidays = hd.getHolidays();
+  const holidays = hd.getHolidays(yearNumber);
   holidays.forEach((holiday, index) => {
     const aDate = new Date(holiday.date);
     const month = aDate.getMonth();
