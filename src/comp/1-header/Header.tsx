@@ -1,51 +1,30 @@
-import { StyledH1 } from "../comp.style";
+import { StyledH1 } from "./Header.style";
 
-import { StyledBrief, StyledBriefBox, StyledCtrBox, StyledHeader } from "./Header.style";
-import Checkbox from "../../data-lib/adapter/MU-adapter/checkbox/Checkbox";
+import {
+  StyledBrief,
+  StyledBriefBox,
+  StyledCtrBox,
+  StyledHeader,
+} from "./Header.style";
 import { Button } from "@material-ui/core";
 import { get } from "lodash";
 import { paths } from "../../util/constant";
-import useComp, { IComp } from "../../data-lib/hook/useComp";
+import useComp from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
-import useSettings from "../settings/useSettings";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
 import { isTrue } from "../../data-lib/util/util";
 import useOutBound from "../../hook/useOutBound";
-import useHeader from "./useHeader";
+import useHeader, { ButtonNames } from "./useHeader";
+import { IconButton } from "@material-ui/core";
+import SaveIcon from "@mui/icons-material/Save";
+import SettingsIcon from "@mui/icons-material/Settings";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
   VALUE = "value",
 }
-
-const SettingsCheck = () => {
-  const props: IComp = {
-    // parentId: settingsId,
-    // parentDataPath: paths.temp.settings[compKeys._path],
-    // name: names._isShown,
-
-    dataPath: paths.temp.settings[compKeys._isShown],
-    id: "temp-settings-isShown",
-  };
-  const { compValue, compId, compDataPath, compLabel, compOnChange } =
-    useComp(props);
-  const { resetSettings } = useSettings();
-
-  const myCompOnChange = (event: any) => {
-    resetSettings();
-    compOnChange(event);
-  };
-
-  return (
-    <Checkbox
-      compId={compId}
-      compDataPath={compDataPath}
-      compValue={compValue}
-      compLabel={compLabel}
-      compOnChange={myCompOnChange}
-    />
-  );
-};
 
 const isQuickNavVisible = (args: IRuntimeArgs) => {
   const isSettingsShown = get(
@@ -64,7 +43,12 @@ const PreviousYearBtn = (props: { changeYear: any }) => {
   const { compVisible } = useComp(compProps);
 
   return isTrue(compVisible) ? (
-    <Button onClick={() => props.changeYear(-1)}>{"<"}</Button>
+    <IconButton
+      aria-label="Save"
+      onClick={() => props.changeYear(-1)}
+    >
+      <NavigateBeforeIcon />
+    </IconButton>
   ) : (
     <></>
   );
@@ -79,31 +63,48 @@ const NextYearBtn = (props: { changeYear: any }) => {
   const { compVisible } = useComp(compProps);
 
   return isTrue(compVisible) ? (
-    <Button onClick={() => props.changeYear(1)}>{">"}</Button>
+    <IconButton
+      aria-label="Save"
+      onClick={() => props.changeYear(1)}
+    >
+      <NavigateNextIcon />
+    </IconButton>
   ) : (
     <></>
   );
 };
 
 export default function Header() {
-  const { activeYear, activeCountry, activeState, changeYear } = useHeader();
+  const { activeYear, activeCountry, activeState, changeYear, handleClick } =
+    useHeader();
   const { saveData } = useOutBound();
-
   return (
     <StyledHeader>
       <PreviousYearBtn changeYear={changeYear} />
-      <StyledH1>Year Planner - {activeYear}</StyledH1>
+      <Button
+        variant="text"
+        onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
+      >
+        <StyledH1>Year Planner - {activeYear}</StyledH1>
+      </Button>
       <NextYearBtn changeYear={changeYear} />
       <StyledBriefBox>
-        <StyledBrief>{activeCountry}, {activeState}</StyledBrief>
+        <StyledBrief>
+          {activeCountry}, {activeState}
+        </StyledBrief>
       </StyledBriefBox>
       <StyledCtrBox>
-        <Button variant="outlined" onClick={saveData}>
-          Save
-        </Button>
+        <IconButton aria-label="Save" size="small" onClick={() => saveData()}>
+          <SaveIcon />
+        </IconButton>
         &nbsp;
-        <SettingsCheck />
-        <strong>Settings</strong>
+        <IconButton
+          aria-label="Save"
+          size="small"
+          onClick={() => handleClick({ buttonName: ButtonNames.SETTINGS })}
+        >
+          <SettingsIcon />
+        </IconButton>
       </StyledCtrBox>
     </StyledHeader>
   );
