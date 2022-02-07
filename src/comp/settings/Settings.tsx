@@ -19,6 +19,7 @@ export default function Settings() {
 
   return (
     <StyledSettingsBox>
+      <form onSubmit={(event) => event.preventDefault()}>
       <StyledSettingsHeader isEditing={isEditing}>
         <StyledH2>Settings</StyledH2>
         <EdittingPrompt isShown={isEditing} />
@@ -27,7 +28,7 @@ export default function Settings() {
         <SettingsBody />
       </StyledSettingsBody>
       <StyledSettingsFooter>
-        <Button variant="contained" onClick={applySettings}>
+        <Button variant="contained" onClick={applySettings} type={'submit'}>
           Apply
         </Button>
         &nbsp;&nbsp;
@@ -39,6 +40,7 @@ export default function Settings() {
           Close
         </Button>
       </StyledSettingsFooter>
+      </form>
     </StyledSettingsBox>
   );
 }
