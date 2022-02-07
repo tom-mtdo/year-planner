@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const StyledH1 = styled.h1`
+    margin: 0;
+    padding 0.3em;
+`
 export const StyledHeader = styled.div`
     display: flex;    
     justify-content: center;    
@@ -12,6 +16,7 @@ export const StyledCtrBox = styled.div`
     align-items: center;
     position: absolute;
     right: 0;
+    bottom: 0;
     padding: 0 3em 0 0;
 `
 export const StyledBriefBox = styled.div`
