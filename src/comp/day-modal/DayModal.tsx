@@ -79,7 +79,7 @@ function DayModal(props: any) {
       onConfirm={onConfirm}
       onCancel={onCancel}
     >
-      <TxtDayNote />
+        <TxtDayNote />
     </Modal>
   );
 }

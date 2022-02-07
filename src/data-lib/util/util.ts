@@ -69,9 +69,9 @@ export const removeIteration = (aPath: string) => {
  * @returns page1.group1[0].group2[2]
  *
  */
-export const getParentPath = (compPath: string = ''): string => {
+export const getParentPath = (compPath: string = ""): string => {
   if (isEmpty(compPath)) {
-    return '';
+    return "";
   }
   return `${compPath.substring(0, compPath.lastIndexOf("."))}`;
 };
@@ -94,7 +94,10 @@ export const isIterationPath = (aPath: string) => {
   return aPath.charAt(aPath.length - 1) === "]";
 };
 
-export const getSiblingPath = (compPath: string | undefined, siblingName: string) => {
+export const getSiblingPath = (
+  compPath: string | undefined,
+  siblingName: string
+) => {
   const parentPath = getParentPath(compPath) || "";
   return `${parentPath.length > 0 ? parentPath.concat(".") : ""}${siblingName}`;
 };
@@ -255,16 +258,41 @@ export const comparePath = (
   return 0;
 };
 
-
 //// other utils
 export const isTrue = (value: any) => {
   return (
-    true === value || BOOLEAN_STR_VALUES.TRUE === value || BOOLEAN_STR_VALUES.YES === value
+    true === value ||
+    BOOLEAN_STR_VALUES.TRUE === value ||
+    BOOLEAN_STR_VALUES.YES === value
   );
-}
+};
 
 export const isFalse = (value: any) => {
   return (
-    false === value || BOOLEAN_STR_VALUES.FALSE === value || BOOLEAN_STR_VALUES.NO === value
+    false === value ||
+    BOOLEAN_STR_VALUES.FALSE === value ||
+    BOOLEAN_STR_VALUES.NO === value
   );
-}
+};
+
+export const getNot = (value: any) => {
+  if (true === value) {
+    return false;
+  }
+  if (false === value) {
+    return true;
+  }
+  if (value === BOOLEAN_STR_VALUES.TRUE) {
+    return BOOLEAN_STR_VALUES.FALSE;
+  }
+  if (value === BOOLEAN_STR_VALUES.FALSE) {
+    return BOOLEAN_STR_VALUES.TRUE;
+  }
+  if (value === BOOLEAN_STR_VALUES.YES) {
+    return BOOLEAN_STR_VALUES.NO;
+  }
+  if (value === BOOLEAN_STR_VALUES.NO) {
+    return BOOLEAN_STR_VALUES.YES;
+  }
+  return undefined;
+};
