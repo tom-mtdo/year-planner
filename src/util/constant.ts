@@ -1,6 +1,5 @@
 import { countriesToSelect, getCountries } from "./util";
 import { compKeys } from '../data-lib/util/constant';
-import Holidays from "date-holidays";
 
 // names used to construct data path & comp id
 // fields in groups in roots
