@@ -131,8 +131,17 @@ export const countriesToSelect = (countriesObject: any = []) => {
 };
 
 export const getCountries = () => {
-  const hd = new Holidays();
-  return hd.getCountries();
+  // const hd = new Holidays();
+  // return hd.getCountries();
+
+  // few countries don't have state and not sorted, so use short list for now
+  return {
+    'AU': 'Australia',
+    'CA': 'Canada',
+    'GB': 'United Kingdom',
+    'NZ': 'New Zealand',
+    'US': 'United States of America',
+  };
 }
 
 // TODO use singleton for Holidays
@@ -145,6 +154,7 @@ export const stateToSelect = (countryCode: string) => {
 }
 
 export const countryCodeToName = (countryCode: string) => {
+  // @ts-ignore
   return countries[countryCode] ?? ''; 
 }
 
