@@ -1,19 +1,8 @@
-import { Countries } from '../constant';
-import { countriesToSelect, stateToSelect } from '../util';
+import { } from '../constant';
+import { stateToSelect } from '../util';
 
 
 describe('Util', () => {
-    describe('countriesToSelect', () => {
-        it('should return array of country for select', () => {
-            const expected = [
-                ['AU', 'Australia'],
-                ['NZ', 'New Zealand']
-            ];
-            const output = countriesToSelect(Countries);
-            expect(output).toEqual(expected);
-        })
-    })
-
     describe('stateToSelect', () => {
         it('should return array of state for a country for select', () => {
             const expected = [

@@ -8,7 +8,7 @@ export default function Footer(){
         <Box>
             <StyledNote>* Double click on a day to add notes</StyledNote>
             <StyledInfo>Version: 1.0.0 Beta 1</StyledInfo>
-            <StyledP>Copyright TOMTECH Pty Ltd</StyledP>
+            <StyledP>Copyright HTD Pty Ltd</StyledP>
         </Box>
     );
 }
