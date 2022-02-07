@@ -1,6 +1,6 @@
 import Holidays from "date-holidays";
 import _ from "lodash";
-import { Countries, ICountry } from "./constant";
+import { countries } from './constant';
 import {
   DAY_SHORT_NAME,
   MaxYear,
@@ -24,6 +24,8 @@ export interface DayInfo {
   holiday?: string; // Queen birthday .etc
   note?: string;
 }
+
+
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
   const firstDate = new Date(year, month, 1);
@@ -84,7 +86,7 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
     aYear.push(aMonth);
   }
 
-  addHoliday(aYear, country, state);
+  addHoliday(aYear, country, state, year);
 
   return aYear;
 };
@@ -102,19 +104,15 @@ export const getCalendar = (input: IGetCalendar) => {
   }
 
   return getYearContent(input);
-  // return {
-  //   header: getHeader(),
-  //   content: getYearContent(year),
-  // };
 };
 
 export const isWeekend = (day: number) => {
   return Math.abs(day) % 7 === 5 || Math.abs(day) % 7 === 6;
 };
 
-export const addHoliday = (aYear: any[][], country='AU', state='VIC') => {
+export const addHoliday = (aYear: any[][], country='AU', state='VIC', yearNumber: number) => {
   const hd = new Holidays(country, state);
-  const holidays = hd.getHolidays();
+  const holidays = hd.getHolidays(yearNumber);
   holidays.forEach((holiday, index) => {
     const aDate = new Date(holiday.date);
     const month = aDate.getMonth();
@@ -124,32 +122,30 @@ export const addHoliday = (aYear: any[][], country='AU', state='VIC') => {
   return aYear;
 };
 
-export const countriesToSelect = (countries: Map<string, ICountry>) => {
-  const result: [string, string][] = [];
-  if (countries && !_.isEmpty(countries)) {
-    Countries.forEach((value, key) => {
-      result.push([key, value.name]);
-    });
-  }
+// TODO use singleton for Holidays
+export const countriesToSelect = (countriesObject: any = []) => {
+  return Object.keys(countriesObject).map((code, index) => {
+    return [code, countriesObject[code]];
+  });
 
-  return result;
 };
 
+export const getCountries = () => {
+  const hd = new Holidays();
+  return hd.getCountries();
+}
+
+// TODO use singleton for Holidays
 export const stateToSelect = (countryCode: string) => {
-  const country: ICountry = Countries.get(countryCode) as ICountry;
-  const states = country ? country.states : {};
-
-  // @ts-ignore
-  const codes = Object.keys(states);
-  return codes && codes.length > 0
-    ? codes.map((code, index) => {
-        return [code, states[code]];
-      })
-    : [];
-};
+  const hd = new Holidays();
+  const states = hd.getStates(countryCode) ?? [];
+  return Object.keys(states).map((code, index) => {
+    return [code, states[code]];
+  });
+}
 
 export const countryCodeToName = (countryCode: string) => {
-  return (Countries.get(countryCode) as ICountry)?.name ?? undefined; 
+  return countries[countryCode] ?? ''; 
 }
 
 export const getStrDate = (aDate: Date) => {
