@@ -9,6 +9,7 @@ import useComp, { IComp } from "../../data-lib/hook/useComp";
 import useCommon from '../../hook/useCommon';
 import useForm from "../../data-lib/hook/useForm";
 import { pathToId } from "../../data-lib/util/util";
+import { DayInfo } from '../../util/util';
 
 const TxtDayNote = () => {
   const props: IComp = {
@@ -76,11 +77,15 @@ function DayModal(props: any) {
     }
   };
 
+  const noteDate: Date = modalData?.dayInfo?.date || '';
+  const title = noteDate ? `${noteDate.toISOString().substring(0, 10)}` : '';
+
   return (
     <Modal
       isShown={BOOLEAN_STR_VALUES.TRUE === modalData?._isShown}
       onConfirm={onConfirm}
       onCancel={onCancel}
+      title={title}
     >
         <TxtDayNote />
     </Modal>
