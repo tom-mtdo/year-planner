@@ -1,4 +1,3 @@
-import { Switch } from "@material-ui/core";
 import { isNumber } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
@@ -7,7 +6,7 @@ import { paths } from "../../util/constant";
 import { countryCodeToName } from "../../util/util";
 import useSettings from "../settings/useSettings";
 import { CHANGE_YEAR_TYPE } from "./Header";
-import { BOOLEAN_STR_VALUES, compKeys } from '../../data-lib/util/constant';
+import { compKeys } from '../../data-lib/util/constant';
 import { getNot } from "../../data-lib/util/util";
 
 export enum ButtonNames {

@@ -19,6 +19,7 @@ export default function Select(props: IComp) {
     compOnBlur,
     compOptions,
     compError,
+    setCompRef,
     ...rest
   } = props;
 
@@ -59,6 +60,7 @@ export default function Select(props: IComp) {
       <InputLabel id={labelId}>{compLabel}</InputLabel>
       <MuSelect
         {...rest}
+        inputRef={setCompRef}
         labelId={labelId}
         id={compId}
         value={compValue}

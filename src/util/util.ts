@@ -1,5 +1,4 @@
 import Holidays from "date-holidays";
-import _ from "lodash";
 import { countries } from './constant';
 import {
   DAY_SHORT_NAME,
