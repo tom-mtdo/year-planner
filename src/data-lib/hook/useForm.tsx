@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataProvider';
 import { compKeys } from '../util/constant';
 import { get } from 'lodash';
@@ -13,11 +13,28 @@ export enum FORM_STATUS {
     DIRTY = 'dirty'
 }
 
-const useForm = () => {
+/**
+ * 
+ * @param props compToFocus: compId of comp which will get focus after loaded
+ * @returns 
+ */
+const useForm = (props?: {compToFocus?: string}) => {
     const {getValue, setValue} = useContext(DataContext);
     const {removeError} = useError();
     const {getChildren} = useRegistry();
     const {validate} = useHandler();
+
+    const {getCompRef} = useRegistry();
+    const compRef = props?.compToFocus ? getCompRef(props?.compToFocus) : undefined;
+  
+    const focusOnComp = () => {
+      if(compRef) { compRef.focus(); }
+    }
+  
+    // focus on item after load
+    useEffect(() => {
+        focusOnComp()  
+    }, [compRef]);
 
     const setFormStatus = (formDataPath: string = '', status: FORM_STATUS) => {
         if( getValue && setValue && Boolean(formDataPath)) { 

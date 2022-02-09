@@ -7,11 +7,13 @@ import useForm, { FORM_STATUS } from "../../data-lib/hook/useForm";
 import { isEmpty } from "../../data-lib/util/validation";
 import { yearPlanner as validation } from "../0-YearPlanner/validation";
 import useCommon from '../../hook/useCommon';
+import { pathToId } from '../../data-lib/util/util';
 
 const useSettings = () => {
   const { getValue, setValue } = useContext(DataContext);
-  const { resetForm, validateForm } = useForm();
   const { moveToYear } = useCommon();
+  const compToFocus = pathToId(paths.temp.settings.year);
+  const { resetForm, validateForm } = useForm({compToFocus});
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
