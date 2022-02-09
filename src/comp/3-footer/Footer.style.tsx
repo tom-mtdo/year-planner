@@ -4,10 +4,12 @@ export const StyledFooter = styled.div`
     text-align: center;
     display: flex;
     justify-content: space-between;
-    padding: 1.3em 1.5em;
+    padding: 0.2em;
     flex-flow: column wrap;
+
     @media (min-width: 700px) {
         flex-flow: row wrap;
+        padding: 1.3em 1.5em;
     }
 `;
 export const StyledNote = styled.div`

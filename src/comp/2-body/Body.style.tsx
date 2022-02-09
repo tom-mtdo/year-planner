@@ -16,7 +16,11 @@ export const BodyCenterBox = styled.div`
     text-align: center;
     flex-grow: 10;
     overflow: hidden;
-    padding: 0 1.5em;
+    padding: 0 0.2em;
+
+    @media (min-width: 700px) {
+        padding: 0 1.5em;
+    }
 `;
 
 export const BodyRightBox = styled.div`
