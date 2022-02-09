@@ -7,6 +7,7 @@ export const StyledSettingsBox = styled.div`
     background-color: white;
     align-items: center;
     justify-content: center;
+    margin: 0 1.5em 0 0;
 `;
 
 export const StyledSettingsHeader = styled.div<any>`
