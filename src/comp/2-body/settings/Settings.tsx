@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { StyledH2 } from "../../lib/styles";
+import { StyledH2 } from "../../../lib/styles";
 import {
   StyledSettingsBox,
   StyledSettingsHeader,
@@ -10,7 +10,7 @@ import {
 import SettingsBody from "./SettingsBody";
 import styled from "styled-components";
 import useSettings from './useSettings';
-import { isTrue } from "../../data-lib/util/util";
+import { isTrue } from "../../../data-lib/util/util";
 
 // Form to collect settings from users
 export default function Settings() {

@@ -1,12 +1,12 @@
 import React from "react";
-import { BodyBox, BodyLeftBox, BodyCenterBox, BodyRightBox } from './Body.style';
+import { BodyBox, BodyCenterBox, BodyRightBox } from './Body.style';
 import PlannerContent from './calendar/Calendar';
-import Settings from "../settings/Settings";
+import Settings from "./settings/Settings";
 
 function Body() {
   return (
     <BodyBox>
-      <BodyLeftBox />
+      {/* <BodyLeftBox /> */}
       <BodyCenterBox>
         <PlannerContent />
       </BodyCenterBox>
