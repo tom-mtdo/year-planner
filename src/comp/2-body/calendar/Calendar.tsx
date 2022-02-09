@@ -7,7 +7,7 @@ import { countPadding, DayInfo } from "../../../util/util";
 import Header from "./CalendarHeader";
 import { useCalendar } from "./useCalendar";
 import { Padding, MonthLabelCell } from "./comps";
-export const MONTH_LABEL_MIN_WIDTH = "70px";
+export const MONTH_LABEL_MIN_WIDTH = "0";
 
 export default function Calendar() {
   const {

@@ -16,11 +16,10 @@ export const BodyCenterBox = styled.div`
     text-align: center;
     flex-grow: 10;
     overflow: hidden;
-    padding: 0 24px;
+    padding: 0 1.5em;
 `;
 
 export const BodyRightBox = styled.div`
     text-align: center;
     flex-grow: 3;
-    padding: 0 24px 0 0;
 `;
