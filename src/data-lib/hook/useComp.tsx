@@ -51,6 +51,13 @@ export default function useComp(props: IComp) {
   const { touchForm } = useForm();
   const { getRuntimeValue } = useRuntime();
 
+  // ref
+  let compRef: React.RefObject<HTMLElement> | undefined | null = undefined;
+
+  const setCompRef = (ele: any) => {
+    compRef = ele;
+  }
+
   // Value & error
   const compValue = getValue ? getValue(compDataPath ?? "") : undefined;
   const compError = getValue
@@ -78,7 +85,7 @@ export default function useComp(props: IComp) {
 
   // Registry
   useEffect(() => {
-    registerComp({ compId, compDataPath });
+    registerComp({ compId, compDataPath, compRef });
 
     return () => {
       unRegisterComp({ compId });
@@ -91,6 +98,7 @@ export default function useComp(props: IComp) {
     name,
     compId,
     compDataPath,
+    compRef,
     compLabel,
     compDescription,
     compError,
@@ -98,7 +106,8 @@ export default function useComp(props: IComp) {
     compVisible,
     compDynaProp,
     compOnChange,
-    compOnChangeInForm,
     compOnBlur,
+    compOnChangeInForm,
+    setCompRef,
   };
 }
