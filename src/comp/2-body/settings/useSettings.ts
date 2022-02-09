@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { DataContext } from "../../data-lib/context/DataProvider";
-import { paths } from "../../util/constant";
-import { BOOLEAN_STR_VALUES, compKeys } from "../../data-lib/util/constant";
-import { names } from "../../util/constant";
-import useForm, { FORM_STATUS } from "../../data-lib/hook/useForm";
-import { isEmpty } from "../../data-lib/util/validation";
-import { yearPlanner as validation } from "../0-YearPlanner/validation";
-import useCommon from '../../hook/useCommon';
-import { pathToId } from '../../data-lib/util/util';
+import { DataContext } from "../../../data-lib/context/DataProvider";
+import { paths } from "../../../util/constant";
+import { BOOLEAN_STR_VALUES, compKeys } from "../../../data-lib/util/constant";
+import { names } from "../../../util/constant";
+import useForm, { FORM_STATUS } from "../../../data-lib/hook/useForm";
+import { isEmpty } from "../../../data-lib/util/validation";
+import { yearPlanner as validation } from "../../0-YearPlanner/validation";
+import useCommon from '../../../hook/useCommon';
+import { pathToId } from '../../../data-lib/util/util';
 
 const useSettings = () => {
   const { getValue, setValue } = useContext(DataContext);
