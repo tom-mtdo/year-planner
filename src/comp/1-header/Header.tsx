@@ -1,4 +1,4 @@
-import { StyledH1 } from "./Header.style";
+import { StyledH1, StyledTitleBox } from "./Header.style";
 
 import {
   StyledBrief,
@@ -43,10 +43,7 @@ const PreviousYearBtn = (props: { changeYear: any }) => {
   const { compVisible } = useComp(compProps);
 
   return isTrue(compVisible) ? (
-    <IconButton
-      aria-label="Save"
-      onClick={() => props.changeYear(-1)}
-    >
+    <IconButton aria-label="Save" onClick={() => props.changeYear(-1)}>
       <NavigateBeforeIcon />
     </IconButton>
   ) : (
@@ -63,10 +60,7 @@ const NextYearBtn = (props: { changeYear: any }) => {
   const { compVisible } = useComp(compProps);
 
   return isTrue(compVisible) ? (
-    <IconButton
-      aria-label="Save"
-      onClick={() => props.changeYear(1)}
-    >
+    <IconButton aria-label="Save" onClick={() => props.changeYear(1)}>
       <NavigateNextIcon />
     </IconButton>
   ) : (
@@ -80,14 +74,16 @@ export default function Header() {
   const { saveData } = useOutBound();
   return (
     <StyledHeader>
-      <PreviousYearBtn changeYear={changeYear} />
-      <Button
-        variant="text"
-        onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
-      >
-        <StyledH1>Year Planner - {activeYear}</StyledH1>
-      </Button>
-      <NextYearBtn changeYear={changeYear} />
+      <StyledTitleBox>
+        <PreviousYearBtn changeYear={changeYear} />
+        <Button
+          variant="text"
+          onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
+        >
+          <StyledH1>Year Planner - {activeYear}</StyledH1>
+        </Button>
+        <NextYearBtn changeYear={changeYear} />
+      </StyledTitleBox>
       <StyledBriefBox>
         <StyledBrief>
           {activeCountry}, {activeState}
