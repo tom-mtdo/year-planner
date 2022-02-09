@@ -4,7 +4,7 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import useCommon from "../../hook/useCommon";
 import { paths } from "../../util/constant";
 import { countryCodeToName } from "../../util/util";
-import useSettings from "../settings/useSettings";
+import useSettings from "../2-body/settings/useSettings";
 import { CHANGE_YEAR_TYPE } from "./Header";
 import { compKeys } from '../../data-lib/util/constant';
 import { getNot } from "../../data-lib/util/util";

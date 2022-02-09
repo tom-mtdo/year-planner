@@ -1,15 +1,15 @@
-import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
-import Select from "../../data-lib/adapter/MU-adapter/select/Select";
-import { VSpacer } from "../../lib/styles";
-import { CountriesToSelect, names, paths } from "../../util/constant";
+import TextField from "../../../data-lib/adapter/MU-adapter/textField/TextField";
+import Select from "../../../data-lib/adapter/MU-adapter/select/Select";
+import { VSpacer } from "../../../lib/styles";
+import { CountriesToSelect, names, paths } from "../../../util/constant";
 import { useContext } from 'react';
-import { DataContext } from "../../data-lib/context/DataProvider";
-import { stateToSelect } from "../../util/util";
-import { IComp } from "../../data-lib/hook/useComp";
-import useComp from "../../data-lib/hook/useComp";
-import { compKeys } from "../../data-lib/util/constant";
-import { pathToId, getSiblingValue, isTrue } from "../../data-lib/util/util";
-import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
+import { DataContext } from "../../../data-lib/context/DataProvider";
+import { stateToSelect } from "../../../util/util";
+import { IComp } from "../../../data-lib/hook/useComp";
+import useComp from "../../../data-lib/hook/useComp";
+import { compKeys } from "../../../data-lib/util/constant";
+import { pathToId, getSiblingValue, isTrue } from "../../../data-lib/util/util";
+import { IRuntimeArgs } from "../../../data-lib/hook/useRuntime";
 
 const settingsId = pathToId(paths.temp.settings[compKeys._path]);
 

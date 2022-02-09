@@ -1,4 +1,4 @@
-import { names } from '../../util/constant';
+import { names } from '../../../util/constant';
 
 export const settings = {
     [names.year]: {
