@@ -27,8 +27,8 @@ export const StyledModalHeader = styled.div`
 `;
 
 export const StyledModalBody = styled.div`
-    min-width: 500px;
-    min-height: 200px;
+    min-width: 300px;
+    min-height: 100px;
     border-top: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     box-sizing: border-box;

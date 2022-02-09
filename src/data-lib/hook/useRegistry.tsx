@@ -7,20 +7,21 @@ import { isEmpty } from "../util/validation";
 export interface ICompEntry {
   compId: string;
   compDataPath?: string;
+  compRef?: React.RefObject<HTMLElement> | undefined | null
 }
 
 export default function useRegistry() {
   const { getValue, setValue, removeValue } = useContext(DataContext);
 
   const registerComp = (params: ICompEntry) => {
-    const {compDataPath, compId} = params;
+    const {compDataPath, compId, compRef} = params;
     // Check need at least compId or compDataPath
     if (isEmpty(params) || !Boolean(compId) || !Boolean(compDataPath) || !setValue) {
       return;
     }
 
     const registerPath = `${paths.registry}['${compId}']`;
-    const compEntry = {compDataPath};
+    const compEntry = {compDataPath, compRef};
     setValue(registerPath, compEntry);
   };
 
@@ -32,6 +33,15 @@ export default function useRegistry() {
     removeValue(paths.registry, compId);
   };
 
+  /**
+   * 
+   * @param compId 
+   * @returns object
+   * {compId: {
+   *    compDataPath: 'page1.group2.comp1',
+   *    compRef: <DOM ref>
+   * }}
+   */
   const getCompEntry = (compId: string) => {
     if (!getValue) { return undefined; }
     return pick(getValue(paths.registry), compId);
@@ -57,5 +67,16 @@ export default function useRegistry() {
     );
   }
 
-  return { registerComp, unRegisterComp, getCompEntry, getAllEntries, getChildren};
+  // sugar syntax utils
+  const getCompRef = (compId: string) => {
+    const entry = getCompEntry(compId) ?? {};
+    const result = entry[compId]?.compRef ?? undefined;
+    return result;
+  }
+
+  const getCompDataPath = (compId: string) => {
+    return getCompEntry(compId)?.compDataPath ?? undefined;
+  }
+
+  return { registerComp, unRegisterComp, getCompEntry, getAllEntries, getChildren, getCompRef, getCompDataPath};
 }

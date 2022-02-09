@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { StyledH2 } from "../../lib/styles";
+import { StyledH2 } from "../../../lib/styles";
 import {
   StyledSettingsBox,
   StyledSettingsHeader,
@@ -10,7 +10,7 @@ import {
 import SettingsBody from "./SettingsBody";
 import styled from "styled-components";
 import useSettings from './useSettings';
-import { isTrue } from "../../data-lib/util/util";
+import { isTrue } from "../../../data-lib/util/util";
 
 // Form to collect settings from users
 export default function Settings() {
@@ -19,6 +19,7 @@ export default function Settings() {
 
   return (
     <StyledSettingsBox>
+      <form onSubmit={(event) => event.preventDefault()}>
       <StyledSettingsHeader isEditing={isEditing}>
         <StyledH2>Settings</StyledH2>
         <EdittingPrompt isShown={isEditing} />
@@ -27,7 +28,7 @@ export default function Settings() {
         <SettingsBody />
       </StyledSettingsBody>
       <StyledSettingsFooter>
-        <Button variant="contained" onClick={applySettings}>
+        <Button variant="contained" onClick={applySettings} type={'submit'}>
           Apply
         </Button>
         &nbsp;&nbsp;
@@ -39,6 +40,7 @@ export default function Settings() {
           Close
         </Button>
       </StyledSettingsFooter>
+      </form>
     </StyledSettingsBox>
   );
 }

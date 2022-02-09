@@ -7,14 +7,13 @@ import { DataContext } from "../../data-lib/context/DataProvider";
 import { paths } from "../../util/constant";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
 import useCommon from '../../hook/useCommon';
+import useForm from "../../data-lib/hook/useForm";
+import { pathToId } from "../../data-lib/util/util";
+import { DayInfo } from '../../util/util';
 
 const TxtDayNote = () => {
   const props: IComp = {
-    // parentId: settingsId,
-    // parentDataPath: paths.temp.settings[compKeys._path],
-    // name: names.year,
-
-    id: "runtime-dayModal-note",
+    id: pathToId(paths.temp.dayModal.note),
     dataPath: paths.temp.dayModal.note,
     label: "Note",
   };
@@ -26,6 +25,7 @@ const TxtDayNote = () => {
     compError,
     compOnBlur,
     compOnChangeInForm,
+    setCompRef
   } = useComp(props);
 
   return (
@@ -33,6 +33,7 @@ const TxtDayNote = () => {
       compName={"Note"}
       compId={compId}
       compDataPath={compDataPath}
+      setCompRef={setCompRef}
       compValue={compValue}
       compLabel={compLabel}
       compOnChange={compOnChangeInForm}
@@ -46,6 +47,9 @@ function DayModal(props: any) {
   const { getValue, setValue } = useContext(DataContext);
   const modalData = getValue ? getValue(paths.temp.dayModal._path) : {};
   const { saveDate } = useCommon();
+  const compToFocus = pathToId(paths.temp.dayModal.note);
+  useForm({compToFocus});
+
 
   const onConfirm = () => {
     saveData();
@@ -73,13 +77,17 @@ function DayModal(props: any) {
     }
   };
 
+  const noteDate: Date = modalData?.dayInfo?.date || '';
+  const title = noteDate ? `${noteDate.toISOString().substring(0, 10)}` : '';
+
   return (
     <Modal
       isShown={BOOLEAN_STR_VALUES.TRUE === modalData?._isShown}
       onConfirm={onConfirm}
       onCancel={onCancel}
+      title={title}
     >
-      <TxtDayNote />
+        <TxtDayNote />
     </Modal>
   );
 }

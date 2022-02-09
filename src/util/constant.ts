@@ -1,4 +1,4 @@
-import { countriesToSelect } from "./util";
+import { countriesToSelect, getCountries } from "./util";
 import { compKeys } from '../data-lib/util/constant';
 
 // names used to construct data path & comp id
@@ -145,46 +145,5 @@ export interface ICountry {
   states: IStates;
 }
 
-const ArrCountries = [
-  [
-    "AU",
-    {
-      name: "Australia",
-      states: {
-        ACT: "Australian Capital Territory",
-        NSW: "New South Wales",
-        NT: "Northern Territory",
-        QLD: "Queensland",
-        SA: "South Australia",
-        TAS: "Tasmania",
-        VIC: "Victoria",
-        WA: "Western Australia",
-      },
-    },
-  ],
-  [
-    "NZ",
-    {
-      name: "New Zealand",
-      states: {
-        AUK: "Auckland Province",
-        CAN: "Canterbury",
-        CIT: "Chatham Islands",
-        HKB: "Hawke's Bay",
-        MBH: "Marlborough",
-        NSN: "Nelson",
-        NTL: "Northland",
-        OTA: "Otago Province",
-        STL: "Southland",
-        TKI: "Taranaki",
-        WGN: "Wellington Province",
-        WTC: "Westland",
-      },
-    },
-  ],
-];
-
-// @ts-ignore
-export const Countries = new Map<string, ICountry>(ArrCountries);
-
-export const CountriesToSelect = countriesToSelect(Countries);
+export const countries = getCountries();
+export const CountriesToSelect = countriesToSelect(countries);

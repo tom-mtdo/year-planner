@@ -16,6 +16,7 @@ export default function TextField(props: IComp) {
     compOnChange,
     compOnBlur,
     compName,
+    setCompRef,
     ...rest
   } = props;
 
@@ -38,6 +39,7 @@ export default function TextField(props: IComp) {
     <FieldWrapper {...wrapperProps}>
       <MUTextField
         {...rest}
+        inputRef={setCompRef}
         id={compId}
         name={compName}
         label={compLabel}

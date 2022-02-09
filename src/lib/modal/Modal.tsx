@@ -12,30 +12,32 @@ import {
 export interface IModal {
   isShown?: boolean;
   onConfirm?: any;
+  title?: string;
   [key: string]: any;
 }
 
 export default function Modal(props: IModal) {
-  const { isShown, onConfirm, onCancel, children } = props;
+  const { isShown, onConfirm, onCancel, title = 'Modal title', children } = props;
   return !isShown ? (
     <></>
   ) : (
     <StyledModal>
       <StyledModalBox>
-        <StyledModalHeader>
-          <StyledH2>Modal title</StyledH2>
-        </StyledModalHeader>
-        <StyledModalBody>
-          {children}
-        </StyledModalBody>
-        <StyledModalFooter>
-          <Button variant="contained" onClick={onConfirm}>
-            Confirm
-          </Button>
-          <Button variant="contained" onClick={onCancel}>
-            Cancel
-          </Button>
-        </StyledModalFooter>
+        <form onSubmit={(event) => event.preventDefault()}>
+          <StyledModalHeader>
+            <StyledH2>{title}</StyledH2>
+          </StyledModalHeader>
+          <StyledModalBody>{children}</StyledModalBody>
+          <StyledModalFooter>
+            <Button variant="contained" onClick={onConfirm} type={'submit'}>
+              Confirm
+            </Button>
+            &nbsp;&nbsp;
+            <Button variant="contained" onClick={onCancel}>
+              Cancel
+            </Button>
+          </StyledModalFooter>
+        </form>
       </StyledModalBox>
     </StyledModal>
   );

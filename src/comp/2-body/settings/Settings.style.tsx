@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSettingsBox = styled.div`
+    min-width: 300px;
     border: solid gray 1px;
     display: flex;
     flex-direction: column;
@@ -18,8 +19,6 @@ export const StyledSettingsHeader = styled.div<any>`
 `;
 
 export const StyledSettingsBody = styled.div`
-    min-width: 500px;
-    min-height: 200px;
     border-top: solid 1px darkgray;
     border-bottom: solid 1px darkgray;
     box-sizing: border-box;
