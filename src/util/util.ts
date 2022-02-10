@@ -74,7 +74,8 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
 
     // other days in month
     for (let j = 1; j <= monthInfo.numDay; j++) {
-      aDay = new Date(year, i, j);
+      // use UTC zone so date.toISOstring() will stay in same day
+      aDay = new Date(Date.UTC(year, i, j));
       aMonth.push({
         date: aDay,
         note: "",
