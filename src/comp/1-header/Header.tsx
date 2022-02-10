@@ -13,10 +13,8 @@ import useComp from "../../data-lib/hook/useComp";
 import { compKeys, BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
 import { IRuntimeArgs } from "../../data-lib/hook/useRuntime";
 import { isTrue } from "../../data-lib/util/util";
-import useOutBound from "../../hook/useOutBound";
 import useHeader, { ButtonNames } from "./useHeader";
 import { IconButton } from "@material-ui/core";
-import SaveIcon from "@mui/icons-material/Save";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
@@ -68,40 +66,56 @@ const NextYearBtn = (props: { changeYear: any }) => {
   );
 };
 
-export default function Header() {
-  const { activeYear, activeCountry, activeState, changeYear, handleClick } =
-    useHeader();
-  const { saveData } = useOutBound();
+const TitleBox = () => {
+  const { activeYear, changeYear, handleClick } = useHeader();
   return (
-    <StyledHeader>
-      <StyledTitleBox>
-        <PreviousYearBtn changeYear={changeYear} />
-        <Button
-          variant="text"
-          onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
-        >
-          <StyledH1>Year Planner - {activeYear}</StyledH1>
-        </Button>
-        <NextYearBtn changeYear={changeYear} />
-      </StyledTitleBox>
+    <StyledTitleBox>
+      <PreviousYearBtn changeYear={changeYear} />
+      <Button
+        variant="text"
+        onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
+      >
+        <StyledH1>Year Planner - {activeYear}</StyledH1>
+      </Button>
+      <NextYearBtn changeYear={changeYear} />
+    </StyledTitleBox>
+  );
+};
+
+const ControlBox = () => {
+  const { handleClick } = useHeader();
+  return (
+    <StyledCtrBox>
+      <IconButton
+        aria-label="Save"
+        size="small"
+        onClick={() => handleClick({ buttonName: ButtonNames.SETTINGS })}
+      >
+        <SettingsIcon />
+      </IconButton>
+    </StyledCtrBox>
+  );
+};
+
+export default function Header() {
+  const { activeCountry, activeState } = useHeader();
+
+  // This comp doesn't update state so can stay here
+  const BriefBox = () => {
+    return (
       <StyledBriefBox>
         <StyledBrief>
           {activeCountry}, {activeState}
         </StyledBrief>
       </StyledBriefBox>
-      <StyledCtrBox>
-        <IconButton aria-label="Save" size="small" onClick={() => saveData()}>
-          <SaveIcon />
-        </IconButton>
-        &nbsp;
-        <IconButton
-          aria-label="Save"
-          size="small"
-          onClick={() => handleClick({ buttonName: ButtonNames.SETTINGS })}
-        >
-          <SettingsIcon />
-        </IconButton>
-      </StyledCtrBox>
+    );
+  };
+
+  return (
+    <StyledHeader>
+      <TitleBox />
+      <BriefBox />
+      <ControlBox />
     </StyledHeader>
   );
 }
