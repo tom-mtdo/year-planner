@@ -9,7 +9,6 @@ import useComp, { IComp } from "../../data-lib/hook/useComp";
 import useCommon from '../../hook/useCommon';
 import useForm from "../../data-lib/hook/useForm";
 import { pathToId } from "../../data-lib/util/util";
-import { DayInfo } from '../../util/util';
 
 const TxtDayNote = () => {
   const props: IComp = {
