@@ -3,7 +3,6 @@ import { DayInfo, getHeader } from "../../../util/util";
 import { useContext } from "react";
 import { DataContext } from "../../../data-lib/context/DataProvider";
 
-// logic hook
 export const useCalendar = () => {
   const { getValue, setValue } = useContext(DataContext);
 
@@ -22,7 +21,7 @@ export const useCalendar = () => {
   }
 
   const isCurrentYear = `${currentYear}` === year;
-  const onDoubleClick = (dayInfo: DayInfo) => {
+  const addNoteToADay = (dayInfo: DayInfo) => {
     if (setValue) {
       // Open modal
       setValue(paths.temp.dayModal._isShown, BOOLEAN_VALUES.TRUE);
@@ -37,6 +36,6 @@ export const useCalendar = () => {
     isCurrentYear,
     currentMonth,
     currentDate,
-    onDoubleClick,
+    addNoteToADay,
   };
 };

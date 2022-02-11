@@ -1,22 +1,22 @@
 import React from "react";
 import { DayInfo } from "../../../util/util";
-// import { isWeekend, DayInfo } from '../../util/util';
 import {
   StyledDay,
   StyledDateNum,
   StyledNote,
   StyledHoliday,
+  StyledButton
 } from "./Day.style";
 
 export interface IDay {
   dayInfo?: DayInfo | undefined;
   isCurrent?: boolean;
   children?: any;
-  onDoubleClick?: any;
+  addNote?: any;
 }
 
 export default function Day(props: IDay) {
-  const { dayInfo, isCurrent, onDoubleClick, children } = props;
+  const { dayInfo, isCurrent, addNote, children } = props;
   let dateNum = dayInfo?.date?.getDate() ?? "";
   const day = dayInfo?.date?.getDay() ?? 0;
   const isWeekend = day % 7 === 6 || day % 7 === 0;
@@ -28,8 +28,8 @@ export default function Day(props: IDay) {
   };
 
   return (
-    <StyledDay {...styledProps} onDoubleClick={() => onDoubleClick(dayInfo)}>
-      <StyledDateNum>{dateNum}</StyledDateNum>
+    <StyledDay {...styledProps} onDoubleClick={() => addNote(dayInfo)}>
+      <StyledDateNum><StyledButton onClick={() => addNote(dayInfo)}>{dateNum}</StyledButton></StyledDateNum>
       <StyledNote>{dayInfo?.note}</StyledNote>
       {children}
       <StyledHoliday>{dayInfo?.holiday}</StyledHoliday>
