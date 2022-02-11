@@ -1,4 +1,4 @@
-import { StyledH1, StyledTitleBox } from "./Header.style";
+import { StyledH1, StyledTitleBox, StyledButton } from "./Header.style";
 
 import {
   StyledBrief,
@@ -18,11 +18,20 @@ import { IconButton } from "@material-ui/core";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { styled } from '@material-ui/styles';
 
 export enum CHANGE_YEAR_TYPE {
   OFFSET = "offset",
   VALUE = "value",
 }
+
+const MyNavigateBeforeIcon = styled(NavigateBeforeIcon)({
+  color: 'mediumvioletred',
+});
+
+const MyNavigateNextIcon = styled(NavigateNextIcon)({
+  color: 'mediumvioletred',
+});
 
 const isQuickNavVisible = (args: IRuntimeArgs) => {
   const isSettingsShown = get(
@@ -42,7 +51,7 @@ const PreviousYearBtn = (props: { changeYear: any }) => {
 
   return isTrue(compVisible) ? (
     <IconButton aria-label="Save" onClick={() => props.changeYear(-1)}>
-      <NavigateBeforeIcon />
+      <MyNavigateBeforeIcon />
     </IconButton>
   ) : (
     <></>
@@ -59,7 +68,7 @@ const NextYearBtn = (props: { changeYear: any }) => {
 
   return isTrue(compVisible) ? (
     <IconButton aria-label="Save" onClick={() => props.changeYear(1)}>
-      <NavigateNextIcon />
+      <MyNavigateNextIcon />
     </IconButton>
   ) : (
     <></>
@@ -71,12 +80,9 @@ const TitleBox = () => {
   return (
     <StyledTitleBox>
       <PreviousYearBtn changeYear={changeYear} />
-      <Button
-        variant="text"
-        onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}
-      >
+      <StyledButton onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}>
         <StyledH1>Year Planner - {activeYear}</StyledH1>
-      </Button>
+      </StyledButton>
       <NextYearBtn changeYear={changeYear} />
     </StyledTitleBox>
   );
