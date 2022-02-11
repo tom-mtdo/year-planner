@@ -16,7 +16,7 @@ export default function Calendar() {
     isCurrentYear,
     currentMonth,
     currentDate,
-    onDoubleClick,
+    addNoteToADay,
   } = useCalendar();
 
   const months =
@@ -33,7 +33,7 @@ export default function Calendar() {
           return (
             <Cell key={dayIndex}>
               <Day
-                onDoubleClick={onDoubleClick}
+                addNote={addNoteToADay}
                 dayInfo={aDay}
                 isCurrent={isToday}
               ></Day>

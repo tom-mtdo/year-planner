@@ -30,8 +30,10 @@ export const StyledNote = styled.span`
   position: absolute;
   width: 100%;
   left: 0;
-  top: 17px;
+  top: 20px;
   font-size: x-small;
+  padding: 0 0.1em;
+  text-align: left;
 `;
 
 export const StyledHoliday = styled.span`
@@ -49,4 +51,14 @@ export const StyledDayVoid = styled.div`
   padding: 0;
   position: relative;
   background-color: unset;
+`;
+
+export const StyledButton = styled.button`
+  background: none;
+  color: palevioletred;
+  border: none;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.1em 0.3em;
+  cursor:pointer;
 `;
