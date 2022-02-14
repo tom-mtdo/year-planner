@@ -1,16 +1,13 @@
-import React, { useState } from "react";
 import Modal from "../../lib/modal/Modal";
 import { BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { names, paths } from "../../util/constant";
+import { paths } from "../../util/constant";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
-import useCommon from "../hook/useCommon";
 import useForm from "../../data-lib/hook/useForm";
 import { pathToId, getParentPath } from '../../data-lib/util/util';
-import useOutBound from "../hook/useOutBound";
-import { getPathsInUserData, getStrDate, IPathsInUserData } from "../../util/util";
+import { getPathsInUserData, IPathsInUserData } from "../../util/util";
 import { isEmpty } from '../../data-lib/util/validation';
 
 const TxtDayNote = () => {
@@ -106,16 +103,9 @@ function DayModal(props: any) {
       return;
     }
 
-    // const year = targetDate.getFullYear();
-    // const strDate = getStrDate(targetDate);
-    // const yearKey = `${names.year}${year}`;
-    // const dateKey = `date${strDate}`
-    
-    // const notePath = `${yearKey}.${dateKey}.note`;
-
-    const subPaths: IPathsInUserData = getPathsInUserData(targetDate);
+    const {notePath, dateKey}: IPathsInUserData = getPathsInUserData(targetDate) || {};
     // the second condition is for typescript
-    if(isEmpty(subPaths?.notePath) || undefined === subPaths.notePath) { 
+    if(isEmpty(notePath)) { 
       console.log("Error: can't find path to save note");
       return; 
     }
@@ -126,9 +116,9 @@ function DayModal(props: any) {
       // if user data for a date is more than a note then need to remove at parent level
       // if note is object, now it is string, then need to remove at notePath level
       // Run and look at context for more details
-      removeValue(getParentPath(getParentPath(subPaths.notePath)), subPaths.dateKey);
+      removeValue(getParentPath(getParentPath(notePath)), dateKey);
     } else {
-      setValue(subPaths.notePath, note);
+      setValue(notePath, note);
     }
   };
 

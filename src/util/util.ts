@@ -21,7 +21,7 @@ export interface MonthInfo {
 export interface DayInfo {
   date: Date;
   holiday?: string; // Queen birthday .etc
-  note?: string;
+  // note?: string;
 }
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
@@ -197,17 +197,20 @@ export const getStrDate = (aDate: Date) => {
  * 
  */
 export interface IPathsInUserData {
-  yearKey: string;
-  dateKey: string;
-  notePath: string;
+  yearKey?: string;
+  dateKey?: string;
+  notePath?: string;
 };
 
-export const getPathsInUserData = (inDate: Date): IPathsInUserData => {
+export const getPathsInUserData = (inDate: Date | undefined): IPathsInUserData | undefined=> {
+  if (undefined === inDate) { return; }
+
   const year = inDate.getFullYear();
   const strDate = getStrDate(inDate);
   const yearKey = `${names.year}${year}`;
   const dateKey = `${names.date}${strDate}`;
   const notePath = `${names.userData}.${yearKey}.${dateKey}.${names.note}`;
+
   return {
     yearKey,
     dateKey,
