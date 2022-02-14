@@ -6,12 +6,12 @@ import { names } from "../../../util/constant";
 import useForm, { FORM_STATUS } from "../../../data-lib/hook/useForm";
 import { isEmpty } from "../../../data-lib/util/validation";
 import { yearPlanner as validation } from "../../0-YearPlanner/validation";
-import useCommon from '../../../hook/useCommon';
+import useCommon from '../../hook/useCommon';
 import { pathToId } from '../../../data-lib/util/util';
 
 const useSettings = () => {
   const { getValue, setValue } = useContext(DataContext);
-  const { moveToYear } = useCommon();
+  // const { moveToYear } = useCommon();
   const compToFocus = pathToId(paths.temp.settings.year);
   const { resetForm, validateForm } = useForm({compToFocus});
 
@@ -85,7 +85,7 @@ const useSettings = () => {
       activeCountry !== settingsCountry ||
       activeState !== settingsState
     ) {
-      moveToYear(settingsYear, settingsCountry, settingsState);
+      // moveToYear(settingsYear, settingsCountry, settingsState);
       resetForm(paths.temp.settings._path);
     }
   };

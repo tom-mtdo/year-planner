@@ -1,6 +1,5 @@
-import { BOOLEAN_VALUES } from "../util/constant";
-import { getCalendar, IGetCalendar } from "../util/util";
-import { YEAR_PLANNER } from "./useOutBound";
+import { BOOLEAN_VALUES, names } from "../../util/constant";
+import { getCalendar, IGetCalendar } from "../../util/util";
 
 export interface IUseInBound {
   [key: string]: any;
@@ -8,12 +7,13 @@ export interface IUseInBound {
 
 // TODO: this hook and appConfig are overlap, need clean
 export default function useInBound(props?: any) {
+
   const toDay = new Date();
   const currentYear = toDay.getFullYear();
   const calendar = getCalendar({ year: currentYear } as IGetCalendar);
 
   const loadData = () => {
-    const savedData = localStorage.getItem(YEAR_PLANNER) ?? '';
+    const savedData = localStorage.getItem(names.yearPlanner) ?? '';
     let data: any = {};
 
     try {
@@ -52,6 +52,6 @@ export default function useInBound(props?: any) {
     error: {},
     userData
   };
-
+  
   return { prepopData, year, country, state };
 }

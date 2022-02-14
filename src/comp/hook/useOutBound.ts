@@ -1,26 +1,25 @@
 // If uuid empty then generate a new one and save to local storage
 
-import { isEmpty } from "../data-lib/util/validation";
+import { isEmpty } from "../../data-lib/util/validation";
 import { v4 as uuidv4 } from "uuid";
 import { useContext } from 'react';
-import { DataContext } from "../data-lib/context/DataProvider";
-import { names, paths } from '../util/constant';
-import { DayInfo, getStrDate } from "../util/util";
+import { DataContext } from "../../data-lib/context/DataProvider";
+import { names, paths } from '../../util/constant';
+import { DayInfo, getStrDate } from "../../util/util";
 import { set, pickBy } from 'lodash';
-
-const UUID = "uuid";
-export const YEAR_PLANNER = 'yearPlanner';
 
 const useOutBound = function () {
   const { getValue, setValue } = useContext(DataContext);
 
+  // id to know which user, will be replaced by userId provided by Single Sign On (SSO)
   const setUuid = () => {
-    if (isEmpty(localStorage.getItem(UUID))) {
-      localStorage.setItem(UUID, uuidv4());
+    if (isEmpty(localStorage.getItem(names.uuid))) {
+      localStorage.setItem(names.uuid, uuidv4());
     }
   };
 
-  // Todo save to buffer then call api
+  // TODO save to buffer then call api
+  // Get user data from context and save to storage, e.g. local storage, S3
   const saveData = () => {
     if (!getValue || !setValue) {
       return;
@@ -55,6 +54,7 @@ const useOutBound = function () {
       userData: prevData
     };
 
+
     // add string 'year' to fix lodash function
     let newUserData;
     const thisYearKey = `${names.year}${year}`;
@@ -69,7 +69,7 @@ const useOutBound = function () {
 
     storeData.userData = newUserData;
     setValue(`${paths.userData._path}`, newUserData);
-    localStorage.setItem(YEAR_PLANNER, JSON.stringify(storeData));
+    localStorage.setItem(names.yearPlanner, JSON.stringify(storeData));
   };
 
   return { setUuid, saveData };

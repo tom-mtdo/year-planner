@@ -6,6 +6,8 @@ import { compKeys } from '../data-lib/util/constant';
 export const names = {
   // app name
   yearPlanner: 'yearPlanner',
+  // id
+  uuid: "uuid",
   // context root levels
   userData: "userData",
   runtime: "runtime",
