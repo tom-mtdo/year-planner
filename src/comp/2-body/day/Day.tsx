@@ -1,6 +1,5 @@
 import React from "react";
 import { DayInfo, getPathsInUserData } from '../../../util/util';
-import { isEmpty } from '../../../data-lib/util/validation';
 import { useContext } from 'react';
 import { DataContext } from '../../../data-lib/context/DataProvider';
 import {

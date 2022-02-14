@@ -1,7 +1,6 @@
 import { isNumber } from "lodash";
 import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import useCommon from "../hook/useCommon";
 import { paths, MinYear, MaxYear } from "../../util/constant";
 import { countryCodeToName } from "../../util/util";
 import useSettings from "../2-body/settings/useSettings";
@@ -16,7 +15,7 @@ export enum ButtonNames {
 
 const useHeader = function () {
   const { getValue, setValue } = useContext(DataContext);
-  // const { moveToYear } = useCommon();
+
   const { resetSettings } = useSettings();
   
   const strActiveYear = getValue ? getValue(paths.runtime.year) : "";

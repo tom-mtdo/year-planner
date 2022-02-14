@@ -6,14 +6,13 @@ import { names } from "../../../util/constant";
 import useForm, { FORM_STATUS } from "../../../data-lib/hook/useForm";
 import { isEmpty } from "../../../data-lib/util/validation";
 import { yearPlanner as validation } from "../../0-YearPlanner/validation";
-import useCommon from '../../hook/useCommon';
-import { pathToId } from '../../../data-lib/util/util';
+import { pathToId } from "../../../data-lib/util/util";
 
 const useSettings = () => {
   const { getValue, setValue } = useContext(DataContext);
   // const { moveToYear } = useCommon();
   const compToFocus = pathToId(paths.temp.settings.year);
-  const { resetForm, validateForm } = useForm({compToFocus});
+  const { resetForm, validateForm } = useForm({ compToFocus });
 
   const isShown = getValue ? getValue(paths.temp.settings._isShown) : false;
 
@@ -60,7 +59,7 @@ const useSettings = () => {
   };
 
   const applySettings = () => {
-    if (!getValue) {
+    if (!getValue || !setValue) {
       return;
     }
 
@@ -85,7 +84,13 @@ const useSettings = () => {
       activeCountry !== settingsCountry ||
       activeState !== settingsState
     ) {
-      // moveToYear(settingsYear, settingsCountry, settingsState);
+      const preRuntime = getValue(paths.runtime[compKeys._path]);
+      setValue(paths.runtime[compKeys._path], {
+        ...preRuntime,
+        year: settingsYear,
+        country: settingsCountry,
+        state: settingsState,
+      });
       resetForm(paths.temp.settings._path);
     }
   };
