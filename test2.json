@@ -1,0 +1,9 @@
+{
+  "year": "2022",
+  "country": "AU",
+  "state": "VIC",
+  "userData": {
+    "year2022": { "date20220201": { "note": "Hi" } },
+    "year2023": { "date20230201": { "note": "7654" } }
+  }
+}

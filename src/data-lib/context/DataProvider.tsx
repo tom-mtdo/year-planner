@@ -6,8 +6,8 @@ import useData from './useData';
  */
 export interface IDataContext {
     data?: any;
-    getValue?: (dataPath: string) => any;
-    setValue?: (dataPath: string, value: any) => void;
+    getValue?: (dataPath: string | undefined) => any;
+    setValue?: (dataPath: string | undefined, value: any) => void;
     removeValue?: (dataPath: string, removeKey?: string, includeChildren?: boolean) => void;
     pickKeyValue?: (dataPath: string, pickKey: string) => void;
 }

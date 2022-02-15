@@ -57,7 +57,14 @@ export const length = (expression: string, value: any) => {
     }
 
     const lengthNum = parseInt(expression, 10);
-    const valueLength = !!value && !!value.length ? value.length : 0;
+    if (isEmpty(value) && lengthNum > 0) {
+      return false
+    }
+    if (isEmpty(value) && lengthNum <= 0) {
+      return true;
+    }
+
+    const valueLength = value && value.length ? value.length : value.toString().length;
 
     return valueLength === lengthNum;
 }

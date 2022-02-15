@@ -2,6 +2,12 @@ import styled from 'styled-components';
 
 export const StyledH1 = styled.h1`
     margin: 0;
+    padding: 0.5em;
+`
+export const StyledH1Static = styled.h1`
+    margin: 0;
+    padding: 0.5em;
+    font-size: 1.6em;
 `
 export const StyledHeader = styled.div`
     display: flex;    
