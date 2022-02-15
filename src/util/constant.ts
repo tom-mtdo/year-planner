@@ -51,7 +51,7 @@ export const userData = {
 const runtimeHome = `${names.runtime}`;
 const runtime = {
   [compKeys._path]: runtimeHome,
-  [compKeys._status]: compKeys._status,
+  [compKeys._status]: `${runtimeHome}.${compKeys._status}`,
   calendar: `${runtimeHome}.${names.calendar}`,
   year:  `${runtimeHome}.${names.year}`,
   country:  `${runtimeHome}.${names.country}`,

@@ -5,22 +5,14 @@ import { DataContext } from "../../../data-lib/context/DataProvider";
 
 export const useCalendar = () => {
   const { getValue, setValue } = useContext(DataContext);
-
-  const toDay = new Date();
-  const currentYear = toDay.getFullYear();
-  const currentMonth = toDay.getMonth(); // 0 - 11
-  const currentDate = toDay.getDate(); // 1 - 31
   const headerRow = getHeader();
+  const year = getValue ? getValue(paths.runtime.year) : undefined;
 
-  let year = "";
   let calendar: any[] = [];
-
   if (getValue) {
-    year = getValue(paths.runtime.year);
     calendar = getValue(paths.runtime.calendar);
   }
 
-  const isCurrentYear = `${currentYear}` === year;
   const addNoteToADay = (dayInfo: DayInfo) => {
     if (setValue) {
       // Open modal
@@ -33,9 +25,7 @@ export const useCalendar = () => {
   return {
     headerRow,
     calendar,
-    isCurrentYear,
-    currentMonth,
-    currentDate,
+    year,
     addNoteToADay,
   };
 };
