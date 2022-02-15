@@ -1,4 +1,4 @@
-import { StyledH1, StyledTitleBox, StyledButton } from "./Header.style";
+import { StyledH1, StyledH1Static, StyledTitleBox, StyledButton } from "./Header.style";
 
 import {
   StyledBrief,
@@ -6,7 +6,6 @@ import {
   StyledCtrBox,
   StyledHeader,
 } from "./Header.style";
-import { Button } from "@material-ui/core";
 import { get } from "lodash";
 import { paths } from "../../util/constant";
 import useComp from "../../data-lib/hook/useComp";
@@ -58,6 +57,35 @@ const PreviousYearBtn = (props: { changeYear: any }) => {
   );
 };
 
+const CurrentYearBtn = (props: { handleClick: any, label: string }) => {
+  
+  const compProps = {
+    id: "btnCurrentYear",
+    isVisible: isQuickNavVisible,
+  };
+
+  const { compVisible } = useComp(compProps);
+
+  return isTrue(compVisible) ? (
+    <StyledButton onClick={() => props.handleClick({ buttonName: ButtonNames.TODAY })}>
+      <StyledH1>{props.label}</StyledH1>
+      </StyledButton>
+  ) : (
+    <></>
+  );
+};
+
+const CurrentYearTitle = (props: {label: string}) => {
+  const compProps = {
+    id: "currentYearStaticTitle",
+    isVisible: isQuickNavVisible,
+  };
+
+  const { compVisible } = useComp(compProps);
+  return !compVisible ? <StyledH1Static>{props.label}</StyledH1Static> : <></>
+}
+
+
 const NextYearBtn = (props: { changeYear: any }) => {
   const compProps = {
     id: "btnNextYear",
@@ -77,12 +105,12 @@ const NextYearBtn = (props: { changeYear: any }) => {
 
 const TitleBox = () => {
   const { activeYear, changeYear, handleClick } = useHeader();
+  const strTitle = `Year Planner - ${activeYear}`;
   return (
     <StyledTitleBox>
       <PreviousYearBtn changeYear={changeYear} />
-      <StyledButton onClick={() => handleClick({ buttonName: ButtonNames.TODAY })}>
-        <StyledH1>Year Planner - {activeYear}</StyledH1>
-      </StyledButton>
+      <CurrentYearBtn handleClick={handleClick} label={strTitle} />
+      <CurrentYearTitle label={strTitle}/>
       <NextYearBtn changeYear={changeYear} />
     </StyledTitleBox>
   );

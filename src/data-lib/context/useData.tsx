@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { get, pick, pickBy, set } from "lodash";
 import { produce } from "immer";
+import { isEmpty } from "../util/validation";
 
 export default function useData(prepop?: any) {
   const [data, setData] = useState(prepop ?? {});
 
-  const getValue = (dataPath: string) => {
-    return get(data, dataPath, undefined);
+  const getValue = (dataPath: string | undefined) => {
+    return typeof dataPath === "string" && !isEmpty(dataPath)
+      ? get(data, dataPath, undefined)
+      : undefined;
   };
 
-  const setValue = (dataPath: string, value: any) => {
+  const setValue = (dataPath: string | undefined, value: any) => {
+    // second condition is for typescript only
+    if (isEmpty(dataPath) || undefined === dataPath) { return; }
     setData((prevData: any) => {
       return produce(prevData, (draft: any) => {
         set(draft, dataPath, value);
@@ -18,28 +23,32 @@ export default function useData(prepop?: any) {
   };
 
   /**
-   * 
+   *
    * @param dataPath dataPath to object
    * @param pickKey key to return value
    * return: key & value pair of the object
-   * 
+   *
    * e.g. registry : {
    *  page1.comp1: "Tom"
    * }
-   * 
+   *
    * dataPath = registry
    * pickKey = page1.comp1
    * return page1.comp1: "Tom"
-   * 
+   *
    */
   const pickKeyValue = (dataPath: string, pickKey: string) => {
     return pick(data[dataPath], pickKey);
-  }
+  };
 
   // Todo Use Regex
   // Remove key value from an object specified by dataPath
   // if keyPattern is empty, then the object will be empty
-  const removeValue = (dataPath: string, keyPattern: string = '', includeChildren: boolean = false) => {
+  const removeValue = (
+    dataPath: string,
+    keyPattern: string = "",
+    includeChildren: boolean = false
+  ) => {
     // const regex = new RegExp(keyPattern);
     let result;
     setData((prevData: any) => {
@@ -48,8 +57,8 @@ export default function useData(prepop?: any) {
         const newSubData = Boolean(keyPattern)
           ? pickBy(prevSubData, (value, key) => {
               return includeChildren === true
-              ? !key.includes(keyPattern)
-              : key !== keyPattern;
+                ? !key.includes(keyPattern)
+                : key !== keyPattern;
             })
           : {};
 

@@ -1,5 +1,5 @@
 import Holidays from "date-holidays";
-import { countries } from './constant';
+import { countries, names } from "./constant";
 import {
   DAY_SHORT_NAME,
   MaxYear,
@@ -21,10 +21,8 @@ export interface MonthInfo {
 export interface DayInfo {
   date: Date;
   holiday?: string; // Queen birthday .etc
-  note?: string;
+  // note?: string;
 }
-
-
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
   const firstDate = new Date(year, month, 1);
@@ -62,7 +60,7 @@ export const getHeader = (): any => {
 };
 
 export const getYearContent = (input: IGetCalendar): any[][] => {
-  const {year, country, state} = input;
+  const { year, country, state } = input;
   const aYear = [];
   let aMonth;
   let aDay;
@@ -92,13 +90,13 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
 };
 
 export interface IGetCalendar {
-  year: number,
-  country: string,
-  state: string
-};
+  year: number;
+  country: string;
+  state: string;
+}
 
 export const getCalendar = (input: IGetCalendar) => {
-  const {year} = input;
+  const { year } = input;
   if (year < MinYear || year > MaxYear) {
     return;
   }
@@ -110,7 +108,12 @@ export const isWeekend = (day: number) => {
   return Math.abs(day) % 7 === 5 || Math.abs(day) % 7 === 6;
 };
 
-export const addHoliday = (aYear: any[][], country='AU', state='VIC', yearNumber: number) => {
+export const addHoliday = (
+  aYear: any[][],
+  country = "AU",
+  state = "VIC",
+  yearNumber: number
+) => {
   const hd = new Holidays(country, state);
   const holidays = hd.getHolidays(yearNumber);
   holidays.forEach((holiday, index) => {
@@ -127,7 +130,6 @@ export const countriesToSelect = (countriesObject: any = []) => {
   return Object.keys(countriesObject).map((code, index) => {
     return [code, countriesObject[code]];
   });
-
 };
 
 export const getCountries = () => {
@@ -136,13 +138,13 @@ export const getCountries = () => {
 
   // few countries don't have state and not sorted, so use short list for now
   return {
-    'AU': 'Australia',
-    'CA': 'Canada',
-    'GB': 'United Kingdom',
-    'NZ': 'New Zealand',
-    'US': 'United States of America',
+    AU: "Australia",
+    CA: "Canada",
+    GB: "United Kingdom",
+    NZ: "New Zealand",
+    US: "United States of America",
   };
-}
+};
 
 // TODO use singleton for Holidays
 export const stateToSelect = (countryCode: string) => {
@@ -151,12 +153,12 @@ export const stateToSelect = (countryCode: string) => {
   return Object.keys(states).map((code, index) => {
     return [code, states[code]];
   });
-}
+};
 
 export const countryCodeToName = (countryCode: string) => {
   // @ts-ignore
-  return countries[countryCode] ?? ''; 
-}
+  return countries[countryCode] ?? "";
+};
 
 export const getStrDate = (aDate: Date) => {
   if (!aDate) {
@@ -172,4 +174,46 @@ export const getStrDate = (aDate: Date) => {
   const strDate = date < 10 ? "0" + date : "" + date;
 
   return `${strYear}${strMonth}${strDate}`;
+};
+
+// for userData
+/**
+ *   // const userData = {
+  //   year2022: {            // yearKey
+  //     date20220214: {      // dateKey
+  //       note: 'Buy flowers'
+  //     }
+  //   },
+  //   year2023: {
+  //     date20230214: {
+  //       note: 'Should buy flowers'
+  //     }
+  //   }
+  // }
+
+ * @param date a date
+ * @returns path to get note, which is saved in userData in context
+ * inform of: year2022.date20220214.note
+ * 
+ */
+export interface IPathsInUserData {
+  yearKey?: string;
+  dateKey?: string;
+  notePath?: string;
+};
+
+export const getPathsInUserData = (inDate: Date | undefined): IPathsInUserData | undefined=> {
+  if (undefined === inDate) { return; }
+
+  const year = inDate.getFullYear();
+  const strDate = getStrDate(inDate);
+  const yearKey = `${names.year}${year}`;
+  const dateKey = `${names.date}${strDate}`;
+  const notePath = `${names.userData}.${yearKey}.${dateKey}.${names.note}`;
+
+  return {
+    yearKey,
+    dateKey,
+    notePath,
+  };
 };

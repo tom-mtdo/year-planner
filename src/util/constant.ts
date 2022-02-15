@@ -6,6 +6,8 @@ import { compKeys } from '../data-lib/util/constant';
 export const names = {
   // app name
   yearPlanner: 'yearPlanner',
+  // id
+  uuid: "uuid",
   // context root levels
   userData: "userData",
   runtime: "runtime",
@@ -27,8 +29,14 @@ export const names = {
 
   // self prop
   _isShown: '_isShown'
-
 };
+
+export const values = {
+  init: 'init',
+  loading: 'loading',
+  loaded: 'loaded',
+  
+}
 
 export const labels = {
   yearPlanner: 'Year planner'
@@ -43,6 +51,7 @@ export const userData = {
 const runtimeHome = `${names.runtime}`;
 const runtime = {
   [compKeys._path]: runtimeHome,
+  [compKeys._status]: compKeys._status,
   calendar: `${runtimeHome}.${names.calendar}`,
   year:  `${runtimeHome}.${names.year}`,
   country:  `${runtimeHome}.${names.country}`,

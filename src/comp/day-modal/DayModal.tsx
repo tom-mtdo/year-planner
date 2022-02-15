@@ -1,15 +1,14 @@
-import React, { useState } from "react";
 import Modal from "../../lib/modal/Modal";
 import { BOOLEAN_STR_VALUES } from "../../data-lib/util/constant";
 import TextField from "../../data-lib/adapter/MU-adapter/textField/TextField";
-import { useContext, useEffect } from 'react';
+import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { paths } from "../../util/constant";
 import useComp, { IComp } from "../../data-lib/hook/useComp";
-import useCommon from '../../hook/useCommon';
 import useForm from "../../data-lib/hook/useForm";
-import { pathToId } from "../../data-lib/util/util";
-import useOutBound from "../../hook/useOutBound";
+import { pathToId, getParentPath } from '../../data-lib/util/util';
+import { getPathsInUserData, IPathsInUserData } from "../../util/util";
+import { isEmpty } from '../../data-lib/util/validation';
 
 const TxtDayNote = () => {
   const props: IComp = {
@@ -25,7 +24,7 @@ const TxtDayNote = () => {
     compError,
     compOnBlur,
     compOnChangeInForm,
-    setCompRef
+    setCompRef,
   } = useComp(props);
 
   return (
@@ -44,12 +43,10 @@ const TxtDayNote = () => {
 };
 
 function DayModal(props: any) {
-  const { getValue, setValue } = useContext(DataContext);
-  const { saveData } = useOutBound();
+  const { getValue, setValue, removeValue } = useContext(DataContext);
   const modalData = getValue ? getValue(paths.temp.dayModal._path) : {};
-  const { saveDate } = useCommon();
   const compToFocus = pathToId(paths.temp.dayModal.note);
-  useForm({compToFocus});
+  useForm({ compToFocus });
 
   const onConfirm = () => {
     saveNote();
@@ -70,28 +67,63 @@ function DayModal(props: any) {
       });
     }
   };
-  
-  // --- wait for saveDate completed then save user data
-  // path to where is the data saved, put in state so it will trigger render when change
-  const [notePath, setNotePath] = useState<string | undefined>(undefined);
-  const noteValue = getValue && (undefined !== notePath) ? getValue(notePath) : '';
 
-  // When save to context complete -> 
-  // call a function to get user data from context and save to local storage
-  useEffect(() => {
-    saveData();
-  }, [noteValue]);
+  // // example of --- wait for saveDate completed then save user data
+  // // path to where is the data saved, put in state so it will trigger render when change
+  // const [notePath, setNotePath] = useState<string | undefined>(undefined);
+  // const noteValue =
+  //   getValue && undefined !== notePath ? getValue(notePath) : "";
+
+  // // When save to context complete ->
+  // // call a function to get user data from context and save to local storage
+  // useEffect(() => {
+  //   saveData();
+  // }, [noteValue]);
+  // // --- end of wait for saveDate completed then save user data
+
+  // const userData = {
+  //   year2022: {            // yearKey
+  //     date20220214: {      // dateKey
+  //       note: 'Buy flowers'
+  //     }
+  //   },
+  //   year2023: {
+  //     date20230214: {
+  //       note: 'Should buy flowers'
+  //     }
+  //   }
+  // }
 
   const saveNote = () => {
-    if (saveDate) {
-      const path = saveDate(modalData?.dayInfo);
-      setNotePath(path);
+    if(!setValue || !removeValue) { return; }
+    
+    const targetDate = modalData?.dayInfo?.date;
+    if (!targetDate || !(targetDate instanceof Date)) {
+      console.log(`Error: can't find date to save note`);
+      return;
+    }
+
+    const {notePath, dateKey}: IPathsInUserData = getPathsInUserData(targetDate) || {};
+    // the second condition is for typescript
+    if(isEmpty(notePath)) { 
+      console.log("Error: can't find path to save note");
+      return; 
+    }
+
+    const note = modalData?.dayInfo?.note || undefined;
+    if (isEmpty(note)) {
+      // remove at grand parent level because user data for a date is only note at the moment
+      // if user data for a date is more than a note then need to remove at parent level
+      // if note is object, now it is string, then need to remove at notePath level
+      // Run and look at context for more details
+      removeValue(getParentPath(getParentPath(notePath)), dateKey);
+    } else {
+      setValue(notePath, note);
     }
   };
-  // --- end of wait for saveDate completed then save user data
 
-  const noteDate: Date = modalData?.dayInfo?.date || '';
-  const title = noteDate ? `${noteDate.toISOString().substring(0, 10)}` : '';
+  const noteDate: Date = modalData?.dayInfo?.date || "";
+  const title = noteDate ? `${noteDate.toISOString().substring(0, 10)}` : "";
 
   return (
     <Modal
@@ -100,10 +132,9 @@ function DayModal(props: any) {
       onCancel={onCancel}
       title={title}
     >
-        <TxtDayNote />
+      <TxtDayNote />
     </Modal>
   );
 }
 
 export default DayModal;
-

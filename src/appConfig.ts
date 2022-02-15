@@ -1,59 +1,42 @@
-import { BOOLEAN_VALUES } from "./util/constant";
-import { getCalendar, IGetCalendar } from "./util/util";
 
+import { BOOLEAN_VALUES, values } from './util/constant';
 
-// All config functions and parametter.
+// Config functions and parametters.
 // These functions will be call before loading landding component
 // So there will be no context or hook available yet
 
 export const getInitData = () => {
-    const toDay = new Date();
-    const currentYear = toDay.getFullYear();
-    const calendar = getCalendar({ year: currentYear } as IGetCalendar);
-  
-    const loadData = () => {
-      const savedData = localStorage.getItem('userData') ?? '';
-      let data;
-  
-      try {
-        data = JSON.parse(savedData);
-      } catch (ex) {
-        data = undefined;
-      }
-  
-      return data
-    };
-  
-    const savedData = loadData();
-    const country = 'AU';
-    const state = 'VIC';
-    const year = `${currentYear}`;
-  
-    // set current year as default
-    const initData = {
-      runtime: {
-        year,
-        calendar,
-        country,
-        state,
-      },
-      temp: {
-        settings: {
-          _isShown: BOOLEAN_VALUES.FALSE,
-          country: "",
-          state: "",
-        },
-        dayModal: {
-          _isShown: BOOLEAN_VALUES.FALSE,
-          dayInfo: {
-            note: "",
-          },
-        },
-      },
-      error: {},
-      userData: savedData
-    };
+  const toDay = new Date();
+  const currentYear = toDay.getFullYear();
+  const country = "AU";
+  const state = "VIC";
+  const year = `${currentYear}`;
+  const _status = values.init;
 
-    return initData
-  
-}
+  // set current year as default
+  const initData = {
+    runtime: {
+      year,
+      country,
+      state,
+      _status
+    },
+    temp: {
+      settings: {
+        _isShown: BOOLEAN_VALUES.FALSE,
+        country: "",
+        state: "",
+      },
+      dayModal: {
+        _isShown: BOOLEAN_VALUES.FALSE,
+        dayInfo: {
+          note: "",
+        },
+      },
+    },
+    error: {},
+    userData: {}
+  };
+
+  return initData;
+};
