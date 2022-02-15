@@ -5,16 +5,19 @@ import useOutBound from "../hook/useOutBound";
 import { labels, paths, MinYear, MaxYear } from "../../util/constant";
 import { getCalendar } from "../../util/util";
 import { yearPlanner } from "./validation";
+import useInBound from '../hook/useInBound';
 
 const useYearPlanner = function () {
   const { getValue, setValue } = useContext(DataContext);
   const { loadValidation } = useRuntime();
   const { setUuid } = useOutBound();
+  const {loadData} = useInBound();
 
-  useEffect(() => {
-    
+  useEffect(() => {  
+    loadData();
+    setUuid();
     loadValidation(yearPlanner);
-    // setUuid();
+    
     document.title = labels.yearPlanner;
     console.log("YearPlanner construction completed");
   }, []);

@@ -1,4 +1,5 @@
-import { BOOLEAN_VALUES } from './util/constant';
+
+import { BOOLEAN_VALUES, values } from './util/constant';
 
 // Config functions and parametters.
 // These functions will be call before loading landding component
@@ -10,6 +11,7 @@ export const getInitData = () => {
   const country = "AU";
   const state = "VIC";
   const year = `${currentYear}`;
+  const _status = values.init;
 
   // set current year as default
   const initData = {
@@ -17,6 +19,7 @@ export const getInitData = () => {
       year,
       country,
       state,
+      _status
     },
     temp: {
       settings: {

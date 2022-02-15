@@ -2,12 +2,13 @@
 
 import { isEmpty } from "../../data-lib/util/validation";
 import { v4 as uuidv4 } from "uuid";
-import { useContext } from 'react';
+import { useContext, useEffect } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
-import { names } from '../../util/constant';
+import { names, paths, values } from '../../util/constant';
+import { compKeys } from "../../data-lib/util/constant";
 
 const useOutBound = function () {
-  const { getValue, setValue } = useContext(DataContext);
+  const { getValue } = useContext(DataContext);
 
   // id to know which user, will be replaced by userId provided by Single Sign On (SSO)
   const setUuid = () => {
@@ -16,59 +17,30 @@ const useOutBound = function () {
     }
   };
 
-  // TODO save to buffer then call api
-  // Get user data from context and save to storage, e.g. local storage, S3
-  // const saveData = () => {
-  //   if (!getValue || !setValue) {
-  //     return;
-  //   }
-  //   console.log('Saving user data');
-  //   const year = getValue(paths.runtime.year);
-  //   const country = getValue(paths.runtime.country);
-  //   const state = getValue(paths.runtime.state);
-  //   const calendar = getValue(paths.runtime.calendar);
-  //   // extract user data
-  //   if (!calendar || !Array.isArray(calendar)) {
-  //     return;
-  //   }
+  // save data to storage
+  const year = getValue ? getValue(paths.runtime.year) : undefined;
+  const country = getValue ? getValue(paths.runtime.country) : undefined;
+  const state = getValue ? getValue(paths.runtime.state) : undefined;
+  const userData = getValue
+    ? getValue(paths.userData[compKeys._path])
+    : undefined;
+  const status = getValue
+    ? getValue(paths.runtime[compKeys._status])
+    : undefined;
 
-  //   let userData = {};
-  //   calendar.forEach((aMonth, index) => {
-  //     if (aMonth && Array.isArray(aMonth)) {
-  //       aMonth.forEach((aDay: DayInfo, index) => {
-  //         if (aDay.note) {
-  //           const strDate = getStrDate(aDay.date);
-  //           set(userData, `date${strDate}.note`, aDay.note);
-  //         }
-  //       });
-  //     }
-  //   });
+  useEffect(() => {
+    // only start auto saving after initial loading data completed
+    if (status !== values.loaded) { return; }
 
-  //   const prevData = getValue(paths.userData._path);
-  //   const storeData = {
-  //     year,
-  //     country,
-  //     state,
-  //     userData: prevData
-  //   };
+    const storeData = {
+      year,
+      country,
+      state,
+      userData,
+    };
 
-
-  //   // add string 'year' to fix lodash function
-  //   let newUserData;
-  //   const thisYearKey = `${names.year}${year}`;
-  //   if (!isEmpty(userData)) {
-  //     newUserData = { ...prevData, [thisYearKey]: userData };
-  //     // setValue(`${paths.userData._path}.${names.year}${activeYear}`, userData);
-  //   } else { // If this year has no user data -> clear this year from local storage, if any
-  //     newUserData = pickBy(prevData, (value, key) => {
-  //       return key !== thisYearKey;
-  //     })
-  //   }
-
-  //   storeData.userData = newUserData;
-  //   setValue(`${paths.userData._path}`, newUserData);
-  //   localStorage.setItem(names.yearPlanner, JSON.stringify(storeData));
-  // };
+    localStorage.setItem(names.yearPlanner, JSON.stringify(storeData));
+  }, [year, country, state, userData, status]);
 
   return { setUuid };
 };
