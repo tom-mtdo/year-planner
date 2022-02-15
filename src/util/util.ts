@@ -24,6 +24,14 @@ export interface DayInfo {
   // note?: string;
 }
 
+export const getToday = () => {
+  const today = new Date();
+  const thisYear = today.getFullYear();
+  const thisMonth = today.getMonth(); // 0 - 11
+  const thisDate = today.getDate(); // 1 - 31
+  return {today, thisYear, thisMonth, thisDate}
+}
+
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
   const firstDate = new Date(year, month, 1);
   const lastDate = new Date(year, month + 1, 0);

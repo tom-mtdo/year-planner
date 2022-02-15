@@ -1,5 +1,5 @@
 import { names, paths, values } from "../../util/constant";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { DataContext } from "../../data-lib/context/DataProvider";
 import { compKeys } from "../../data-lib/util/constant";
 import { isEmpty } from "../../data-lib/util/validation";

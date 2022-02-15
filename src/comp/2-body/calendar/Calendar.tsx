@@ -3,31 +3,26 @@ import { ContentBox } from "./Calendar.style";
 import Row from "../../../lib/row/Row";
 import Cell from "../../../lib/cell/Cell";
 import Day from "../day/Day";
-import { countPadding, DayInfo } from "../../../util/util";
+import { countPadding, DayInfo, getToday } from "../../../util/util";
 import Header from "./CalendarHeader";
 import { useCalendar } from "./useCalendar";
 import { Padding, MonthLabelCell } from "./comps";
 export const MONTH_LABEL_MIN_WIDTH = "0";
 
 export default function Calendar() {
-  const {
-    headerRow,
-    calendar,
-    isCurrentYear,
-    currentMonth,
-    currentDate,
-    addNoteToADay,
-  } = useCalendar();
+  const { headerRow, calendar, year, addNoteToADay } = useCalendar();
+
+  const { thisYear, thisMonth, thisDate } = getToday();
 
   const months =
-    calendar && Array.isArray(calendar) ? (
+    Array.isArray(calendar) ? (
       calendar.map((aMonth: any, monthIndex: any) => {
         const monthCell = aMonth.map((aDay: DayInfo, dayIndex: any) => {
           // return a day
           const isToday =
-            isCurrentYear &&
-            monthIndex === currentMonth &&
-            dayIndex === currentDate - 1
+            year === thisYear &&
+            monthIndex === thisMonth && // get month return 0 - 11
+            dayIndex === thisDate - 1 // get date return 1 - 31
               ? true
               : false;
           return (
@@ -51,7 +46,7 @@ export default function Calendar() {
 
         // return a month
         return (
-          <Row key={monthIndex} minHeight={'90px'}>
+          <Row key={monthIndex} minHeight={"90px"}>
             <MonthLabelCell monthIndex={monthIndex} />
             {[leftPadding, ...monthCell, rightPadding]}
             <MonthLabelCell monthIndex={monthIndex} />
@@ -61,7 +56,7 @@ export default function Calendar() {
     ) : (
       <></>
     );
-    
+
   return (
     <ContentBox>
       <Header headerData={headerRow} />
