@@ -24,3 +24,4 @@ export const StyledP = styled.p`
     margin: 0;
     padding 1em;
 `
+
