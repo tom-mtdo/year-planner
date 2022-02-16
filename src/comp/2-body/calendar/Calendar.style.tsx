@@ -1,21 +1,22 @@
 import styled from "styled-components";
 
 export const ContentBox = styled.div`
+    box-sizing: border-box;
     text-align: center;
     width: 100%;
     overflow: auto;
     display: flex;
     flex-direction: row;
-    padding: 0 0 0 70px;
+    padding: 0 0 0 3.5em;
 `;
 
 
-export const StyledMonthLabelCell = styled.div`
+export const StyledMonthLabelBox = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    height: 100%;
-    padding: 0 0 0 4px;
+    min-height: 90px;
+    padding: 0 4px;
 `;
 
 export const StyledMonthLabel = styled.span`

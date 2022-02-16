@@ -9,16 +9,6 @@ export interface IHeader {
 export const Header = (props: IHeader) => {
   const { headerData } = props;
 
-  let cornerL = (
-    <StyledCell
-      key={"corner-l"}
-      border={"solid 1px burlywood"}
-      minWidth={MONTH_LABEL_MIN_WIDTH}
-    >
-      <DayLabel colIndex={-5}></DayLabel>
-    </StyledCell>
-  );
-
   let cornerR = (
     <StyledCell
       key={"corner-r"}
@@ -45,7 +35,7 @@ export const Header = (props: IHeader) => {
   
   const headerRow = (
     <StyledRow key={"label"} minHeight={"unset"}>
-      {[cornerL, ...headerCell, cornerR]}
+      {[...headerCell, cornerR]}
     </StyledRow>
   );
 

@@ -11,6 +11,7 @@ import {
   StyledHeadColumn,
   StyledRow,
 } from "../../../lib/styles";
+import DayLabel from "../day-label/DayLabel";
 export const MONTH_LABEL_MIN_WIDTH = "0";
 
 export default function Calendar() {
@@ -50,7 +51,6 @@ export default function Calendar() {
       // return a month
       return (
         <StyledRow key={monthIndex} minHeight={"90px"}>
-          <MonthLabelCell monthIndex={monthIndex} />
           {[leftPadding, ...monthCell, rightPadding]}
           <MonthLabelCell monthIndex={monthIndex} />
         </StyledRow>
@@ -61,6 +61,16 @@ export default function Calendar() {
   );
 
   const monthLabelCells: any = [];
+  monthLabelCells.push(
+    <StyledCell
+      key={"corner-l"}
+      border={"solid 1px burlywood"}
+      minWidth={MONTH_LABEL_MIN_WIDTH}
+    >
+      <DayLabel colIndex={-5}>&nbsp;</DayLabel>
+    </StyledCell>
+  );
+
   for (let i=0; i < 12; i++){
     monthLabelCells.push(<MonthLabelCell monthIndex={i} />)
   }
