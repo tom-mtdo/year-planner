@@ -1,12 +1,11 @@
 import React from "react";
 import { ContentBox } from "./Calendar.style";
-import Row from "../../../lib/row/Row";
-import Cell from "../../../lib/cell/Cell";
 import Day from "../day/Day";
 import { countPadding, DayInfo, getToday } from "../../../util/util";
 import Header from "./CalendarHeader";
 import { useCalendar } from "./useCalendar";
 import { Padding, MonthLabelCell } from "./comps";
+import { StyledCell, StyledRow } from "../../../lib/styles";
 export const MONTH_LABEL_MIN_WIDTH = "0";
 
 export default function Calendar() {
@@ -26,13 +25,13 @@ export default function Calendar() {
               ? true
               : false;
           return (
-            <Cell key={dayIndex}>
+            <StyledCell key={dayIndex}>
               <Day
                 addNote={addNoteToADay}
                 dayInfo={aDay}
                 isCurrent={isToday}
               ></Day>
-            </Cell>
+            </StyledCell>
           );
         });
 
@@ -46,11 +45,11 @@ export default function Calendar() {
 
         // return a month
         return (
-          <Row key={monthIndex} minHeight={"90px"}>
+          <StyledRow key={monthIndex} minHeight={"90px"}>
             <MonthLabelCell monthIndex={monthIndex} />
             {[leftPadding, ...monthCell, rightPadding]}
             <MonthLabelCell monthIndex={monthIndex} />
-          </Row>
+          </StyledRow>
         );
       })
     ) : (

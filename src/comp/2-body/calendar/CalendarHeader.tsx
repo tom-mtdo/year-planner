@@ -1,5 +1,4 @@
-import Cell from "../../../lib/cell/Cell";
-import Row from "../../../lib/row/Row";
+import { StyledCell, StyledRow } from "../../../lib/styles";
 import DayLabel from "../day-label/DayLabel";
 import { MONTH_LABEL_MIN_WIDTH } from "./Calendar";
 
@@ -11,23 +10,23 @@ export const Header = (props: IHeader) => {
   const { headerData } = props;
 
   let cornerL = (
-    <Cell
+    <StyledCell
       key={"corner-l"}
       border={"solid 1px burlywood"}
       minWidth={MONTH_LABEL_MIN_WIDTH}
     >
       <DayLabel colIndex={-5}></DayLabel>
-    </Cell>
+    </StyledCell>
   );
 
   let cornerR = (
-    <Cell
+    <StyledCell
       key={"corner-r"}
       border={"solid 1px burlywood"}
       minWidth={MONTH_LABEL_MIN_WIDTH}
     >
       <DayLabel colIndex={-5}></DayLabel>
-    </Cell>
+    </StyledCell>
   );
 
   // header
@@ -35,19 +34,19 @@ export const Header = (props: IHeader) => {
   if (headerData && Array.isArray(headerData)) {
     headerCell = headerData.map((dayLabel, index) => {
       return (
-        <Cell key={index}>
+        <StyledCell key={index}>
           <DayLabel colIndex={index}>
             <span>{dayLabel}</span>
           </DayLabel>
-        </Cell>
+        </StyledCell>
       );
     });
   }
   
   const headerRow = (
-    <Row key={"label"} minHeight={"unset"}>
+    <StyledRow key={"label"} minHeight={"unset"}>
       {[cornerL, ...headerCell, cornerR]}
-    </Row>
+    </StyledRow>
   );
 
   return headerRow;
