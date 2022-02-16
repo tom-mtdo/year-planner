@@ -10,7 +10,7 @@ import {
   StyledContent,
   StyledHeadColumn,
   StyledRow,
-} from "../../../lib/styles";
+} from "./Calendar.style";
 import DayLabel from "../day-label/DayLabel";
 export const MONTH_LABEL_MIN_WIDTH = "0";
 

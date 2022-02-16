@@ -1,4 +1,4 @@
-import { StyledCell, StyledRow } from "../../../lib/styles";
+import { StyledCell, StyledRow } from "./Calendar.style";
 import DayLabel from "../day-label/DayLabel";
 import { MONTH_LABEL_MIN_WIDTH } from "./Calendar";
 

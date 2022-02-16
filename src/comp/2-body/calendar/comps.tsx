@@ -2,7 +2,7 @@ import { MONTH_SHORT_NAME } from "../../../util/constant";
 import { MONTH_LABEL_MIN_WIDTH } from "./Calendar";
 import { StyledDayVoid } from "../day/Day.style";
 import {StyledMonthLabelBox, StyledMonthLabel} from './Calendar.style';
-import { StyledCell } from '../../../lib/styles';
+import { StyledCell } from './Calendar.style';
 
 // padding left & right
 export interface IPadding {
