@@ -50,3 +50,15 @@ export const StyledCell = styled.div<{border?: string, minWidth?: string}>`
     box-sizing: border-box;
     text-align: center;
 `;
+
+export const StyledHeadColumn = styled.div`
+    border: solid 1px gray;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 1.5em;
+    z-index: 2;
+`;
+export const StyledContent = styled.div`
+    border: solid 1px gray;
+`;

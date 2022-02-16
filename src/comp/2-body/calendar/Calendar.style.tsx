@@ -4,7 +4,11 @@ export const ContentBox = styled.div`
     text-align: center;
     width: 100%;
     overflow: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 0 0 0 70px;
 `;
+
 
 export const StyledMonthLabelCell = styled.div`
     display: flex;
