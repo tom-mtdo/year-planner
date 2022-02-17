@@ -9,6 +9,12 @@ import {
   TOTAL_COLUMN,
 } from "./constant";
 
+/**
+ * Notes:
+ * - All data go between files: string
+ * - Data within a file can be number boolean .etc
+ */
+
 export interface MonthInfo {
   month: number; // 0 - 11
   firstDate: Date;
@@ -21,16 +27,22 @@ export interface MonthInfo {
 export interface DayInfo {
   date: Date;
   holiday?: string; // Queen birthday .etc
-  // note?: string;
+  note?: string;
+  isToday?: string;
 }
 
 export const getToday = () => {
   const today = new Date();
-  const thisYear = today.getFullYear();
-  const thisMonth = today.getMonth(); // 0 - 11
-  const thisDate = today.getDate(); // 1 - 31
-  return {today, thisYear, thisMonth, thisDate}
-}
+  const strYear = today.getFullYear() + "";
+  const strMonth = today.getMonth() + ""; // 0 - 11
+  const strDate = today.getDate() + ""; // 1 - 31
+
+  const numYear = today.getFullYear();
+  const numMonth = today.getMonth(); // 0 - 11
+  const numDate = today.getDate(); // 1 - 31
+
+  return { today, strYear, strMonth, strDate, numYear, numMonth, numDate };
+};
 
 export const getMonthInfo = (year: number, month: number): MonthInfo => {
   const firstDate = new Date(year, month, 1);
@@ -72,6 +84,7 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
   const aYear = [];
   let aMonth;
   let aDay;
+
   for (let i = 0; i < 12; i++) {
     aMonth = [];
 
@@ -85,7 +98,7 @@ export const getYearContent = (input: IGetCalendar): any[][] => {
       aMonth.push({
         date: aDay,
         note: "",
-        holiday: "",
+        holiday: ""
       });
     }
 
@@ -208,10 +221,14 @@ export interface IPathsInUserData {
   yearKey?: string;
   dateKey?: string;
   notePath?: string;
-};
+}
 
-export const getPathsInUserData = (inDate: Date | undefined): IPathsInUserData | undefined=> {
-  if (undefined === inDate) { return; }
+export const getPathsInUserData = (
+  inDate: Date | undefined
+): IPathsInUserData | undefined => {
+  if (undefined === inDate) {
+    return;
+  }
 
   const year = inDate.getFullYear();
   const strDate = getStrDate(inDate);

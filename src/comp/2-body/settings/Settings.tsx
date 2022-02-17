@@ -9,37 +9,40 @@ import {
 } from "./Settings.style";
 import SettingsBody from "./SettingsBody";
 import styled from "styled-components";
-import useSettings from './useSettings';
+import useSettings from "./useSettings";
 import { isTrue } from "../../../data-lib/util/util";
 
 // Form to collect settings from users
 export default function Settings() {
-  const {isEditing, isShown, resetSettings, closeSettings, applySettings} = useSettings();
-  if (!isTrue(isShown)) { return <></>; }
+  const { isEditing, isShown, resetSettings, closeSettings, applySettings } =
+    useSettings();
+  if (!isTrue(isShown)) {
+    return <></>;
+  }
 
   return (
     <StyledSettingsBox>
       <form onSubmit={(event) => event.preventDefault()}>
-      <StyledSettingsHeader isEditing={isEditing}>
-        <StyledH2>Settings</StyledH2>
-        <EdittingPrompt isShown={isEditing} />
-      </StyledSettingsHeader>
-      <StyledSettingsBody>
-        <SettingsBody />
-      </StyledSettingsBody>
-      <StyledSettingsFooter>
-        <Button variant="contained" onClick={applySettings} type={'submit'}>
-          Apply
-        </Button>
-        &nbsp;&nbsp;
-        <Button variant="contained" onClick={resetSettings}>
-          Reset
-        </Button>
-        &nbsp;&nbsp;
-        <Button variant="contained" onClick={closeSettings}>
-          Close
-        </Button>
-      </StyledSettingsFooter>
+        <StyledSettingsHeader isEditing={isEditing}>
+          <StyledH2>Settings</StyledH2>
+          <EdittingPrompt isShown={isEditing} />
+        </StyledSettingsHeader>
+        <StyledSettingsBody>
+          <SettingsBody />
+        </StyledSettingsBody>
+        <StyledSettingsFooter>
+          <Button variant="contained" onClick={applySettings} type={"submit"}>
+            Apply
+          </Button>
+          &nbsp;&nbsp;
+          <Button variant="contained" onClick={resetSettings}>
+            Reset
+          </Button>
+          &nbsp;&nbsp;
+          <Button variant="contained" onClick={closeSettings}>
+            Close
+          </Button>
+        </StyledSettingsFooter>
       </form>
     </StyledSettingsBox>
   );
