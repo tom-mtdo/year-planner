@@ -7,10 +7,9 @@ import { BOOLEAN_VALUES, values } from './util/constant';
 
 export const getInitData = () => {
   const toDay = new Date();
-  const currentYear = toDay.getFullYear();
+  const year = toDay.getFullYear() + '';
   const country = "AU";
   const state = "VIC";
-  const year = `${currentYear}`;
   const _status = values.init;
 
   // set current year as default

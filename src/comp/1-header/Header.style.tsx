@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { wideScreen } from '../../util/theme';
 
 export const StyledH1 = styled.h1`
     margin: 0;
@@ -28,7 +29,7 @@ export const StyledCtrBox = styled.div`
     bottom: 0;
     padding: 0 0.2em 0 0;
 
-    @media (min-width: 700px) {
+    @media (min-width: ${wideScreen}) {
         padding: 0 5em 0 0;
     }
 `

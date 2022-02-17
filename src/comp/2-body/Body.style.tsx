@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { wideScreen } from "../../util/theme";
 
 export const BodyBox = styled.div`
     text-align: center;
@@ -18,7 +19,7 @@ export const BodyCenterBox = styled.div`
     overflow: hidden;
     padding: 0 0.2em;
 
-    @media (min-width: 700px) {
+    @media (min-width: ${wideScreen}) {
         padding: 0 1.5em;
     }
 `;

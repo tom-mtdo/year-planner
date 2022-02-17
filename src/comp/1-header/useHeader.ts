@@ -38,7 +38,7 @@ const useHeader = function () {
       return;
     }
 
-    setValue(paths.runtime.year, newYear);
+    setValue(paths.runtime.year, newYear + '');
   };
 
   const handleClick = (input: { buttonName: ButtonNames }) => {
