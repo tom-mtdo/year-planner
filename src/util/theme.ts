@@ -1,1 +1,1 @@
-export const wideScreen = '700px';
+export const wideScreen = '1000px';
