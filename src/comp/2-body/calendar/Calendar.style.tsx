@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { wideScreen } from "../../../util/theme";
+
 
 // Table
 export const ContentBox = styled.div`
@@ -19,9 +21,8 @@ export const StyledHeadColumn = styled.div`
     position: absolute;
     left: 0.2em;
     z-index: 2;
-    min-width: 3.5em;
 
-    @media (min-width: 700px) {
+    @media (min-width: ${wideScreen}) {
         left: 1.5em;
     }
 `;
@@ -38,7 +39,7 @@ export const StyledRow = styled.div<{minHeight?: string, minWidth?: string}>`
     min-width: ${props => props.minWidth ?? '2200px'};
 `;
 
-export const StyledCell = styled.div<{border?: string, minWidth?: string, minHeight?: string}>`
+export const StyledCell = styled.div<{border?: string, minWidth?: string, minHeight?: string, side?: string}>`
     flex-grow: 1;
     width: 100%;  // Default to full width
     margin: 0;
@@ -49,6 +50,11 @@ export const StyledCell = styled.div<{border?: string, minWidth?: string, minHei
     min-height: ${props => props.minHeight ?? 'unset'};
     box-sizing: border-box;
     text-align: center;
+    display: ${props => 'R' === props.side ? 'none' : 'unset'};
+
+    @media (min-width: ${wideScreen}) {
+      display: unset;
+    }        
 `;
 
 export const StyledMonthLabelBox = styled.div`
@@ -56,7 +62,12 @@ export const StyledMonthLabelBox = styled.div`
     align-items: center;
     width: 100%;
     min-height: 90px;
-    padding: 0 4px;
+    padding: 0;
+    box-sizing: border-box;
+
+    @media (min-width: ${wideScreen}) {
+      padding: 0 4px;
+    }    
 `;
 
 export const StyledMonthLabel = styled.span`
@@ -65,7 +76,7 @@ export const StyledMonthLabel = styled.span`
   font-size: 1.3em;
   text-align: left;
   
-  @media (min-width: 700px) {
+  @media (min-width: ${wideScreen}) {
     font-size: 1.5em;
   }
 `;

@@ -24,16 +24,18 @@ export const Padding = ({ count }: IPadding) => {
 // Month label
 export interface IMonthLabel {
   monthIndex: number;
+  side?: string
 }
 
 
 
-export const MonthLabelCell = ({ monthIndex }: IMonthLabel) => {
+export const MonthLabelCell = ({ monthIndex, side }: IMonthLabel) => {
   return (
     <StyledCell
       key={`month-label-${monthIndex}-L`}
       border={"solid 1px burlywood"}
       minWidth={MONTH_LABEL_MIN_WIDTH}
+      side = {side}
     >
       <StyledMonthLabelBox>
         <StyledMonthLabel>{MONTH_SHORT_NAME[monthIndex]}</StyledMonthLabel>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { wideScreen } from "../../util/theme";
 
 export const StyledFooter = styled.div`
     text-align: center;
@@ -7,7 +8,7 @@ export const StyledFooter = styled.div`
     padding: 0.2em;
     flex-flow: column wrap;
 
-    @media (min-width: 700px) {
+    @media (min-width: ${wideScreen}) {
         flex-flow: row wrap;
         padding: 1.3em 1.5em;
     }
