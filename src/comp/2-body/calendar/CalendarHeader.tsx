@@ -14,6 +14,7 @@ export const Header = (props: IHeader) => {
       key={"corner-r"}
       border={"solid 1px burlywood"}
       minWidth={MONTH_LABEL_MIN_WIDTH}
+      side={'R'}
     >
       <DayLabel colIndex={-5}></DayLabel>
     </StyledCell>
